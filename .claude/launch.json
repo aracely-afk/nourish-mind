@@ -3,9 +3,13 @@
   "configurations": [
     {
       "name": "nourish-mind",
-      "runtimeExecutable": "npm",
+      "runtimeExecutable": "/tmp/node-v20.18.1-darwin-arm64/bin/npm",
       "runtimeArgs": ["run", "dev"],
-      "port": 3000
+      "cwd": "/Users/chellycuadra/Desktop/CV/nourish-mind",
+      "port": 3000,
+      "env": {
+        "PATH": "/tmp/node-v20.18.1-darwin-arm64/bin:/usr/bin:/bin"
+      }
     }
   ]
 }
