@@ -6,6 +6,7 @@ export const LESSONS = [
     readTimeMin: 8,
     theme: "awareness",
     scripture: { verse: "For as he thinks in his heart, so is he.", reference: "Proverbs 23:7 (NKJV)" },
+    prayer: "Lord, as I begin this journey, I invite You into my thought life. Help me see the stories I carry about food with honest, compassionate eyes. Transform the way I think so that my choices reflect who You made me to be. Amen.",
     content: `Every eating habit you have today has a story behind it. Maybe you grew up in a home where food was love — where your grandmother's casserole meant safety and belonging. Maybe you learned early that cleaning your plate was a sign of gratitude. Or perhaps food became your escape during stressful seasons of life.
 
 None of this makes you broken. It makes you human.
@@ -44,6 +45,7 @@ Today, choose one meal or snack and write down — even just mentally — what y
     readTimeMin: 9,
     theme: "triggers",
     scripture: { verse: "But whoever drinks of the water that I shall give him will never thirst again.", reference: "John 4:14 (NKJV)" },
+    prayer: "Father, You alone can satisfy the deepest hunger of my soul. Teach me to come to You first when I feel empty, restless, or depleted. Help me recognize the difference between physical hunger and emotional longing, and guide me to true nourishment. Amen.",
     content: `Here is a question that could change everything: Are you hungry right now, or are you feeling something else?
 
 Most of us were never taught to tell the difference. We learned to eat at mealtimes, eat when others eat, eat when we're sad, bored, nervous, or celebrating. Over time, the signal for "I need food" and the signal for "I need comfort" get crossed — and food becomes the answer to every inner need.
@@ -85,6 +87,7 @@ When you feel emotional hunger, ask: What am I really craving? Rest? Connection?
     readTimeMin: 10,
     theme: "theology",
     scripture: { verse: "Do you not know that your body is the temple of the Holy Spirit who is in you, whom you have from God, and you are not your own?", reference: "1 Corinthians 6:19 (NKJV)" },
+    prayer: "Holy Spirit, thank You for making my body Your home. Help me treat this body with honor — not from a place of shame, but from a place of gratitude and love. May the way I eat today reflect the value You have placed on this life. Amen.",
     content: `For many Christians, the verse "your body is a temple" has been weaponized as a shame statement — used to make people feel guilty about weight, food choices, or physical appearance. That is not what Paul meant.
 
 The temple in the Old Testament was a place where God's presence dwelled. It was holy — not because it was perfect in design, but because of whose presence it held. When Paul says your body is a temple, he is saying something breathtaking: God has chosen to live inside you.
@@ -120,6 +123,7 @@ This week, before making a food choice, pause and whisper this prayer: "Lord, he
     readTimeMin: 8,
     theme: "triggers",
     scripture: { verse: "The LORD is close to the brokenhearted and saves those who are crushed in spirit.", reference: "Psalm 34:18 (NIV)" },
+    prayer: "Lord, You are close to me even in my most painful moments. When I reach for food to numb or soothe, remind me that You are near. Help me name what I feel and bring it to You before I reach for something that cannot heal it. Amen.",
     content: `Emotional eating is not a character flaw. It is a coping strategy — one that once helped you survive. The problem is not that you reached for food when you were hurting. The problem is that food cannot heal what you are trying to heal with it.
 
 Common emotional eating triggers include stress at work, loneliness, boredom, anxiety, sadness, conflict in relationships, and even positive emotions like celebration. Food becomes the tool because it is immediate, available, and temporarily effective. For a few moments, the pain dims.
@@ -159,6 +163,7 @@ Once you identify the trigger, you can choose a different response: a walk, a pr
     readTimeMin: 9,
     theme: "triggers",
     scripture: { verse: "Do not be anxious about anything, but in every situation, by prayer and petition, with thanksgiving, present your requests to God.", reference: "Philippians 4:6 (NIV)" },
+    prayer: "Prince of Peace, my stress is real — but You are greater than any pressure I carry. Teach me to bring my anxieties to You before they drive me to the kitchen. Replace my stress response with trust, and my tension with the peace that surpasses understanding. Amen.",
     content: `There is biology behind stress eating — and understanding it will help you stop blaming yourself.
 
 When you experience stress, your brain signals your adrenal glands to release cortisol, the primary stress hormone. Cortisol does several things: it raises your heart rate, sharpens your focus, and — critically — it increases appetite and specifically drives cravings for high-calorie, high-fat, high-sugar foods.
@@ -192,6 +197,7 @@ On high-stress days: drink a full glass of water first (cortisol mimics thirst a
     readTimeMin: 9,
     theme: "identity",
     scripture: { verse: "Do not be conformed to this world, but be transformed by the renewing of your mind.", reference: "Romans 12:2 (NKJV)" },
+    prayer: "Father, Your Word promises I can be transformed by the renewing of my mind. Today I surrender the food beliefs that have held me captive — the rigid rules, the shame, the lies diet culture has sold me. Write Your truth on my heart instead. Amen.",
     content: `You carry a set of food beliefs that were handed to you — by your family, your culture, your past diets, and the media. Many of these beliefs are lies. And lies, repeated long enough, feel like truth.
 
 Here are some common food lies: "I have no willpower." "I'll start over on Monday." "I already ruined today, so I might as well keep going." "I don't deserve to feel good in my body." "This is just how I am."
@@ -227,6 +233,7 @@ Transformation begins in the mind. Feed it truth.`,
     readTimeMin: 6,
     theme: "review",
     scripture: { verse: "Be still and know that I am God.", reference: "Psalm 46:10 (NKJV)" },
+    prayer: "Lord, on this day of reflection I am still before You. Thank You for every step taken this week — even the imperfect ones. You are God, and You are working in me. I rest in that today. Amen.",
     content: `You have made it through your first week. Before you rush to week two, stop. Be still.
 
 God built rest into the rhythm of creation. The Sabbath was not a reward for productivity — it was written into the fabric of existence from day seven of creation. Rest is not laziness. Rest is obedience. It is an act of trust that says, "I do not have to keep striving to be worthy."
@@ -264,6 +271,7 @@ Rest today. You do not have to earn your next breath.`,
     readTimeMin: 8,
     theme: "awareness",
     scripture: { verse: "To everything there is a season, a time for every purpose under heaven.", reference: "Ecclesiastes 3:1 (NKJV)" },
+    prayer: "Creator God, You designed this body with wisdom I am still learning to trust. Help me tune in to the signals You built into me — to eat when I am hungry, to stop when I am satisfied, and to trust Your timing in all things. Amen.",
     content: `Years of dieting, food rules, and emotional eating can disconnect you from your body's natural hunger signals. Many people reach a point where they genuinely don't know if they're hungry or not. They eat by the clock, by the rule, or by the feeling — but not by actual physical hunger.
 
 Your body was designed with wisdom. It knows when it needs fuel, and it sends signals — stomach growling, a slight drop in energy, difficulty concentrating. These are trustworthy signals. The goal of this program is to help you hear them again.
@@ -297,6 +305,7 @@ It takes about 20 minutes for fullness signals to reach your brain. The pause cr
     readTimeMin: 9,
     theme: "habits",
     scripture: { verse: "For a righteous man may fall seven times and rise again.", reference: "Proverbs 24:16 (NKJV)" },
+    prayer: "Father, thank You that Your mercies are not all-or-nothing — they are new every morning. When I fall, help me rise again without condemnation. Teach me that progress, not perfection, is what You celebrate in me. Amen.",
     content: `"I already ruined my eating today, so I might as well eat whatever I want." If you have ever said this, you have been caught in the all-or-nothing trap — one of the most common thinking patterns that keeps people cycling between perfection and collapse.
 
 All-or-nothing thinking (also called black-and-white thinking) sees every choice as either perfect or disastrous. There is no middle ground. The moment the ideal plan is interrupted by a single cookie, a missed workout, or a difficult dinner — the entire effort is categorized as "failed" and abandoned.
@@ -333,6 +342,7 @@ The distance between a setback and your next right choice determines your long-t
     readTimeMin: 8,
     theme: "identity",
     scripture: { verse: "Through the LORD's mercies we are not consumed, because His compassions fail not. They are new every morning.", reference: "Lamentations 3:22-23 (NKJV)" },
+    prayer: "God of new mercies, You look at me with compassion, not contempt. Help me look at myself the same way today. Where I have been harsh and demanding with myself, soften me. Let Your lovingkindness be the lens through which I see my own journey. Amen.",
     content: `Many people believe that being hard on themselves is what keeps them on track — that self-criticism is the engine of discipline. Research strongly disagrees.
 
 Studies consistently show that self-compassion — treating yourself with the same kindness you would offer a dear friend — is actually more strongly associated with healthy behavior change than self-criticism. People who are compassionate with themselves after setbacks are more likely to try again, adjust their approach, and persist long-term.
@@ -373,6 +383,7 @@ Self-compassion is not: "It doesn't matter what I eat." It is not permission to 
     readTimeMin: 7,
     theme: "triggers",
     scripture: { verse: "Commit your works to the LORD, and your thoughts will be established.", reference: "Proverbs 16:3 (NKJV)" },
+    prayer: "Lord, I commit this day — and my restless hands — to You. When boredom creeps in and I reach for food out of habit rather than hunger, redirect me. Fill my idle moments with purpose and connection that truly satisfies. Amen.",
     content: `Boredom is one of the most overlooked eating triggers. It doesn't announce itself loudly like stress or sadness. It seeps in quietly — and suddenly you're standing in front of the pantry not sure why.
 
 Boredom eating serves a specific function: it introduces stimulation. When the brain is under-stimulated, food offers a quick sensory experience — taste, texture, smell, the act of chewing. It is not truly about hunger. It is about occupying a restless mind.
@@ -408,6 +419,7 @@ Boredom is telling you something: I need more life, not more food.`,
     readTimeMin: 8,
     theme: "habits",
     scripture: { verse: "Blessed are those who hunger and thirst for righteousness, for they shall be filled.", reference: "Matthew 5:6 (NKJV)" },
+    prayer: "Father, You promise to fill those who truly hunger. Help me release my grip on restriction and trust that there is enough — enough food, enough grace, enough of Your provision. Free me from the scarcity mindset that drives me to overeat. Amen.",
     content: `Every diet that has ever told you "never eat that food again" has set you up for a specific failure mode — one that psychologists call the ironic process theory, and the rest of us call the forbidden fruit effect.
 
 When you tell your brain a food is completely off-limits, it does something counterintuitive: it increases your desire for that food. Studies show that when people are told they cannot have a specific food, they think about it more, desire it more intensely, and eat more of it when they finally "give in" than they would have if it were never forbidden.
@@ -441,6 +453,7 @@ Tell yourself you CAN have any food — but you choose how much and how often. "
     readTimeMin: 8,
     theme: "theology",
     scripture: { verse: "How sweet are Your words to my taste, sweeter than honey to my mouth!", reference: "Psalm 119:103 (NKJV)" },
+    prayer: "Lord, Your Word is sweeter than honey — the deepest comfort my soul can find. Help me turn to You when I crave comfort, and to receive food simply as the beautiful gift of fuel You designed it to be. Amen.",
     content: `Food was created good. Genesis records that God prepared a garden full of food and declared it very good. Jesus fed thousands because their hunger mattered to Him. He turned water into wine at a wedding. He ate with sinners and saints alike. Food is not the enemy.
 
 The issue is not that food brings comfort. The issue is when food becomes our primary source of comfort — when it replaces the deeper comforts of connection, rest, meaning, and God's presence.
@@ -482,6 +495,7 @@ Then eat your actual food — and let it be what it was designed to be: deliciou
     readTimeMin: 6,
     theme: "review",
     scripture: { verse: "But those who wait on the LORD shall renew their strength; they shall mount up with wings like eagles.", reference: "Isaiah 40:31 (NKJV)" },
+    prayer: "Lord, two weeks in, I need Your strength to continue. Where I am weary, renew me. Where I have been faithful, confirm my steps. Like the eagle, may I rise above old patterns and soar into the freedom You have planned for me. Amen.",
     content: `You are two weeks in. This is where many programs begin to lose people — not because the program stops working, but because the initial novelty fades and real life keeps happening.
 
 Isaiah 40:31 is a promise for exactly this moment. "Those who wait on the LORD" — those who keep showing up, keep looking to Him, keep moving even when it feels slow — will renew their strength. Soaring comes after waiting.
@@ -518,6 +532,7 @@ You are not behind. You are exactly where you need to be.`,
     readTimeMin: 10,
     theme: "awareness",
     scripture: { verse: "We demolish arguments and every pretension that sets itself up against the knowledge of God, and we take captive every thought to make it obedient to Christ.", reference: "2 Corinthians 10:5 (NIV)" },
+    prayer: "God, today I take every thought captive and bring it to You. Help me notice the food thoughts that do not belong — the catastrophic ones, the shameful ones, the all-or-nothing ones. Replace them with truth, and give me courage to write it all down. Amen.",
     content: `Paul's instruction to "take captive every thought" is not mystical. It is practical. In CBT, it has a name: Thought Records.
 
 A thought record is a written log that captures the automatic thoughts that arise around food, examines them for accuracy, and replaces them with more balanced, truthful thinking. Writing matters here — it slows the thought process enough for the rational brain to participate.
@@ -553,6 +568,7 @@ This is not about positive thinking. It is about accurate thinking — and accur
     readTimeMin: 8,
     theme: "triggers",
     scripture: { verse: "Am I now trying to win the approval of human beings, or of God? If I were still trying to please people, I would not be a servant of Christ.", reference: "Galatians 1:10 (NIV)" },
+    prayer: "Father, free me from the need for approval at the table. Help me eat for my own health and not to satisfy the expectations of others. Anchor my identity in You so that no social pressure can pull me away from the path I have chosen. Amen.",
     content: `Food is social. It is wrapped up in culture, family, love, and celebration. Every tradition has food at the center of it — and that is good. But social settings can also be pressure cookers for eating habits: people commenting on your plate, family members urging second helpings, colleagues ordering dessert expecting you to join in.
 
 How do you stay true to your intentions without becoming rigid, joyless, or preachy at the dinner table?
@@ -587,6 +603,7 @@ This program is not about performing discipline at parties. A single celebration
     readTimeMin: 7,
     theme: "habits",
     scripture: { verse: "Ponder the path of your feet, and let all your ways be established.", reference: "Proverbs 4:26 (NKJV)" },
+    prayer: "Lord, guide my feet — and my fork. Help me pause before I act and consider the path I am on. Give me a mind that is clear, a heart that is grounded, and the wisdom to make choices that align with who I am becoming. Amen.",
     content: `You've been using the traffic light system for food. Now let's use it for your thoughts.
 
 Some thoughts are Green: accurate, helpful, energizing. "I made a good choice today." "My body is capable." "Progress, not perfection."
@@ -625,6 +642,7 @@ The traffic light mind and the traffic light plate work together. What you allow
     readTimeMin: 8,
     theme: "theology",
     scripture: { verse: "For everything God created is good, and nothing is to be rejected if it is received with thanksgiving.", reference: "1 Timothy 4:4-5 (NIV)" },
+    prayer: "Thank You, Father, for food. For the colors, the flavors, the nourishment You have provided. Slow me down today. Help me receive every meal as a gift from Your hand, set apart with gratitude and prayer. Amen.",
     content: `When was the last time you actually tasted your food?
 
 For many of us, eating happens on autopilot — standing over the sink, scrolling on a phone, driving between meetings. Calories consumed but not experienced. Food present but no real encounter with it.
@@ -662,6 +680,7 @@ You will likely eat less. You will definitely enjoy it more.`,
     readTimeMin: 8,
     theme: "habits",
     scripture: { verse: "No discipline seems pleasant at the time, but painful. Later on, however, it produces a harvest of righteousness and peace for those who have been trained by it.", reference: "Hebrews 12:11 (NIV)" },
+    prayer: "Lord, discipline is hard — but You promise it bears fruit. Help me separate comfort from reward, and help me find celebration in ways that honor the work I am doing. Train me, even when it is uncomfortable. Amen.",
     content: `"I've been so good this week, I deserve a treat." This thought feels rational. It follows a logic of reward and punishment that most of us learned in childhood — behave well, receive something good. Misbehave, go without.
 
 But when food becomes the primary reward for discipline, several problems emerge. First, you are reinforcing the idea that certain foods are inherently precious — which makes them more desirable. Second, you are linking your food choices to a performance metric, not to genuine hunger or enjoyment. Third, the reward often escalates — one cookie becomes the bag, because the "deserve" feeling doesn't diminish quickly.
@@ -698,6 +717,7 @@ Eventually, the goal is for the habit itself to feel rewarding. The energy from 
     readTimeMin: 9,
     theme: "theology",
     scripture: { verse: "But the fruit of the Spirit is love, joy, peace, forbearance, kindness, goodness, faithfulness, gentleness and self-control.", reference: "Galatians 5:22-23 (NIV)" },
+    prayer: "Holy Spirit, I cannot manufacture self-control on my own — it is Your fruit in me. Fill me today. As I abide in You, let the fruit of self-control grow naturally from that connection rather than from sheer willpower alone. Amen.",
     content: `Here is something that often surprises people: self-control is listed last in the fruit of the Spirit. Not first. Last.
 
 This order is likely intentional. Self-control that comes before love, joy, peace, and gentleness is white-knuckled willpower. Self-control that flows from love, joy, and peace is something entirely different — it is the natural expression of a life that is already full.
@@ -731,6 +751,7 @@ You are not trying harder. You are going deeper. And depth produces fruit that w
     readTimeMin: 6,
     theme: "review",
     scripture: { verse: "The LORD is my shepherd; I shall not want. He makes me lie down in green pastures; He leads me beside still waters. He restores my soul.", reference: "Psalm 23:1-3 (NKJV)" },
+    prayer: "Good Shepherd, I have made it halfway. Lead me beside still waters today. Restore my soul. I trust that You know the path forward and that the green pastures You provide are more than enough for this journey. Amen.",
     content: `Three weeks. Twenty-one days. You have covered more ground than most diets cover in three months — not because of restrictions, but because of depth.
 
 Psalm 23 is one of the most beloved passages in Scripture — and it is almost entirely about provision, rest, and restoration. The Shepherd doesn't lead the sheep to perform, to earn their pasture, or to prove their worth. He leads them to green pastures and still waters simply because they belong to Him. He restores their souls — not as a reward for achievement, but as an act of care.
@@ -767,6 +788,7 @@ The Good Shepherd knows where you are. He is not surprised by your struggles. He
     readTimeMin: 9,
     theme: "identity",
     scripture: { verse: "I praise you because I am fearfully and wonderfully made; your works are wonderful, I know that full well.", reference: "Psalm 139:14 (NIV)" },
+    prayer: "Creator, You made me fearfully and wonderfully. Forgive me for the years I spent at war with this body. Today I choose gratitude over criticism. Help me see what You see — a life worthy of care, not punishment. Amen.",
     content: `Many people who have struggled with food for years have also developed a difficult relationship with their bodies. Years of dieting, failure, weight cycling, and comparison have left them feeling like their body is the enemy — untrustworthy, uncooperative, broken.
 
 David wrote Psalm 139:14 not as a greeting card sentiment, but as a genuine declaration of wonder. "Fearfully and wonderfully made" — the Hebrew word for "fearfully" carries the idea of something that evokes awe and reverence. Your body was designed to evoke wonder. Not condemnation.
@@ -800,6 +822,7 @@ This practice rewires the emotional tone of your relationship with your body —
     readTimeMin: 8,
     theme: "awareness",
     scripture: { verse: "There is therefore now no condemnation for those who are in Christ Jesus.", reference: "Romans 8:1 (NKJV)" },
+    prayer: "Lord, there is no condemnation in You. Release me from the shame spiral that follows every imperfect meal. Help me receive Your grace freely so I can return to the path without the weight of guilt slowing me down. Amen.",
     content: `Food guilt is one of the most corrosive forces in your relationship with eating. It turns a neutral or even pleasurable experience into a source of shame, self-condemnation, and often — paradoxically — more eating.
 
 Here is the typical guilt cycle: Eat something beyond your plan → Feel guilty and ashamed → Shame creates distress → Distress triggers more eating → More eating creates more guilt → Repeat.
@@ -835,6 +858,7 @@ Guilt is not your ally. It does not produce better choices — it produces shame
     readTimeMin: 8,
     theme: "triggers",
     scripture: { verse: "I will both lie down in peace and sleep; for You alone, O LORD, make me dwell in safety.", reference: "Psalm 4:8 (NKJV)" },
+    prayer: "Father, as the day winds down I lay before You my cravings, my worries, and my need for control. Guard my night hours. Help me rest — truly rest — and wake with a clear mind and a body ready to begin again. Amen.",
     content: `Night eating is one of the most common struggles in weight management — and it has both psychological and biological dimensions.
 
 Biologically, your body's circadian clock naturally suppresses hunger hormones during the day and allows them to rise at night — but this is for animals that are active at night. For most people with a normal sleep schedule, eating significantly after dinner works against your body's metabolic clock. Food eaten late at night is more likely to be stored as fat, and digestion interrupts sleep quality.
@@ -872,6 +896,7 @@ Close the kitchen after dinner (literally put a sign on it if needed). Plan a sa
     readTimeMin: 8,
     theme: "identity",
     scripture: { verse: "Therefore let no one pass judgment on you in questions of food and drink.", reference: "Colossians 2:16 (NIV)" },
+    prayer: "Lord, free me from the judgment I place on food — and on myself. Help me release the morality I have attached to eating and receive food as the neutral, nourishing gift You designed it to be. I am not defined by what I eat. Amen.",
     content: `Diet culture has assigned moral value to food. "Clean eating" implies there is dirty eating. "Bad" foods. "Guilty pleasures." "Cheating." This language turns eating into a moral performance — and the eater into a moral character being judged.
 
 Paul's instruction to the Colossians is radical in this context: let no one judge you regarding food. Including yourself. Food is food. Eating a cookie does not make you a bad person. Eating a salad does not make you virtuous. Moral goodness and food choices are not in the same category.
@@ -909,6 +934,7 @@ Your worth, your goodness, and your identity are established by God — not by y
     readTimeMin: 8,
     theme: "triggers",
     scripture: { verse: "I have learned, in whatever state I am, to be content. I know how to be abased, and I know how to abound.", reference: "Philippians 4:11-12 (NKJV)" },
+    prayer: "God of abundance, teach me contentment. Whether the day goes perfectly or not at all, help me find balance in the middle — neither swinging into indulgence nor crashing into restriction. You are enough in every state I find myself in. Amen.",
     content: `The eating pattern that drives the most weight gain is not the occasional large meal. It is the pendulum swing between intense restriction and uncontrolled eating. Restrict severely → feel deprived → eat everything in sight → feel guilty → restrict severely again. The body never finds equilibrium.
 
 Paul's declaration in Philippians 4 is remarkable: "I have learned to be content." Not "I am naturally content." Not "contentment happened to me." I have learned it. Contentment in food — the ability to eat moderately at celebrations and moderately on ordinary days, neither depriving nor gorging — is a learned skill.
@@ -943,6 +969,7 @@ Most people fear the middle — that without the intensity of restriction or the
     readTimeMin: 9,
     theme: "habits",
     scripture: { verse: "Trust in the LORD with all your heart, and lean not on your own understanding; in all your ways acknowledge Him, and He shall direct your paths.", reference: "Proverbs 3:5-6 (NKJV)" },
+    prayer: "Lord, I lean on You and not on my own understanding. Help me build a way of eating rooted in wisdom, not rigid rules — in grace, not guilt. Direct my path as I put into practice everything You have been teaching me. Amen.",
     content: `Programs end. Diets have finish lines. But a food philosophy is yours forever.
 
 This lesson is about synthesizing everything you've learned into a personal set of principles — a philosophy of eating that reflects who you are, what you believe, and what you've discovered about yourself over the past 27 days.
@@ -981,6 +1008,7 @@ Answer these questions and combine the answers into your personal food philosoph
     readTimeMin: 6,
     theme: "review",
     scripture: { verse: "Forget the former things; do not dwell on the past. See, I am doing a new thing! Now it springs up; do you not perceive it?", reference: "Isaiah 43:18-19 (NIV)" },
+    prayer: "God of new things, I release the old version of my relationship with food. I do not dwell on the past — I stand here, changed. Thank You for the new thing You are doing in me. I see it, and I receive it with open hands. Amen.",
     content: `You are in the final week. Take a moment to absorb that.
 
 When you began this program, you had a relationship with food that was shaped by years of habits, beliefs, and experiences. Twenty-eight days later, that relationship is changing — not because you ate perfectly, but because you have been paying attention. You have been learning. You have been practicing.
@@ -1021,6 +1049,7 @@ Isaiah says "forget the former things" — not to ignore the past, but to not be
     readTimeMin: 9,
     theme: "identity",
     scripture: { verse: "I press on toward the goal for the prize of the upward call of God in Christ Jesus.", reference: "Philippians 3:14 (NKJV)" },
+    prayer: "Father, I press on. Not because I have arrived, but because the goal ahead is worth the reaching. Help me trade the diet mentality for a lifetime perspective — one that sees every day as a step toward the prize, not a test I might fail. Amen.",
     content: `The greatest threat to your progress is not a bad week. It is returning to a diet mentality the moment this program ends.
 
 Diet mentality says: there is a start date and an end date. There is a "on" state and an "off" state. There are rules to follow and rules to break. There is a finish line at a certain weight. When you reach the finish line, you go back to normal.
@@ -1058,6 +1087,7 @@ Many people set a goal weight and believe everything will change when they reach
     readTimeMin: 10,
     theme: "theology",
     scripture: { verse: "So if the Son makes you free, you shall be free indeed.", reference: "John 8:36 (NKJV)" },
+    prayer: "Lord, whom the Son sets free is free indeed. I stand here today — not perfect, but transformed. Thank You for these 30 days. Go with me into the days ahead. What You have begun in me, I trust You to complete. Amen.",
     content: `Thirty days. You made it.
 
 But more importantly: you showed up. Day after day, imperfectly, sometimes reluctantly, sometimes skipping a day and coming back — you kept coming back. And that persistence is the real victory.

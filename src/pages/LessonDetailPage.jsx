@@ -41,6 +41,14 @@ export default function LessonDetailPage() {
 
       {/* Lesson content */}
       <div className="p-4 space-y-4">
+        {/* Opening Prayer */}
+        {lesson.prayer && (
+          <div className="bg-gradient-to-br from-[#4B2E83]/10 to-[#A88FCF]/10 border border-[#A88FCF]/30 rounded-2xl p-4">
+            <p className="text-xs font-semibold text-brand-primary uppercase tracking-widest mb-2 font-brand">Opening Prayer</p>
+            <p className="text-sm text-gray-700 italic leading-relaxed font-display">{lesson.prayer}</p>
+          </div>
+        )}
+
         {/* Scripture */}
         <div className="bg-amber-50 border-l-4 border-amber-400 rounded-r-2xl p-4">
           <p className="text-amber-800 italic text-sm leading-relaxed font-display">"{lesson.scripture.verse}"</p>
