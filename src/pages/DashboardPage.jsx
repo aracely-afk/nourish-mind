@@ -64,7 +64,7 @@ export default function DashboardPage() {
       <div className="pt-2 flex items-start justify-between">
         <div>
           <p className="text-sm text-gray-500">{formatDateFull(today)}</p>
-          <h1 className="text-xl font-bold text-gray-900">{getGreeting()}, {profile.name || 'friend'} 👋</h1>
+          <h1 className="text-xl font-bold text-gray-900 font-brand">{getGreeting()}, {profile.name || 'friend'} 👋</h1>
         </div>
         <button onClick={() => navigate('/progress')}
                 className="p-2 bg-white rounded-xl border border-gray-100 shadow-sm text-gray-400 hover:text-brand-primary transition-colors mt-1">
@@ -198,7 +198,7 @@ export default function DashboardPage() {
       {/* Scripture */}
       {currentLesson && (
         <div className="bg-amber-50 border border-amber-200 rounded-2xl p-4">
-          <p className="text-sm text-amber-800 italic leading-relaxed">"{currentLesson.scripture.verse}"</p>
+          <p className="text-sm text-amber-800 italic leading-relaxed font-display">"{currentLesson.scripture.verse}"</p>
           <p className="text-xs text-amber-600 mt-1 font-medium">— {currentLesson.scripture.reference}</p>
         </div>
       )}

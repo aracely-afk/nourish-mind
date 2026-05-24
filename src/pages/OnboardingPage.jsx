@@ -72,24 +72,24 @@ export default function OnboardingPage() {
 
   // Step 0: Welcome
   if (step === 0) return (
-    <div className="min-h-[100dvh] bg-gradient-to-br from-[#4B2E83] via-[#3a2270] to-[#2d1a5e] flex flex-col items-center justify-center p-6 text-white text-center">
-      <div className="mb-6">
-        <img src="/logo.png" alt="NourishMind" className="w-36 h-36 object-contain mx-auto"
-          onError={e => { e.target.style.display = 'none'; e.target.nextSibling.style.display = 'flex' }} />
-        <div style={{ display: 'none' }} className="w-20 h-20 bg-white/20 rounded-3xl flex items-center justify-center mx-auto backdrop-blur">
-          <Leaf size={40} className="text-white" />
-        </div>
+    <div className="relative min-h-[100dvh] flex flex-col items-center justify-end pb-16 text-white text-center overflow-hidden"
+         style={{ paddingBottom: 'max(4rem, env(safe-area-inset-bottom))' }}>
+      {/* Full-bleed logo background */}
+      <img src="/logo.png" alt="NourishMind"
+           className="absolute inset-0 w-full h-full object-cover"
+           onError={e => { e.target.style.display = 'none' }} />
+      {/* Gradient overlay — dark at bottom so text is readable */}
+      <div className="absolute inset-0 bg-gradient-to-t from-[#1a0e38] via-[#2d1a5e]/60 to-transparent pointer-events-none" />
+      {/* Content sits above overlay */}
+      <div className="relative z-10 flex flex-col items-center px-6 w-full">
+        <blockquote className="text-white/80 text-sm font-display italic max-w-xs mb-8 leading-relaxed drop-shadow">
+          "I can do all things through Christ who strengthens me." — Philippians 4:13
+        </blockquote>
+        <button onClick={() => setStep(1)}
+                className="bg-[#D4AF37] text-[#2d1a5e] font-bold px-8 py-4 rounded-2xl text-base shadow-xl flex items-center gap-2 hover:bg-[#c9a430] active:scale-95 transition-all w-full max-w-xs justify-center">
+          Begin My Journey <ChevronRight size={20} />
+        </button>
       </div>
-      <h1 className="text-4xl font-bold mb-1">NourishMind</h1>
-      <p className="text-[#A88FCF] text-sm font-medium tracking-widest uppercase mb-3">Renew Your Mind. Nourish Your Life.</p>
-      <blockquote className="text-white/70 text-sm italic max-w-xs mb-10 leading-relaxed">
-        "I can do all things through Christ who strengthens me." — Philippians 4:13
-      </blockquote>
-      <button onClick={() => setStep(1)}
-              className="bg-[#D4AF37] text-[#2d1a5e] font-bold px-8 py-4 rounded-2xl text-base shadow-lg flex items-center gap-2 hover:bg-[#c9a430] transition-colors">
-        Begin My Journey <ChevronRight size={20} />
-      </button>
-      <p className="text-white/40 text-xs mt-6 max-w-xs">CBT principles · biblical wisdom · personalized tracking</p>
     </div>
   )
 
