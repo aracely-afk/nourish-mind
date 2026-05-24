@@ -78,7 +78,7 @@ export default function OnboardingPage() {
     <div
       className="relative min-h-[100dvh] flex flex-col items-center text-center overflow-hidden"
       style={{
-        background: 'linear-gradient(to bottom, #5e6b5a 0%, #e8efe9 100%)',
+        background: 'linear-gradient(to bottom, #1f2933 0%, #5e6b5a 100%)',
         paddingTop: 'env(safe-area-inset-top)',
         paddingBottom: 'max(2rem, env(safe-area-inset-bottom))',
       }}
@@ -95,7 +95,7 @@ export default function OnboardingPage() {
           <h1 className="font-brand font-bold text-4xl sm:text-5xl tracking-wide leading-none">
             <span className="text-[#4B2E83]">Nourish</span><span className="text-[#D4AF37]">Mind</span>
           </h1>
-          <p className="text-[#1f2933] text-[11px] font-medium tracking-[0.22em] mt-2 uppercase">
+          <p className="text-[#ced0d5] text-[11px] font-medium tracking-[0.22em] mt-2 uppercase">
             Renew Your Mind, Transform Your Life
           </p>
         </div>
@@ -104,7 +104,7 @@ export default function OnboardingPage() {
       {/* Accent + Quote + CTA */}
       <div className="relative z-10 flex flex-col items-center px-6 w-full pb-2">
         <img src="/accent.png" alt="" className="w-28 mb-3 opacity-90" />
-        <blockquote className="text-[#1f2933] text-sm font-display italic max-w-xs mb-5 leading-relaxed">
+        <blockquote className="text-[#ced0d5] text-sm font-display italic max-w-xs mb-5 leading-relaxed">
           "I can do all things through Christ who strengthens me." — Philippians 4:13
         </blockquote>
         <button
