@@ -76,16 +76,16 @@ export default function OnboardingPage() {
   // Step 0: Welcome
   if (step === 0) return (
     <div
-      className="relative min-h-[100dvh] flex flex-col items-center text-white text-center overflow-hidden bg-[#2d1a5e]"
+      className="relative min-h-[100dvh] flex flex-col items-center text-center overflow-hidden"
       style={{
+        background: 'linear-gradient(to bottom, #5e6b5a 0%, #e8efe9 100%)',
         paddingTop: 'env(safe-area-inset-top)',
         paddingBottom: 'max(2rem, env(safe-area-inset-bottom))',
       }}
     >
-      {/* Logo emblem — crop to top portion so the baked-in wordmark is hidden;
-          we render the wordmark as HTML below for full legibility control */}
-      <div className="flex-1 w-full flex items-center justify-center px-6 pt-6 min-h-0">
-        <div className="w-full max-w-[280px] aspect-square overflow-hidden rounded-full">
+      {/* Logo emblem — crop to circular emblem so the baked-in wordmark is hidden */}
+      <div className="flex-1 w-full flex items-center justify-center px-6 pt-8 min-h-0">
+        <div className="w-full max-w-[200px] aspect-square overflow-hidden rounded-full shadow-xl">
           <img
             src="/logo.png"
             alt="NourishMind"
@@ -98,20 +98,20 @@ export default function OnboardingPage() {
 
       {/* HTML wordmark + tagline — readable, never cropped */}
       <div className="relative z-10 flex flex-col items-center px-6 w-full pb-2">
-        <h1 className="text-white font-brand font-bold tracking-[0.18em] text-3xl sm:text-4xl drop-shadow-lg">
+        <h1 className="text-[#1f2933] font-brand font-bold tracking-[0.12em] text-2xl sm:text-3xl">
           NOURISHMIND
         </h1>
-        <p className="text-[#F5E6B8] text-xs sm:text-sm font-medium tracking-[0.25em] mt-1 uppercase">
+        <p className="text-[#1f2933] text-[10px] sm:text-xs font-medium tracking-[0.22em] mt-1 uppercase">
           Renew Your Mind · Nourish Your Life
         </p>
 
-        <blockquote className="text-white text-sm font-display italic max-w-xs mt-6 mb-6 leading-relaxed drop-shadow">
+        <blockquote className="text-[#1f2933] text-sm font-display italic max-w-xs mt-6 mb-6 leading-relaxed">
           "I can do all things through Christ who strengthens me." — Philippians 4:13
         </blockquote>
 
         <button
           onClick={() => setStep(1)}
-          className="bg-[#D4AF37] text-[#2d1a5e] font-bold px-8 py-4 rounded-2xl text-base shadow-xl flex items-center gap-2 hover:bg-[#c9a430] active:scale-95 transition-all w-full max-w-xs justify-center"
+          className="bg-[#D4AF37] text-[#1f2933] font-bold px-8 py-4 rounded-2xl text-base shadow-xl flex items-center gap-2 hover:bg-[#c9a430] active:scale-95 transition-all w-full max-w-xs justify-center"
         >
           Begin My Journey <ChevronRight size={20} />
         </button>
