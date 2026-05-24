@@ -4,6 +4,7 @@ import { Lock, CheckCircle, ChevronRight, BookOpen } from 'lucide-react'
 import { useLessons } from '../hooks/useLessons'
 import { LESSONS } from '../data/lessonData'
 import ProgressBar from '../components/ui/ProgressBar'
+import { isMilestone, getMilestone } from '../data/milestones'
 
 const THEME_COLORS = {
   awareness: 'bg-blue-100 text-blue-700',
@@ -33,12 +34,14 @@ export default function LessonsPage() {
         {LESSONS.map(lesson => {
           const completed = isCompleted(lesson.day)
           const unlocked = isUnlocked(lesson.day)
+          const milestone = isMilestone(lesson.day) ? getMilestone(lesson.day) : null
           return (
             <button
               key={lesson.id}
               onClick={() => unlocked && navigate(`/lessons/${lesson.day}`)}
               disabled={!unlocked}
-              className={`w-full flex items-center gap-3 p-4 rounded-2xl border text-left transition-all ${
+              className={`w-full flex items-center gap-3 p-4 rounded-2xl border text-left transition-all relative ${
+                milestone && unlocked && !completed ? 'bg-gradient-to-r from-amber-50 to-yellow-50 border-amber-300 shadow-sm' :
                 completed ? 'bg-green-50 border-green-200' :
                 unlocked ? 'bg-white border-gray-200 hover:border-brand-secondary hover:shadow-sm' :
                 'bg-gray-50 border-gray-100 opacity-60'
@@ -46,13 +49,19 @@ export default function LessonsPage() {
             >
               <div className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 font-bold text-sm ${
                 completed ? 'bg-green-500 text-white' :
+                milestone && unlocked ? 'bg-gradient-to-br from-amber-400 to-orange-500 text-white' :
                 unlocked ? 'bg-brand-pale text-brand-primary' :
                 'bg-gray-200 text-gray-400'
               }`}>
                 {completed ? <CheckCircle size={20} /> : unlocked ? lesson.day : <Lock size={16} />}
               </div>
               <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-1.5 mb-0.5">
+                <div className="flex items-center gap-1.5 mb-0.5 flex-wrap">
+                  {milestone && (
+                    <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-amber-500 text-white">
+                      {milestone.emoji} MILESTONE
+                    </span>
+                  )}
                   <span className={`text-[10px] font-medium px-1.5 py-0.5 rounded-full ${THEME_COLORS[lesson.theme] || 'bg-gray-100 text-gray-600'}`}>
                     {lesson.theme}
                   </span>

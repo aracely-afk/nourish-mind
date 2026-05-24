@@ -1,10 +1,13 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { CheckCircle, ChevronLeft, Clock, Lightbulb } from 'lucide-react'
 import { LESSONS } from '../data/lessonData'
 import { useLessons } from '../hooks/useLessons'
 import { useStreak } from '../hooks/useStreak'
 import PageHeader from '../components/layout/PageHeader'
+import MilestoneCelebration from '../components/celebration/MilestoneCelebration'
+import { getMilestone, isMilestone } from '../data/milestones'
+import { KEYS } from '../utils/storageKeys'
 
 export default function LessonDetailPage() {
   const { day } = useParams()
@@ -16,6 +19,36 @@ export default function LessonDetailPage() {
   const [quizStarted, setQuizStarted] = useState(false)
   const [answers, setAnswers] = useState({})
   const [submitted, setSubmitted] = useState(false)
+  const [celebrating, setCelebrating] = useState(false)
+
+  // Show milestone celebration when revisiting an already-completed milestone day
+  useEffect(() => {
+    if (!lesson) return
+    if (!isMilestone(lesson.day)) return
+    try {
+      const seen = JSON.parse(localStorage.getItem(KEYS.MILESTONES_SEEN) || '[]')
+      // If completed but never celebrated (e.g. completed before this feature existed), show it once
+      if (isCompleted(lesson.day) && !seen.includes(lesson.day)) {
+        setCelebrating(true)
+      }
+    } catch (e) { /* ignore */ }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [lesson?.day])
+
+  function markMilestoneSeen(day) {
+    try {
+      const seen = JSON.parse(localStorage.getItem(KEYS.MILESTONES_SEEN) || '[]')
+      if (!seen.includes(day)) {
+        seen.push(day)
+        localStorage.setItem(KEYS.MILESTONES_SEEN, JSON.stringify(seen))
+      }
+    } catch (e) { /* ignore */ }
+  }
+
+  function handleCelebrationClose() {
+    if (lesson) markMilestoneSeen(lesson.day)
+    setCelebrating(false)
+  }
 
   if (!lesson) return <div className="p-4 text-gray-500">Lesson not found.</div>
   if (!isUnlocked(lesson.day)) return (
@@ -33,10 +66,21 @@ export default function LessonDetailPage() {
     setSubmitted(true)
     completeLesson(lesson.day, score, lesson.quiz.length)
     recordLessonComplete()
+    if (isMilestone(lesson.day)) {
+      // small delay so the user sees their score land first
+      setTimeout(() => setCelebrating(true), 600)
+    }
   }
 
   return (
     <div className="pb-8">
+      {celebrating && (
+        <MilestoneCelebration
+          milestone={getMilestone(lesson.day)}
+          day={lesson.day}
+          onClose={handleCelebrationClose}
+        />
+      )}
       <PageHeader title={`Day ${lesson.day}`} subtitle={`${lesson.readTimeMin} min read`} backTo="/lessons" />
 
       {/* Lesson content */}
