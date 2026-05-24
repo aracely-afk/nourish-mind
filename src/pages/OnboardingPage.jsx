@@ -83,23 +83,19 @@ export default function OnboardingPage() {
         paddingBottom: 'max(2rem, env(safe-area-inset-bottom))',
       }}
     >
-      {/* Full logo — uncropped so the wordmark + emblem are both visible */}
-      <div className="flex-1 w-full flex items-center justify-center px-10 pt-6 min-h-0">
+      {/* Full logo — transparent background, emblem + wordmark + tagline */}
+      <div className="flex-1 w-full flex items-center justify-center px-8 pt-6 min-h-0">
         <img
           src="/logo.png"
           alt="NourishMind"
-          className="w-full max-w-[260px] object-contain drop-shadow-xl rounded-2xl"
+          className="w-full max-w-[300px] object-contain drop-shadow-lg"
           onError={e => { e.target.style.display = 'none' }}
         />
       </div>
 
-      {/* Tagline + quote + CTA */}
+      {/* Quote + CTA */}
       <div className="relative z-10 flex flex-col items-center px-6 w-full pb-2">
-        <p className="text-[#1f2933] text-[10px] font-medium tracking-[0.20em] mt-2 uppercase">
-          Renew Your Mind · Nourish Your Life
-        </p>
-
-        <blockquote className="text-[#1f2933] text-xs font-display italic max-w-xs mt-3 mb-4 leading-relaxed">
+        <blockquote className="text-[#1f2933] text-xs font-display italic max-w-xs mt-2 mb-4 leading-relaxed">
           "I can do all things through Christ who strengthens me." — Philippians 4:13
         </blockquote>
 
