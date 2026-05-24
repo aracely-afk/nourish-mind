@@ -93,7 +93,7 @@ export default function OnboardingPage() {
         />
         <div>
           <h1 className="font-brand font-bold text-4xl sm:text-5xl tracking-wide leading-none">
-            <span className="text-[#4B2E83]">Nourish</span><span className="text-[#D4AF37]">Mind</span>
+            <span className="text-[#D4AF37]">Nourish</span><span className="text-[#D4AF37]">Mind</span>
           </h1>
           <p className="text-[#f5f6f8] text-[11px] font-medium tracking-[0.22em] mt-2 uppercase">
             Renew Your Mind, Transform Your Life
