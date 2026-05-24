@@ -84,8 +84,8 @@ export default function OnboardingPage() {
       }}
     >
       {/* Logo emblem — crop to circular emblem so the baked-in wordmark is hidden */}
-      <div className="flex-1 w-full flex items-center justify-center px-6 pt-8 min-h-0">
-        <div className="w-full max-w-[200px] aspect-square overflow-hidden rounded-full shadow-xl">
+      <div className="flex-1 w-full flex items-center justify-center px-6 pt-4 min-h-0">
+        <div className="w-full max-w-[140px] aspect-square overflow-hidden rounded-full shadow-xl">
           <img
             src="/logo.png"
             alt="NourishMind"
@@ -98,22 +98,22 @@ export default function OnboardingPage() {
 
       {/* HTML wordmark + tagline — readable, never cropped */}
       <div className="relative z-10 flex flex-col items-center px-6 w-full pb-2">
-        <h1 className="text-[#1f2933] font-brand font-bold tracking-[0.12em] text-2xl sm:text-3xl">
+        <h1 className="text-[#1f2933] font-brand font-bold tracking-[0.12em] text-xl sm:text-2xl">
           NOURISHMIND
         </h1>
-        <p className="text-[#1f2933] text-[10px] sm:text-xs font-medium tracking-[0.22em] mt-1 uppercase">
+        <p className="text-[#1f2933] text-[9px] sm:text-[10px] font-medium tracking-[0.22em] mt-1 uppercase">
           Renew Your Mind · Nourish Your Life
         </p>
 
-        <blockquote className="text-[#1f2933] text-sm font-display italic max-w-xs mt-6 mb-6 leading-relaxed">
+        <blockquote className="text-[#1f2933] text-xs font-display italic max-w-xs mt-4 mb-4 leading-relaxed">
           "I can do all things through Christ who strengthens me." — Philippians 4:13
         </blockquote>
 
         <button
           onClick={() => setStep(1)}
-          className="bg-[#D4AF37] text-[#1f2933] font-bold px-8 py-4 rounded-2xl text-base shadow-xl flex items-center gap-2 hover:bg-[#c9a430] active:scale-95 transition-all w-full max-w-xs justify-center"
+          className="bg-[#D4AF37] text-[#1f2933] font-bold px-6 py-3 rounded-2xl text-sm shadow-xl flex items-center gap-2 hover:bg-[#c9a430] active:scale-95 transition-all w-full max-w-xs justify-center"
         >
-          Begin My Journey <ChevronRight size={20} />
+          Begin My Journey <ChevronRight size={18} />
         </button>
       </div>
     </div>
