@@ -23,7 +23,7 @@ export default function FoodExplorerPage() {
         <div className="flex gap-1.5 overflow-x-auto no-scrollbar pb-0.5">
           {FILTERS.map(f => (
             <button key={f} onClick={() => setFilter(f)}
-                    className={`flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-medium transition-colors ${filter===f ? 'bg-indigo-600 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`}>
+                    className={`flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-medium transition-colors ${filter===f ? 'bg-brand-primary text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`}>
               {FILTER_LABELS[f]}
             </button>
           ))}
@@ -75,8 +75,8 @@ export default function FoodExplorerPage() {
               <p className="text-sm font-medium text-gray-700 mb-2">Calculate custom serving</p>
               <div className="flex gap-2">
                 <input type="number" value={customGrams} onChange={e => setCustomGrams(e.target.value)} min="1"
-                       placeholder="grams" className="flex-1 px-3 py-2 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400" />
-                <div className="bg-indigo-50 text-indigo-700 font-semibold px-4 py-2 rounded-xl text-sm flex items-center min-w-[80px] justify-center">
+                       placeholder="grams" className="flex-1 px-3 py-2 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-secondary" />
+                <div className="bg-brand-pale text-brand-primary font-semibold px-4 py-2 rounded-xl text-sm flex items-center min-w-[80px] justify-center">
                   {customGrams ? `${calcCaloriesForGrams(detail, parseFloat(customGrams)||0)} cal` : '— cal'}
                 </div>
               </div>

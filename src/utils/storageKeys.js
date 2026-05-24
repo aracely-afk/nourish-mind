@@ -7,4 +7,6 @@ export const KEYS = {
   LESSON_PROGRESS: 'nm_lesson_progress',
   STREAKS: 'nm_streaks',
   LAST_OPEN_DATE: 'nm_last_open',
+  JOURNEY: 'nm_journey',
+  WEIGHT_LOG: 'nm_weight_log',
 }

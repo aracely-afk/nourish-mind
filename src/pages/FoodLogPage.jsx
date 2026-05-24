@@ -82,7 +82,7 @@ export default function FoodLogPage() {
           <h1 className="font-semibold text-gray-900">Food Log</h1>
           <div className="flex items-center justify-between mt-2">
             <button onClick={() => setDate(d => addDays(d, -1))} className="p-1 rounded-full hover:bg-gray-100"><ChevronLeft size={20} className="text-gray-500" /></button>
-            <span className={`text-sm font-medium ${isToday(date) ? 'text-indigo-600' : 'text-gray-700'}`}>
+            <span className={`text-sm font-medium ${isToday(date) ? 'text-brand-primary' : 'text-gray-700'}`}>
               {isToday(date) ? 'Today' : formatDate(date)}
             </span>
             <button onClick={() => setDate(d => addDays(d, 1))} disabled={isToday(date)}
@@ -98,7 +98,7 @@ export default function FoodLogPage() {
             <span>Goal: {profile.calorieMin}–{profile.calorieMax}</span>
           </div>
           <ProgressBar value={totalCal} max={profile.calorieMax || 1700}
-                       color={totalCal > profile.calorieMax ? 'bg-red-400' : inRange ? 'bg-green-500' : 'bg-indigo-500'} />
+                       color={totalCal > profile.calorieMax ? 'bg-red-400' : inRange ? 'bg-green-500' : 'bg-brand-pale0'} />
         </div>
       </div>
 
@@ -133,7 +133,7 @@ export default function FoodLogPage() {
                 </div>
               )}
               <button onClick={() => openAdd(meal)}
-                      className="w-full flex items-center gap-2 px-4 py-3 text-indigo-600 text-sm font-medium hover:bg-indigo-50 transition-colors border-t border-gray-50">
+                      className="w-full flex items-center gap-2 px-4 py-3 text-brand-primary text-sm font-medium hover:bg-brand-pale transition-colors border-t border-gray-50">
                 <Plus size={16} /> Add food
               </button>
             </div>
@@ -149,7 +149,7 @@ export default function FoodLogPage() {
           <div className="flex gap-2">
             {['all','green','yellow','orange'].map(f => (
               <button key={f} onClick={() => setFilter(f)}
-                      className={`flex-1 py-1.5 rounded-lg text-xs font-medium transition-colors capitalize ${filter===f ? 'bg-indigo-600 text-white' : 'bg-gray-100 text-gray-600'}`}>
+                      className={`flex-1 py-1.5 rounded-lg text-xs font-medium transition-colors capitalize ${filter===f ? 'bg-brand-primary text-white' : 'bg-gray-100 text-gray-600'}`}>
                 {f}
               </button>
             ))}
@@ -170,7 +170,7 @@ export default function FoodLogPage() {
                 </button>
               ))}
               <button onClick={() => setAddCustomOpen(true)}
-                      className="w-full text-center py-3 text-indigo-600 text-sm font-medium hover:bg-indigo-50 rounded-xl transition-colors">
+                      className="w-full text-center py-3 text-brand-primary text-sm font-medium hover:bg-brand-pale rounded-xl transition-colors">
                 + Add custom food
               </button>
             </div>
@@ -187,13 +187,13 @@ export default function FoodLogPage() {
               <div>
                 <label className="text-sm font-medium text-gray-700 block mb-1">Grams</label>
                 <input type="number" value={grams} onChange={e => setGrams(e.target.value)} min="1"
-                       className="w-full px-3 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400" />
+                       className="w-full px-3 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-secondary" />
                 <p className="text-xs text-gray-400 mt-1">
                   ≈ {grams ? Math.round((selected.caloriesPer100g/100)*parseFloat(grams)||0) : 0} calories
                 </p>
               </div>
               <button onClick={handleAdd}
-                      className="w-full bg-indigo-600 text-white py-3.5 rounded-xl font-semibold hover:bg-indigo-700 transition-colors">
+                      className="w-full bg-brand-primary text-white py-3.5 rounded-xl font-semibold hover:bg-[#3a2270] transition-colors">
                 Add to Log
               </button>
             </div>
@@ -207,26 +207,26 @@ export default function FoodLogPage() {
           <div>
             <label className="text-sm font-medium text-gray-700 block mb-1">Food name</label>
             <input type="text" value={customForm.name} onChange={e => setCustomForm(f => ({...f, name: e.target.value}))}
-                   placeholder="e.g. Mom's Soup" className="w-full px-3 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400" />
+                   placeholder="e.g. Mom's Soup" className="w-full px-3 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-secondary" />
           </div>
           <div>
             <label className="text-sm font-medium text-gray-700 block mb-1">Calories per 100g</label>
             <input type="number" value={customForm.caloriesPer100g} onChange={e => setCustomForm(f => ({...f, caloriesPer100g: e.target.value}))}
-                   placeholder="e.g. 150" className="w-full px-3 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400" />
+                   placeholder="e.g. 150" className="w-full px-3 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-secondary" />
           </div>
           <div>
             <label className="text-sm font-medium text-gray-700 block mb-1">Category</label>
             <div className="flex gap-2">
               {['green','yellow','orange'].map(l => (
                 <button key={l} onClick={() => setCustomForm(f => ({...f, trafficLight: l}))}
-                        className={`flex-1 py-2 rounded-xl text-xs font-medium transition-colors capitalize border ${customForm.trafficLight===l ? 'border-indigo-500 bg-indigo-50 text-indigo-700' : 'border-gray-200 text-gray-600'}`}>
+                        className={`flex-1 py-2 rounded-xl text-xs font-medium transition-colors capitalize border ${customForm.trafficLight===l ? 'border-brand-primary bg-brand-pale text-indigo-700' : 'border-gray-200 text-gray-600'}`}>
                   {l}
                 </button>
               ))}
             </div>
           </div>
           <button onClick={saveCustomFood} disabled={!customForm.name || !customForm.caloriesPer100g}
-                  className="w-full bg-indigo-600 text-white py-3.5 rounded-xl font-semibold disabled:opacity-40 hover:bg-indigo-700 transition-colors">
+                  className="w-full bg-brand-primary text-white py-3.5 rounded-xl font-semibold disabled:opacity-40 hover:bg-[#3a2270] transition-colors">
             Save Custom Food
           </button>
         </div>

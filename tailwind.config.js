@@ -10,9 +10,14 @@ export default {
           orange: '#f97316',
         },
         brand: {
-          primary: '#6366f1',
-          secondary: '#8b5cf6',
-          light: '#ede9fe',
+          primary: '#4B2E83',
+          secondary: '#A88FCF',
+          gold: '#D4AF37',
+          sage: '#5E6B5A',
+          mist: '#E8EFE9',
+          pale: '#f3eeff',
+          charcoal: '#1F2933',
+          warm: '#F5F6F8',
         },
       },
       fontFamily: {

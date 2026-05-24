@@ -8,7 +8,7 @@ export default function CalorieRing({ consumed, min, max, size = 180 }) {
   const dash = circumference * Math.min(pct, 1)
   const over = consumed > max
   const inRange = consumed >= min && consumed <= max
-  const color = over ? '#ef4444' : inRange ? '#22c55e' : consumed > min * 0.8 ? '#eab308' : '#6366f1'
+  const color = over ? '#ef4444' : inRange ? '#22c55e' : consumed > min * 0.8 ? '#eab308' : '#4B2E83'
 
   return (
     <div className="relative flex items-center justify-center" style={{ width: size, height: size }}>

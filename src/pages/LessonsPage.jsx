@@ -24,7 +24,7 @@ export default function LessonsPage() {
       <div className="sticky top-0 z-10 bg-white/95 backdrop-blur border-b border-gray-100 px-4 py-3">
         <h1 className="font-semibold text-gray-900">30 Days to Food Freedom</h1>
         <div className="flex items-center gap-2 mt-2">
-          <ProgressBar value={done} max={30} color="bg-indigo-500" className="flex-1" />
+          <ProgressBar value={done} max={30} color="bg-brand-primary" className="flex-1" />
           <span className="text-xs text-gray-500 flex-shrink-0">{done}/30</span>
         </div>
       </div>
@@ -40,13 +40,13 @@ export default function LessonsPage() {
               disabled={!unlocked}
               className={`w-full flex items-center gap-3 p-4 rounded-2xl border text-left transition-all ${
                 completed ? 'bg-green-50 border-green-200' :
-                unlocked ? 'bg-white border-gray-200 hover:border-indigo-300 hover:shadow-sm' :
+                unlocked ? 'bg-white border-gray-200 hover:border-brand-secondary hover:shadow-sm' :
                 'bg-gray-50 border-gray-100 opacity-60'
               }`}
             >
               <div className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 font-bold text-sm ${
                 completed ? 'bg-green-500 text-white' :
-                unlocked ? 'bg-indigo-100 text-indigo-700' :
+                unlocked ? 'bg-brand-pale text-brand-primary' :
                 'bg-gray-200 text-gray-400'
               }`}>
                 {completed ? <CheckCircle size={20} /> : unlocked ? lesson.day : <Lock size={16} />}

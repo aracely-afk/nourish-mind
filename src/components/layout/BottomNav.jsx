@@ -24,7 +24,7 @@ export default function BottomNav() {
               key={to}
               to={to}
               className={`flex flex-col items-center justify-center flex-1 py-2 gap-0.5 min-h-[56px] transition-colors ${
-                isActive ? 'text-indigo-600' : 'text-gray-400 hover:text-gray-600'
+                isActive ? 'text-brand-primary' : 'text-gray-400 hover:text-gray-600'
               }`}
             >
               <Icon size={22} strokeWidth={isActive ? 2.5 : 1.8} />

@@ -22,7 +22,7 @@ export default function LessonDetailPage() {
     <div className="p-6 text-center">
       <div className="text-5xl mb-4">🔒</div>
       <p className="text-gray-600 font-medium">Complete Day {lesson.day - 1} to unlock this lesson.</p>
-      <button onClick={() => navigate('/lessons')} className="mt-4 text-indigo-600 text-sm font-medium">Back to Lessons</button>
+      <button onClick={() => navigate('/lessons')} className="mt-4 text-brand-primary text-sm font-medium">Back to Lessons</button>
     </div>
   )
 
@@ -70,18 +70,18 @@ export default function LessonDetailPage() {
         </div>
 
         {/* Daily Challenge */}
-        <div className="bg-indigo-50 border border-indigo-200 rounded-2xl p-4">
+        <div className="bg-brand-pale border border-brand-secondary/30 rounded-2xl p-4">
           <div className="flex items-center gap-2 mb-2">
-            <Lightbulb size={16} className="text-indigo-600" />
-            <span className="font-semibold text-indigo-800 text-sm">Today's Challenge</span>
+            <Lightbulb size={16} className="text-brand-primary" />
+            <span className="font-semibold text-brand-primary text-sm">Today's Challenge</span>
           </div>
-          <p className="text-sm text-indigo-700 leading-relaxed">{lesson.challenge}</p>
+          <p className="text-sm text-brand-primary leading-relaxed">{lesson.challenge}</p>
         </div>
 
         {/* Quiz */}
         {!completed && !quizStarted && (
           <button onClick={() => setQuizStarted(true)}
-                  className="w-full bg-indigo-600 text-white py-4 rounded-2xl font-semibold hover:bg-indigo-700 transition-colors">
+                  className="w-full bg-brand-primary text-white py-4 rounded-2xl font-semibold hover:bg-[#3a2270] transition-colors">
             Take the Quiz ({lesson.quiz.length} questions)
           </button>
         )}
@@ -105,7 +105,7 @@ export default function LessonDetailPage() {
                                   ? isCorrect ? 'bg-green-50 border-green-400 text-green-800'
                                     : selected ? 'bg-red-50 border-red-300 text-red-700'
                                     : 'bg-gray-50 border-gray-200 text-gray-500'
-                                  : selected ? 'bg-indigo-50 border-indigo-400 text-indigo-800'
+                                  : selected ? 'bg-indigo-50 border-brand-secondary text-brand-primary'
                                   : 'bg-gray-50 border-gray-200 text-gray-700 hover:bg-gray-100'
                               }`}>
                         {opt}

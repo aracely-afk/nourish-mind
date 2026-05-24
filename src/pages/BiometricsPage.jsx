@@ -26,7 +26,7 @@ export default function BiometricsPage() {
         <h1 className="font-semibold text-gray-900">Track</h1>
         <div className="flex items-center justify-between mt-2">
           <button onClick={() => setDate(d => addDays(d,-1))} className="p-1 rounded-full hover:bg-gray-100"><ChevronLeft size={20} className="text-gray-500" /></button>
-          <span className={`text-sm font-medium ${isToday(date) ? 'text-indigo-600' : 'text-gray-700'}`}>{isToday(date) ? 'Today' : formatDate(date)}</span>
+          <span className={`text-sm font-medium ${isToday(date) ? 'text-brand-primary' : 'text-gray-700'}`}>{isToday(date) ? 'Today' : formatDate(date)}</span>
           <button onClick={() => setDate(d => addDays(d,1))} disabled={isToday(date)} className="p-1 rounded-full hover:bg-gray-100 disabled:opacity-30"><ChevronRight size={20} className="text-gray-500" /></button>
         </div>
       </div>
@@ -94,7 +94,7 @@ export default function BiometricsPage() {
             </div>
           )}
           <button onClick={() => setExSheet(true)}
-                  className="w-full flex items-center gap-2 px-4 py-3 text-indigo-600 text-sm font-medium hover:bg-indigo-50 transition-colors border-t border-gray-50">
+                  className="w-full flex items-center gap-2 px-4 py-3 text-brand-primary text-sm font-medium hover:bg-indigo-50 transition-colors border-t border-gray-50">
             <Plus size={16} /> Log exercise
           </button>
         </div>
@@ -107,7 +107,7 @@ export default function BiometricsPage() {
             <div className="grid grid-cols-3 gap-2">
               {EXERCISE_TYPES.map(t => (
                 <button key={t} onClick={() => setExForm(f => ({...f, type: t}))}
-                        className={`py-2 px-3 rounded-xl text-xs font-medium border transition-colors ${exForm.type===t ? 'bg-indigo-600 text-white border-indigo-600' : 'bg-white text-gray-700 border-gray-200'}`}>
+                        className={`py-2 px-3 rounded-xl text-xs font-medium border transition-colors ${exForm.type===t ? 'bg-brand-primary text-white border-brand-primary' : 'bg-white text-gray-700 border-gray-200'}`}>
                   {t}
                 </button>
               ))}
@@ -126,7 +126,7 @@ export default function BiometricsPage() {
             </div>
           </div>
           <button onClick={handleAddExercise} disabled={!exForm.durationMin}
-                  className="w-full bg-indigo-600 text-white py-3.5 rounded-xl font-semibold disabled:opacity-40 hover:bg-indigo-700 transition-colors">
+                  className="w-full bg-brand-primary text-white py-3.5 rounded-xl font-semibold disabled:opacity-40 hover:bg-[#3a2270] transition-colors">
             Save Exercise
           </button>
         </div>
@@ -149,4 +149,4 @@ function Section({ icon: Icon, iconBg, iconColor, title, children }) {
   )
 }
 
-const inputCls = 'w-full px-3 py-2.5 border border-gray-200 rounded-xl text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-400'
+const inputCls = 'w-full px-3 py-2.5 border border-gray-200 rounded-xl text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-brand-secondary'
