@@ -105,7 +105,7 @@ export default function OnboardingPage() {
       <div className="relative z-10 flex flex-col items-center px-6 w-full pb-2">
         <img src="/accent.png" alt="" className="w-28 mb-3 opacity-90" />
         <blockquote className="text-[#f5f6f8] text-sm font-display italic max-w-xs mb-5 leading-relaxed">
-          "I can do all things through Christ who strengthens me." — Philippians 4:13
+          "...be transformed by the renewing of your mind..." — Romans 12:2
         </blockquote>
         <button
           onClick={() => setStep(1)}
