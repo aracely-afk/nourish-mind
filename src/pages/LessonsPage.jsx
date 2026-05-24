@@ -1,0 +1,76 @@
+import React from 'react'
+import { useNavigate } from 'react-router-dom'
+import { Lock, CheckCircle, ChevronRight, BookOpen } from 'lucide-react'
+import { useLessons } from '../hooks/useLessons'
+import { LESSONS } from '../data/lessonData'
+import ProgressBar from '../components/ui/ProgressBar'
+
+const THEME_COLORS = {
+  awareness: 'bg-blue-100 text-blue-700',
+  triggers:  'bg-red-100 text-red-700',
+  theology:  'bg-purple-100 text-purple-700',
+  habits:    'bg-green-100 text-green-700',
+  identity:  'bg-indigo-100 text-indigo-700',
+  review:    'bg-amber-100 text-amber-700',
+}
+
+export default function LessonsPage() {
+  const { progress, isCompleted, isUnlocked } = useLessons()
+  const navigate = useNavigate()
+  const done = progress.completedLessons.length
+
+  return (
+    <div className="pb-4">
+      <div className="sticky top-0 z-10 bg-white/95 backdrop-blur border-b border-gray-100 px-4 py-3">
+        <h1 className="font-semibold text-gray-900">30 Days to Food Freedom</h1>
+        <div className="flex items-center gap-2 mt-2">
+          <ProgressBar value={done} max={30} color="bg-indigo-500" className="flex-1" />
+          <span className="text-xs text-gray-500 flex-shrink-0">{done}/30</span>
+        </div>
+      </div>
+
+      <div className="p-4 space-y-2">
+        {LESSONS.map(lesson => {
+          const completed = isCompleted(lesson.day)
+          const unlocked = isUnlocked(lesson.day)
+          return (
+            <button
+              key={lesson.id}
+              onClick={() => unlocked && navigate(`/lessons/${lesson.day}`)}
+              disabled={!unlocked}
+              className={`w-full flex items-center gap-3 p-4 rounded-2xl border text-left transition-all ${
+                completed ? 'bg-green-50 border-green-200' :
+                unlocked ? 'bg-white border-gray-200 hover:border-indigo-300 hover:shadow-sm' :
+                'bg-gray-50 border-gray-100 opacity-60'
+              }`}
+            >
+              <div className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 font-bold text-sm ${
+                completed ? 'bg-green-500 text-white' :
+                unlocked ? 'bg-indigo-100 text-indigo-700' :
+                'bg-gray-200 text-gray-400'
+              }`}>
+                {completed ? <CheckCircle size={20} /> : unlocked ? lesson.day : <Lock size={16} />}
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-1.5 mb-0.5">
+                  <span className={`text-[10px] font-medium px-1.5 py-0.5 rounded-full ${THEME_COLORS[lesson.theme] || 'bg-gray-100 text-gray-600'}`}>
+                    {lesson.theme}
+                  </span>
+                  <span className="text-[10px] text-gray-400">{lesson.readTimeMin} min</span>
+                </div>
+                <p className={`text-sm font-medium leading-tight ${unlocked ? 'text-gray-800' : 'text-gray-400'}`}>{lesson.title}</p>
+                {completed && progress.quizScores[lesson.day] && (
+                  <p className="text-xs text-green-600 mt-0.5">
+                    Quiz: {progress.quizScores[lesson.day].score}/{progress.quizScores[lesson.day].total} correct
+                  </p>
+                )}
+              </div>
+              {unlocked && !completed && <ChevronRight size={18} className="text-gray-400 flex-shrink-0" />}
+              {completed && <CheckCircle size={18} className="text-green-500 flex-shrink-0" />}
+            </button>
+          )
+        })}
+      </div>
+    </div>
+  )
+}
