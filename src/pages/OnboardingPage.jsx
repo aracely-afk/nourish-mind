@@ -75,21 +75,44 @@ export default function OnboardingPage() {
 
   // Step 0: Welcome
   if (step === 0) return (
-    <div className="relative min-h-[100dvh] flex flex-col items-center justify-end pb-16 text-white text-center overflow-hidden"
-         style={{ paddingBottom: 'max(4rem, env(safe-area-inset-bottom))' }}>
-      {/* Full-bleed logo background */}
-      <img src="/logo.png" alt="NourishMind"
-           className="absolute inset-0 w-full h-full object-cover"
-           onError={e => { e.target.style.display = 'none' }} />
-      {/* Gradient overlay — dark at bottom so text is readable */}
-      <div className="absolute inset-0 bg-gradient-to-t from-[#1a0e38] via-[#2d1a5e]/60 to-transparent pointer-events-none" />
-      {/* Content sits above overlay */}
-      <div className="relative z-10 flex flex-col items-center px-6 w-full">
-        <blockquote className="text-white/80 text-sm font-display italic max-w-xs mb-8 leading-relaxed drop-shadow">
+    <div
+      className="relative min-h-[100dvh] flex flex-col items-center text-white text-center overflow-hidden bg-[#2d1a5e]"
+      style={{
+        paddingTop: 'env(safe-area-inset-top)',
+        paddingBottom: 'max(2rem, env(safe-area-inset-bottom))',
+      }}
+    >
+      {/* Logo emblem — crop to top portion so the baked-in wordmark is hidden;
+          we render the wordmark as HTML below for full legibility control */}
+      <div className="flex-1 w-full flex items-center justify-center px-6 pt-6 min-h-0">
+        <div className="w-full max-w-[280px] aspect-square overflow-hidden rounded-full">
+          <img
+            src="/logo.png"
+            alt="NourishMind"
+            className="w-full h-full object-cover"
+            style={{ objectPosition: 'center 30%' }}
+            onError={e => { e.target.style.display = 'none' }}
+          />
+        </div>
+      </div>
+
+      {/* HTML wordmark + tagline — readable, never cropped */}
+      <div className="relative z-10 flex flex-col items-center px-6 w-full pb-2">
+        <h1 className="text-white font-brand font-bold tracking-[0.18em] text-3xl sm:text-4xl drop-shadow-lg">
+          NOURISHMIND
+        </h1>
+        <p className="text-[#F5E6B8] text-xs sm:text-sm font-medium tracking-[0.25em] mt-1 uppercase">
+          Renew Your Mind · Nourish Your Life
+        </p>
+
+        <blockquote className="text-white text-sm font-display italic max-w-xs mt-6 mb-6 leading-relaxed drop-shadow">
           "I can do all things through Christ who strengthens me." — Philippians 4:13
         </blockquote>
-        <button onClick={() => setStep(1)}
-                className="bg-[#D4AF37] text-[#2d1a5e] font-bold px-8 py-4 rounded-2xl text-base shadow-xl flex items-center gap-2 hover:bg-[#c9a430] active:scale-95 transition-all w-full max-w-xs justify-center">
+
+        <button
+          onClick={() => setStep(1)}
+          className="bg-[#D4AF37] text-[#2d1a5e] font-bold px-8 py-4 rounded-2xl text-base shadow-xl flex items-center gap-2 hover:bg-[#c9a430] active:scale-95 transition-all w-full max-w-xs justify-center"
+        >
           Begin My Journey <ChevronRight size={20} />
         </button>
       </div>
