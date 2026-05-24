@@ -101,3 +101,16 @@ export function cmToFtIn(cm) {
   const totalInches = cm / 2.54
   return { ft: Math.floor(totalInches / 12), inches: Math.round(totalInches % 12) }
 }
+
+export function calcBMI(weightKg, heightCm) {
+  if (!weightKg || !heightCm) return null
+  const h = heightCm / 100
+  return parseFloat((weightKg / (h * h)).toFixed(1))
+}
+
+export function bmiCategory(bmi) {
+  if (bmi < 18.5) return { label: 'Underweight', color: '#3b82f6' }
+  if (bmi < 25)   return { label: 'Normal weight', color: '#22c55e' }
+  if (bmi < 30)   return { label: 'Overweight', color: '#eab308' }
+  return { label: 'Obese', color: '#ef4444' }
+}

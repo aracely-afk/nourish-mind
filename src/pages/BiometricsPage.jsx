@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
-import { Footprints, Droplets, Weight, Dumbbell, Plus, Trash2, ChevronLeft, ChevronRight } from 'lucide-react'
+import { Footprints, Droplets, Weight, Dumbbell, Plus, Trash2, ChevronLeft, ChevronRight, Activity } from 'lucide-react'
 import { useBiometrics } from '../hooks/useBiometrics'
+import { useProfile } from '../hooks/useProfile'
 import { todayStr, formatDate, addDays, isToday } from '../utils/dateHelpers'
 import BottomSheet from '../components/ui/BottomSheet'
 
@@ -9,6 +10,7 @@ const EXERCISE_TYPES = ['Walk', 'Run', 'Cycling', 'Swimming', 'Yoga', 'Weight Tr
 export default function BiometricsPage() {
   const [date, setDate] = useState(todayStr())
   const { getDay, updateDay, addExercise, removeExercise } = useBiometrics()
+  const { profile } = useProfile()
   const [exSheet, setExSheet] = useState(false)
   const [exForm, setExForm] = useState({ type: 'Walk', durationMin: '', caloriesBurned: '' })
   const bio = getDay(date)
@@ -69,6 +71,35 @@ export default function BiometricsPage() {
           </div>
           <p className="text-[10px] text-gray-400 mt-1">Weight fluctuates daily by 2-5 lbs. That's normal! Track the trend, not the number.</p>
         </Section>
+
+        {/* Strength Tracker — build muscle goal only */}
+        {profile.goal === 'gain' && (
+          <Section icon={Activity} iconBg="bg-indigo-50" iconColor="text-indigo-600" title="Strength Tracker">
+            <p className="text-xs text-gray-400 mb-3">Log max reps per set to track strength gains over time</p>
+            <div className="space-y-4">
+              {[
+                { key: 'pushups',  label: 'Push-Ups',         unit: 'reps',    tip: 'Full range of motion, chest to floor' },
+                { key: 'squats',   label: 'Squats',           unit: 'reps',    tip: 'Bodyweight — hips below parallel' },
+                { key: 'lunges',   label: 'Lunges (each leg)',unit: 'reps',    tip: 'Step forward, back knee near floor' },
+                { key: 'plankSec', label: 'Plank Hold',       unit: 'seconds', tip: 'Straight line from head to heels' },
+              ].map(({ key, label, unit, tip }) => {
+                const reps = bio.strengthReps || {}
+                return (
+                  <div key={key}>
+                    <div className="flex justify-between items-center mb-1">
+                      <span className="text-sm font-medium text-gray-700">{label}</span>
+                      <span className="text-xs text-gray-400">{unit}</span>
+                    </div>
+                    <input type="number" min="0" placeholder="0" className={inputCls}
+                           value={reps[key] || ''}
+                           onChange={e => updateDay(date, { strengthReps: { ...reps, [key]: Number(e.target.value) || 0 } })} />
+                    <p className="text-[10px] text-gray-400 mt-0.5 italic">{tip}</p>
+                  </div>
+                )
+              })}
+            </div>
+          </Section>
+        )}
 
         {/* Exercise */}
         <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">

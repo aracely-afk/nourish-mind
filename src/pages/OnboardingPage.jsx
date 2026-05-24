@@ -3,16 +3,16 @@ import { useLocalStorage } from '../hooks/useLocalStorage'
 import { useJourney } from '../hooks/useJourney'
 import { KEYS } from '../utils/storageKeys'
 import {
-  calcBMR, calcTDEE, calcCalorieRange, lbsToKg, ftInToCm,
+  calcBMR, calcTDEE, calcCalorieRange, lbsToKg, ftInToCm, calcBMI, bmiCategory,
   ACTIVITY_LEVELS, GOALS, COMMITMENT_LEVELS, DIET_STYLES, getRecommendedLength,
 } from '../utils/calorieCalc'
 import { ChevronRight, ChevronLeft, Leaf, Heart, AlertTriangle, Phone } from 'lucide-react'
 
 const ED_OPTIONS = [
-  { value: 'healthy',    label: 'Generally healthy',    desc: 'I just want to build better habits',              emoji: '✅' },
-  { value: 'struggling', label: 'It\'s complicated',    desc: 'I sometimes struggle with guilt or restriction',  emoji: '💛' },
-  { value: 'recovering', label: 'In recovery',          desc: 'I\'m recovering from an eating disorder',         emoji: '🌱' },
-  { value: 'active',     label: 'Actively struggling',  desc: 'I\'m currently dealing with an eating disorder',  emoji: '🤍' },
+  { value: 'healthy',    label: 'Generally healthy',                              desc: 'I just want to build better habits',                        emoji: '✅' },
+  { value: 'motivated',  label: 'I know what to do — I need motivation',          desc: 'I have the knowledge but need accountability and support',  emoji: '💪' },
+  { value: 'struggling', label: 'It\'s complicated',                              desc: 'I sometimes struggle with guilt or restriction',            emoji: '💛' },
+  { value: 'ed',         label: 'I am or have struggled with an eating disorder', desc: 'Past or present — I want to approach this mindfully',      emoji: '🌱' },
 ]
 
 export default function OnboardingPage() {
@@ -25,7 +25,7 @@ export default function OnboardingPage() {
   const [form, setForm] = useState({
     name: '', age: 30, sex: 'female',
     weightLbs: 155, heightFt: 5, heightIn: 5,
-    activityLevel: 1.375, goal: 'lose',
+    activityLevel: 1.375, goal: 'lose', goalWeightLbs: '',
   })
   const [commitment, setCommitment] = useState('ready')
   const [dietStyle, setDietStyle] = useState('standard')
@@ -48,12 +48,15 @@ export default function OnboardingPage() {
     const recommended = getRecommendedLength(form.goal, commitment)
     setJourneyLength(recommended)
     setResult({ tdee, min, max, recommended })
+    const bmi = calcBMI(weightKg, heightCm)
     const profile = {
       name: form.name, age: Number(form.age), sex: form.sex,
       weightKg, heightCm, activityLevel: form.activityLevel, goal: form.goal,
       tdee, calorieMin: min, calorieMax: max,
       dietStyle, commitmentLevel: commitment,
       weightTrackingEnabled: false,
+      goalWeightLbs: form.goalWeightLbs ? parseFloat(form.goalWeightLbs) : null,
+      bmi,
     }
     setProfile(profile)
     setStep(4)
@@ -129,31 +132,11 @@ export default function OnboardingPage() {
           ))}
         </div>
 
-        {edAnswer === 'active' && (
-          <div className="bg-red-50 border border-red-200 rounded-2xl p-4">
-            <div className="flex items-start gap-2 mb-2">
-              <AlertTriangle size={16} className="text-red-500 flex-shrink-0 mt-0.5" />
-              <p className="font-semibold text-red-700 text-sm">Please reach out for support first</p>
-            </div>
-            <p className="text-sm text-red-600 leading-relaxed mb-3">
-              NourishMind is not a replacement for professional treatment. If you are currently struggling with an eating disorder, we encourage you to connect with a therapist or counselor before using this app.
-            </p>
-            <div className="bg-white rounded-xl p-3 flex items-center gap-2">
-              <Phone size={14} className="text-red-500" />
-              <div>
-                <p className="text-xs font-bold text-gray-800">NEDA Helpline</p>
-                <p className="text-xs text-gray-500">1-800-931-2237 · Text "NEDA" to 741741</p>
-              </div>
-            </div>
-            <p className="text-xs text-gray-500 mt-3 italic">You can still explore the app — but please do so alongside professional care.</p>
-          </div>
-        )}
-
-        {edAnswer === 'recovering' && (
-          <div className="bg-amber-50 border border-amber-200 rounded-2xl p-4">
-            <p className="font-semibold text-amber-800 text-sm mb-1">Recovery takes courage</p>
-            <p className="text-sm text-amber-700 leading-relaxed">
-              We're honored you're here. NourishMind's CBT approach can complement your recovery journey — but please continue working with your care team. Proceed with self-compassion, not pressure.
+        {edAnswer === 'motivated' && (
+          <div className="bg-brand-pale border border-brand-secondary/20 rounded-2xl p-4">
+            <p className="font-semibold text-brand-primary text-sm mb-1">You're in the right place</p>
+            <p className="text-sm text-gray-600 leading-relaxed">
+              NourishMind is built for exactly this — daily lessons, a points system, streaks, and practical tools to keep you consistent even when motivation dips. Let's build momentum together.
             </p>
           </div>
         )}
@@ -164,6 +147,22 @@ export default function OnboardingPage() {
             <p className="text-sm text-gray-600 leading-relaxed">
               Many people start this journey feeling exactly that way. NourishMind's approach is designed to help heal guilt and restriction — not reinforce them. Take it one day at a time.
             </p>
+          </div>
+        )}
+
+        {edAnswer === 'ed' && (
+          <div className="bg-amber-50 border border-amber-200 rounded-2xl p-4">
+            <p className="font-semibold text-amber-800 text-sm mb-1">Thank you for sharing</p>
+            <p className="text-sm text-amber-700 leading-relaxed mb-3">
+              NourishMind is designed with a trauma-informed mindset — no food is banned, no restriction is encouraged. You're welcome here, and we encourage you to use this app alongside your care team.
+            </p>
+            <div className="bg-white rounded-xl p-3 flex items-center gap-2">
+              <Phone size={14} className="text-amber-500 flex-shrink-0" />
+              <div>
+                <p className="text-xs font-bold text-gray-800">NEDA Helpline — free &amp; confidential</p>
+                <p className="text-xs text-gray-500">1-800-931-2237 · Text "NEDA" to 741741</p>
+              </div>
+            </div>
           </div>
         )}
       </div>
@@ -246,6 +245,45 @@ export default function OnboardingPage() {
             ))}
           </div>
         </Field>
+
+        {form.goal === 'lose' && (
+          <Field label="Goal weight (lbs) — optional">
+            <input type="number" min="80" max="500" value={form.goalWeightLbs}
+                   onChange={e => update('goalWeightLbs', e.target.value)}
+                   placeholder="e.g. 145" className={inputCls} />
+            <p className="text-xs text-gray-400 mt-1">A milestone to track progress toward — not a hard deadline</p>
+          </Field>
+        )}
+
+        {form.goal === 'gain' && (() => {
+          const hCm = ftInToCm(Number(form.heightFt), Number(form.heightIn))
+          const wKg = lbsToKg(Number(form.weightLbs))
+          const bmi = calcBMI(wKg, hCm)
+          const cat = bmi ? bmiCategory(bmi) : null
+          return (
+            <div className="bg-brand-pale border border-brand-secondary/20 rounded-2xl p-4 space-y-3">
+              <div className="flex items-center gap-2">
+                <span className="text-xl">💪</span>
+                <p className="font-semibold text-brand-primary text-sm font-brand">Build Muscle Features</p>
+              </div>
+              {cat && (
+                <div className="bg-white rounded-xl p-3">
+                  <p className="text-xs text-gray-500 mb-1">Your starting BMI</p>
+                  <div className="flex items-baseline gap-2">
+                    <span className="text-2xl font-bold" style={{ color: cat.color }}>{bmi}</span>
+                    <span className="text-sm font-medium" style={{ color: cat.color }}>{cat.label}</span>
+                  </div>
+                  <p className="text-[10px] text-gray-400 mt-1 leading-relaxed">
+                    BMI = weight (kg) ÷ height (m)² · Under 18.5 Underweight · 18.5–24.9 Normal · 25–29.9 Overweight · 30+ Obese
+                  </p>
+                </div>
+              )}
+              <p className="text-sm text-gray-600 leading-relaxed">
+                Your <strong>Track</strong> tab will include a <strong>Strength Tracker</strong> — log daily reps for push-ups, squats, lunges, and plank hold to measure strength gains week over week.
+              </p>
+            </div>
+          )
+        })()}
       </div>
       <div className="fixed bottom-0 left-0 right-0 p-4 bg-white border-t border-gray-100 max-w-lg mx-auto"
            style={{ paddingBottom: 'max(1rem, env(safe-area-inset-bottom))' }}>
