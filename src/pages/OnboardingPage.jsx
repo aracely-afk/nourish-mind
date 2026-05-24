@@ -83,29 +83,23 @@ export default function OnboardingPage() {
         paddingBottom: 'max(2rem, env(safe-area-inset-bottom))',
       }}
     >
-      {/* Logo emblem — crop to circular emblem so the baked-in wordmark is hidden */}
-      <div className="flex-1 w-full flex items-center justify-center px-6 pt-4 min-h-0">
-        <div className="w-full max-w-[140px] aspect-square overflow-hidden rounded-full shadow-xl">
-          <img
-            src="/logo.png"
-            alt="NourishMind"
-            className="w-full h-full object-cover"
-            style={{ objectPosition: 'center 30%' }}
-            onError={e => { e.target.style.display = 'none' }}
-          />
-        </div>
+      {/* Full logo — uncropped so the wordmark + emblem are both visible */}
+      <div className="flex-1 w-full flex items-center justify-center px-10 pt-6 min-h-0">
+        <img
+          src="/logo.png"
+          alt="NourishMind"
+          className="w-full max-w-[260px] object-contain drop-shadow-xl rounded-2xl"
+          onError={e => { e.target.style.display = 'none' }}
+        />
       </div>
 
-      {/* HTML wordmark + tagline — readable, never cropped */}
+      {/* Tagline + quote + CTA */}
       <div className="relative z-10 flex flex-col items-center px-6 w-full pb-2">
-        <h1 className="text-[#1f2933] font-brand font-bold tracking-[0.12em] text-xl sm:text-2xl">
-          NOURISHMIND
-        </h1>
-        <p className="text-[#1f2933] text-[9px] sm:text-[10px] font-medium tracking-[0.22em] mt-1 uppercase">
+        <p className="text-[#1f2933] text-[10px] font-medium tracking-[0.20em] mt-2 uppercase">
           Renew Your Mind · Nourish Your Life
         </p>
 
-        <blockquote className="text-[#1f2933] text-xs font-display italic max-w-xs mt-4 mb-4 leading-relaxed">
+        <blockquote className="text-[#1f2933] text-xs font-display italic max-w-xs mt-3 mb-4 leading-relaxed">
           "I can do all things through Christ who strengthens me." — Philippians 4:13
         </blockquote>
 
