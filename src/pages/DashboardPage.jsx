@@ -62,9 +62,12 @@ export default function DashboardPage() {
     <div className="p-4 space-y-4">
       {/* Header */}
       <div className="pt-2 flex items-start justify-between">
-        <div>
-          <p className="text-sm text-gray-500">{formatDateFull(today)}</p>
-          <h1 className="text-xl font-bold text-gray-900 font-brand">{getGreeting()}, {profile.name || 'friend'} 👋</h1>
+        <div className="flex items-center gap-2">
+          <img src="/icon.png" alt="" className="w-9 h-9 object-contain flex-shrink-0" />
+          <div>
+            <p className="text-sm text-gray-500">{formatDateFull(today)}</p>
+            <h1 className="text-xl font-bold text-gray-900 font-brand">{getGreeting()}, {profile.name || 'friend'} 👋</h1>
+          </div>
         </div>
         <button onClick={() => navigate('/progress')}
                 className="p-2 bg-white rounded-xl border border-gray-100 shadow-sm text-gray-400 hover:text-brand-primary transition-colors mt-1">

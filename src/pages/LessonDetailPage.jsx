@@ -99,6 +99,11 @@ export default function LessonDetailPage() {
           <p className="text-amber-600 text-xs font-medium mt-1">— {lesson.scripture.reference}</p>
         </div>
 
+        {/* Accent divider */}
+        <div className="flex justify-center py-1">
+          <img src="/accent.png" alt="" className="w-24 opacity-70" />
+        </div>
+
         {/* Title */}
         <div>
           <h1 className="text-xl font-bold text-gray-900 font-brand">{lesson.title}</h1>

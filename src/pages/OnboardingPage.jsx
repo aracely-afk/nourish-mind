@@ -83,27 +83,35 @@ export default function OnboardingPage() {
         paddingBottom: 'max(2rem, env(safe-area-inset-bottom))',
       }}
     >
-      {/* Full logo — transparent background, emblem + wordmark + tagline */}
-      <div className="flex-1 w-full flex items-center justify-center px-8 pt-6 min-h-0">
+      {/* Icon + wordmark */}
+      <div className="flex-1 w-full flex flex-col items-center justify-center px-8 pt-6 min-h-0 gap-5">
         <img
-          src="/logo.png"
-          alt="NourishMind"
-          className="w-full max-w-[300px] object-contain drop-shadow-lg"
+          src="/icon.png"
+          alt="NourishMind emblem"
+          className="w-full max-w-[240px] object-contain drop-shadow-2xl"
           onError={e => { e.target.style.display = 'none' }}
         />
+        <div>
+          <h1 className="font-brand font-bold text-4xl sm:text-5xl tracking-wide leading-none">
+            <span className="text-[#4B2E83]">Nourish</span><span className="text-[#D4AF37]">Mind</span>
+          </h1>
+          <p className="text-[#1f2933] text-[11px] font-medium tracking-[0.22em] mt-2 uppercase">
+            Renew Your Mind, Transform Your Life
+          </p>
+        </div>
       </div>
 
-      {/* Quote + CTA */}
+      {/* Accent + Quote + CTA */}
       <div className="relative z-10 flex flex-col items-center px-6 w-full pb-2">
-        <blockquote className="text-[#1f2933] text-xs font-display italic max-w-xs mt-2 mb-4 leading-relaxed">
+        <img src="/accent.png" alt="" className="w-28 mb-3 opacity-90" />
+        <blockquote className="text-[#1f2933] text-sm font-display italic max-w-xs mb-5 leading-relaxed">
           "I can do all things through Christ who strengthens me." — Philippians 4:13
         </blockquote>
-
         <button
           onClick={() => setStep(1)}
-          className="bg-[#D4AF37] text-[#1f2933] font-bold px-6 py-3 rounded-2xl text-sm shadow-xl flex items-center gap-2 hover:bg-[#c9a430] active:scale-95 transition-all w-full max-w-xs justify-center"
+          className="bg-[#D4AF37] text-[#1f2933] font-bold px-6 py-4 rounded-2xl text-base shadow-xl flex items-center gap-2 hover:bg-[#c9a430] active:scale-95 transition-all w-full max-w-xs justify-center"
         >
-          Begin My Journey <ChevronRight size={18} />
+          Begin My Journey <ChevronRight size={20} />
         </button>
       </div>
     </div>
