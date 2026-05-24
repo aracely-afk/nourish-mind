@@ -98,7 +98,7 @@ export default function ProgressPage() {
         <div className="grid grid-cols-3 gap-3">
           <StatBox label="Avg Calories" value={avgCal > 0 ? avgCal.toLocaleString() : '—'} />
           <StatBox label="In Range" value={`${inRangeDays}d`} />
-          <StatBox label="Lessons" value={`${progress.completedLessons.length}/30`} />
+          <StatBox label="Lessons" value={`${progress.completedLessons.length}/90`} />
         </div>
 
         {/* Journey Banner */}

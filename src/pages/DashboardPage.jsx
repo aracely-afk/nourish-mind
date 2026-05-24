@@ -45,7 +45,7 @@ export default function DashboardPage() {
   const consumed = getDayCalories(today)
   const byLight = getDayCaloriesByLight(today)
   const bio = getDay(today)
-  const currentLesson = LESSONS.find(l => l.day === Math.min(progress.currentDay, 30)) || LESSONS[0]
+  const currentLesson = LESSONS.find(l => l.day === Math.min(progress.currentDay, 90)) || LESSONS[0]
 
   const remaining = Math.max(0, profile.calorieMin - consumed)
   const over = consumed > profile.calorieMax
@@ -172,7 +172,7 @@ export default function DashboardPage() {
           </div>
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 mb-0.5">
-              <span className="text-[#D4AF37] text-xs font-semibold">Day {currentLesson.day} of 30</span>
+              <span className="text-[#D4AF37] text-xs font-semibold">Day {currentLesson.day} of 90</span>
               <span className="text-white/60 text-xs">· {currentLesson.readTimeMin} min</span>
             </div>
             <p className="font-semibold text-white text-sm leading-tight">{currentLesson.title}</p>
@@ -182,9 +182,9 @@ export default function DashboardPage() {
         </div>
         <div className="mt-3 flex items-center gap-2">
           <div className="flex-1 h-1.5 bg-white/20 rounded-full overflow-hidden">
-            <div className="h-full bg-[#D4AF37] rounded-full" style={{ width: `${(progress.completedLessons.length / 30) * 100}%` }} />
+            <div className="h-full bg-[#D4AF37] rounded-full" style={{ width: `${(progress.completedLessons.length / 90) * 100}%` }} />
           </div>
-          <span className="text-white/60 text-xs">{progress.completedLessons.length}/30</span>
+          <span className="text-white/60 text-xs">{progress.completedLessons.length}/90</span>
         </div>
       </button>
 
