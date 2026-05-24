@@ -82,7 +82,7 @@ export default function ProgressPage() {
   return (
     <div className="pb-4">
       <div className="sticky top-0 z-10 bg-white/95 backdrop-blur border-b border-gray-100 px-4 py-3">
-        <h1 className="font-semibold text-gray-900">Progress</h1>
+        <h1 className="font-semibold text-gray-900 font-brand">Progress</h1>
         <div className="flex gap-2 mt-2">
           {['week', 'month'].map(r => (
             <button key={r} onClick={() => setRange(r)}

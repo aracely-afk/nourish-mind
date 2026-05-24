@@ -16,7 +16,7 @@ export default function PageHeader({ title, subtitle, backTo, actions }) {
           </button>
         )}
         <div className="flex-1 min-w-0">
-          <h1 className="font-semibold text-gray-900 text-base leading-tight truncate">{title}</h1>
+          <h1 className="font-semibold text-gray-900 text-base leading-tight truncate font-brand">{title}</h1>
           {subtitle && <p className="text-xs text-gray-500 mt-0.5 truncate">{subtitle}</p>}
         </div>
         {actions && <div className="flex items-center gap-1">{actions}</div>}

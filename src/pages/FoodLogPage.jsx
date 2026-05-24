@@ -79,7 +79,7 @@ export default function FoodLogPage() {
       {/* Header */}
       <div className="sticky top-0 z-10 bg-white/95 backdrop-blur border-b border-gray-100">
         <div className="px-4 py-3">
-          <h1 className="font-semibold text-gray-900">Food Log</h1>
+          <h1 className="font-semibold text-gray-900 font-brand">Food Log</h1>
           <div className="flex items-center justify-between mt-2">
             <button onClick={() => setDate(d => addDays(d, -1))} className="p-1 rounded-full hover:bg-gray-100"><ChevronLeft size={20} className="text-gray-500" /></button>
             <span className={`text-sm font-medium ${isToday(date) ? 'text-brand-primary' : 'text-gray-700'}`}>

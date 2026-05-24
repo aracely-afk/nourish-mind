@@ -99,7 +99,7 @@ export default function OnboardingPage() {
       <div className="bg-white border-b border-gray-100 px-4 py-3 flex items-center gap-3">
         <button onClick={() => setStep(0)} className="p-1 text-gray-500"><ChevronLeft size={22} /></button>
         <div>
-          <h1 className="font-semibold text-brand-charcoal">A Quick Wellness Check</h1>
+          <h1 className="font-semibold text-brand-charcoal font-brand">A Quick Wellness Check</h1>
           <p className="text-xs text-gray-500">Step 1 of 5</p>
         </div>
       </div>
@@ -184,7 +184,7 @@ export default function OnboardingPage() {
       <div className="bg-white border-b border-gray-100 px-4 py-3 flex items-center gap-3">
         <button onClick={() => setStep(1)} className="p-1 text-gray-500"><ChevronLeft size={22} /></button>
         <div>
-          <h1 className="font-semibold text-brand-charcoal">Your Profile</h1>
+          <h1 className="font-semibold text-brand-charcoal font-brand">Your Profile</h1>
           <p className="text-xs text-gray-500">Step 2 of 5</p>
         </div>
       </div>
@@ -263,7 +263,7 @@ export default function OnboardingPage() {
       <div className="bg-white border-b border-gray-100 px-4 py-3 flex items-center gap-3">
         <button onClick={() => setStep(2)} className="p-1 text-gray-500"><ChevronLeft size={22} /></button>
         <div>
-          <h1 className="font-semibold text-brand-charcoal">Your Commitment</h1>
+          <h1 className="font-semibold text-brand-charcoal font-brand">Your Commitment</h1>
           <p className="text-xs text-gray-500">Step 3 of 5</p>
         </div>
       </div>
@@ -315,7 +315,7 @@ export default function OnboardingPage() {
   if (step === 4 && result) return (
     <div className="min-h-[100dvh] bg-brand-warm flex flex-col">
       <div className="bg-white border-b border-gray-100 px-4 py-3">
-        <h1 className="font-semibold text-brand-charcoal">Your Personal Plan</h1>
+        <h1 className="font-semibold text-brand-charcoal font-brand">Your Personal Plan</h1>
         <p className="text-xs text-gray-500">Step 4 of 5</p>
       </div>
       <div className="flex-1 p-4 space-y-4 pb-24">
@@ -393,7 +393,7 @@ export default function OnboardingPage() {
   return (
     <div className="min-h-[100dvh] bg-brand-warm flex flex-col items-center justify-center p-6 text-center">
       <div className="text-6xl mb-4">🌱</div>
-      <h1 className="text-2xl font-bold text-brand-charcoal mb-2">You're all set, {form.name}!</h1>
+      <h1 className="text-2xl font-bold text-brand-charcoal mb-2 font-brand">You're all set, {form.name}!</h1>
       <p className="text-gray-500 text-sm mb-8 max-w-xs leading-relaxed">
         Your {journeyLength}-day journey to food freedom starts today. Remember: progress, not perfection.
       </p>

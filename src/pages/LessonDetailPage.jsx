@@ -43,13 +43,13 @@ export default function LessonDetailPage() {
       <div className="p-4 space-y-4">
         {/* Scripture */}
         <div className="bg-amber-50 border-l-4 border-amber-400 rounded-r-2xl p-4">
-          <p className="text-amber-800 italic text-sm leading-relaxed">"{lesson.scripture.verse}"</p>
+          <p className="text-amber-800 italic text-sm leading-relaxed font-display">"{lesson.scripture.verse}"</p>
           <p className="text-amber-600 text-xs font-medium mt-1">— {lesson.scripture.reference}</p>
         </div>
 
         {/* Title */}
         <div>
-          <h1 className="text-xl font-bold text-gray-900">{lesson.title}</h1>
+          <h1 className="text-xl font-bold text-gray-900 font-brand">{lesson.title}</h1>
           <p className="text-gray-500 text-sm">{lesson.subtitle}</p>
         </div>
 

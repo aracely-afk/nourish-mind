@@ -22,7 +22,7 @@ export default function LessonsPage() {
   return (
     <div className="pb-4">
       <div className="sticky top-0 z-10 bg-white/95 backdrop-blur border-b border-gray-100 px-4 py-3">
-        <h1 className="font-semibold text-gray-900">30 Days to Food Freedom</h1>
+        <h1 className="font-semibold text-gray-900 font-brand">30 Days to Food Freedom</h1>
         <div className="flex items-center gap-2 mt-2">
           <ProgressBar value={done} max={30} color="bg-brand-primary" className="flex-1" />
           <span className="text-xs text-gray-500 flex-shrink-0">{done}/30</span>

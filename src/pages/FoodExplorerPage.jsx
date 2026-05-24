@@ -18,7 +18,7 @@ export default function FoodExplorerPage() {
   return (
     <div className="pb-4">
       <div className="sticky top-0 z-10 bg-white/95 backdrop-blur border-b border-gray-100 px-4 py-3 space-y-3">
-        <h1 className="font-semibold text-gray-900">Food Explorer</h1>
+        <h1 className="font-semibold text-gray-900 font-brand">Food Explorer</h1>
         <SearchBar value={query} onChange={setQuery} placeholder="Search 280+ foods…" />
         <div className="flex gap-1.5 overflow-x-auto no-scrollbar pb-0.5">
           {FILTERS.map(f => (
