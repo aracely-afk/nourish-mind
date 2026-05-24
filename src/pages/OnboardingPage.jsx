@@ -84,18 +84,18 @@ export default function OnboardingPage() {
       }}
     >
       {/* Icon + wordmark */}
-      <div className="flex-1 w-full flex flex-col items-center justify-center px-8 pt-6 min-h-0 gap-5">
+      <div className="flex-1 w-full flex flex-col items-center justify-center px-8 pt-4 min-h-0 gap-4">
         <img
           src="/icon.png"
           alt="NourishMind emblem"
-          className="w-full max-w-[240px] object-contain drop-shadow-2xl"
+          className="w-full max-w-[300px] object-contain drop-shadow-2xl"
           onError={e => { e.target.style.display = 'none' }}
         />
         <div>
-          <h1 className="font-brand font-bold text-4xl sm:text-5xl tracking-wide leading-none">
+          <h1 className="font-brand font-bold text-5xl sm:text-6xl tracking-wide leading-none">
             <span className="text-[#D4AF37]">Nourish</span><span className="text-[#D4AF37]">Mind</span>
           </h1>
-          <p className="text-[#f5f6f8] text-[11px] font-medium tracking-[0.22em] mt-2 uppercase">
+          <p className="text-[#f5f6f8] text-[12px] font-medium tracking-[0.22em] mt-2 uppercase">
             Renew Your Mind, Transform Your Life
           </p>
         </div>
@@ -103,9 +103,10 @@ export default function OnboardingPage() {
 
       {/* Accent + Quote + CTA */}
       <div className="relative z-10 flex flex-col items-center px-6 w-full pb-2">
-        <img src="/accent.png" alt="" className="w-28 mb-3 opacity-90" />
-        <blockquote className="text-[#f5f6f8] text-sm font-display italic max-w-xs mb-5 leading-relaxed">
-          "...be transformed by the renewing of your mind..." — Romans 12:2
+        <img src="/accent.png" alt="" className="w-32 mb-3 opacity-90" />
+        <blockquote className="text-[#f5f6f8] text-sm font-display italic max-w-xs mb-5 leading-relaxed text-center">
+          <p>"...be transformed by the renewing of your mind..."</p>
+          <p className="mt-1">Romans 12:2</p>
         </blockquote>
         <button
           onClick={() => setStep(1)}
