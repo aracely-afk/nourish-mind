@@ -315,7 +315,7 @@ export default function FoodLogPage() {
 
       {/* Add Food / Meals Sheet */}
       <BottomSheet open={!!sheet} onClose={closeSheet} title={sheetTitle}>
-        <div className="p-4 space-y-3">
+        <div className="p-3 space-y-2">
 
           {/* ── CREATE MEAL FLOW ── */}
           {creatingMeal ? (
@@ -394,24 +394,25 @@ export default function FoodLogPage() {
                       <p className="text-sm font-medium text-gray-800 truncate">{selected.name}</p>
                       <p className="text-xs text-gray-500">1 serving = {selected.servingLabel}</p>
                     </div>
-                    <button onClick={() => setSelected(null)} className="text-xs text-brand-primary font-medium">Change</button>
+                    <button onClick={() => setSelected(null)} className="text-xs text-brand-primary font-medium flex-shrink-0">Change</button>
                   </div>
-                  <div className="flex items-center justify-center gap-6 py-1">
+
+                  {/* Compact serving + calorie row */}
+                  <div className="flex items-center gap-2 bg-gray-50 rounded-xl px-3 py-2.5">
+                    <span className="text-xs text-gray-500 flex-shrink-0">Servings</span>
                     <button onClick={() => setServings(s => Math.max(0.5, Math.round((s - 0.5) * 2) / 2))}
-                            className="w-10 h-10 rounded-full bg-gray-100 text-gray-700 text-xl font-bold flex items-center justify-center hover:bg-gray-200 active:scale-95 transition-all">−</button>
-                    <div className="text-center">
-                      <div className="text-3xl font-bold text-brand-primary">{servings}</div>
-                      <div className="text-xs text-gray-400">serving{servings !== 1 ? 's' : ''}</div>
-                    </div>
+                            className="w-9 h-9 rounded-full bg-white border border-gray-200 text-gray-700 text-lg font-bold flex items-center justify-center active:scale-95 transition-all flex-shrink-0 shadow-sm">−</button>
+                    <span className="text-xl font-bold text-brand-primary w-8 text-center flex-shrink-0">{servings}</span>
                     <button onClick={() => setServings(s => Math.round((s + 0.5) * 2) / 2)}
-                            className="w-10 h-10 rounded-full bg-brand-primary text-white text-xl font-bold flex items-center justify-center hover:bg-[#3a2270] active:scale-95 transition-all">+</button>
+                            className="w-9 h-9 rounded-full bg-brand-primary text-white text-lg font-bold flex items-center justify-center active:scale-95 transition-all flex-shrink-0">+</button>
+                    <div className="flex-1 text-right">
+                      <span className="text-xl font-bold text-gray-900">
+                        {Math.round((selected.caloriesPer100g / 100) * selected.servingSizeG * servings)}
+                      </span>
+                      <span className="text-sm text-gray-400 ml-1">cal</span>
+                    </div>
                   </div>
-                  <div className="text-center">
-                    <span className="text-2xl font-bold text-gray-900">
-                      {Math.round((selected.caloriesPer100g / 100) * selected.servingSizeG * servings)}
-                    </span>
-                    <span className="text-gray-400 text-sm ml-1">calories</span>
-                  </div>
+
                   <button onClick={handleAddToMeal}
                           className="w-full bg-brand-primary text-white py-3.5 rounded-xl font-semibold hover:bg-[#3a2270] transition-colors">
                     + Add to Meal
@@ -486,59 +487,58 @@ export default function FoodLogPage() {
                     ))}
                   </div>
                   {!selected ? (
-                    <div className="space-y-1 max-h-64 overflow-y-auto no-scrollbar">
+                    <div className="space-y-1 max-h-52 overflow-y-auto no-scrollbar">
                       {results.length === 0 && <p className="text-sm text-gray-400 text-center py-4">No foods found</p>}
                       {results.map(f => (
                         <button key={f.id} onClick={() => { setSelected(f); setServings(1) }}
-                                className="w-full flex items-center gap-3 p-3 rounded-xl hover:bg-gray-50 text-left transition-colors">
+                                className="w-full flex items-center gap-3 p-2.5 rounded-xl hover:bg-gray-50 text-left transition-colors">
                           <TrafficDot light={f.trafficLight} size={10} />
                           <div className="flex-1 min-w-0">
                             <p className="text-sm text-gray-800 truncate">{f.name}</p>
-                            <p className="text-xs text-gray-400">{f.caloriesPer100g} cal/100g · {f.servingLabel}</p>
+                            <p className="text-xs text-gray-400">{Math.round((f.caloriesPer100g / 100) * f.servingSizeG)} cal · {f.servingLabel}</p>
                           </div>
                           <TrafficLightBadge light={f.trafficLight} size="xs" />
                         </button>
                       ))}
                       <button onClick={() => setAddCustomOpen(true)}
-                              className="w-full text-center py-3 text-brand-primary text-sm font-medium hover:bg-brand-pale rounded-xl transition-colors">
+                              className="w-full text-center py-2.5 text-brand-primary text-sm font-medium hover:bg-brand-pale rounded-xl transition-colors">
                         + Add custom food
                       </button>
                     </div>
                   ) : (
-                    <div className="space-y-4">
+                    <div className="space-y-3">
+                      {/* Selected food card */}
                       <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-xl">
                         <TrafficDot light={selected.trafficLight} size={10} />
                         <div className="flex-1 min-w-0">
                           <p className="text-sm font-medium text-gray-800 truncate">{selected.name}</p>
                           <p className="text-xs text-gray-500">1 serving = {selected.servingLabel}</p>
                         </div>
-                        <button onClick={() => setSelected(null)} className="text-xs text-brand-primary font-medium">Change</button>
+                        <button onClick={() => setSelected(null)} className="text-xs text-brand-primary font-medium flex-shrink-0">Change</button>
                       </div>
-                      <div className="bg-white border border-gray-200 rounded-2xl p-4">
-                        <p className="text-xs text-gray-500 mb-3 text-center">How many servings?</p>
-                        <div className="flex items-center justify-center gap-6">
-                          <button
-                            onClick={() => setServings(s => Math.max(0.5, Math.round((s - 0.5) * 2) / 2))}
-                            className="w-11 h-11 rounded-full bg-gray-100 text-gray-700 text-xl font-bold flex items-center justify-center hover:bg-gray-200 active:scale-95 transition-all"
-                          >−</button>
-                          <div className="text-center">
-                            <div className="text-3xl font-bold text-brand-primary">{servings}</div>
-                            <div className="text-xs text-gray-400">serving{servings !== 1 ? 's' : ''}</div>
-                          </div>
-                          <button
-                            onClick={() => setServings(s => Math.round((s + 0.5) * 2) / 2)}
-                            className="w-11 h-11 rounded-full bg-brand-primary text-white text-xl font-bold flex items-center justify-center hover:bg-[#3a2270] active:scale-95 transition-all"
-                          >+</button>
+
+                      {/* Compact serving picker + calorie preview in one row */}
+                      <div className="flex items-center gap-2 bg-gray-50 rounded-xl px-3 py-2.5">
+                        <span className="text-xs text-gray-500 flex-shrink-0">Servings</span>
+                        <button
+                          onClick={() => setServings(s => Math.max(0.5, Math.round((s - 0.5) * 2) / 2))}
+                          className="w-9 h-9 rounded-full bg-white border border-gray-200 text-gray-700 text-lg font-bold flex items-center justify-center active:scale-95 transition-all flex-shrink-0 shadow-sm"
+                        >−</button>
+                        <span className="text-xl font-bold text-brand-primary w-8 text-center flex-shrink-0">{servings}</span>
+                        <button
+                          onClick={() => setServings(s => Math.round((s + 0.5) * 2) / 2)}
+                          className="w-9 h-9 rounded-full bg-brand-primary text-white text-lg font-bold flex items-center justify-center active:scale-95 transition-all flex-shrink-0"
+                        >+</button>
+                        <div className="flex-1 text-right">
+                          <span className="text-2xl font-bold text-gray-900">
+                            {Math.round((selected.caloriesPer100g / 100) * selected.servingSizeG * servings)}
+                          </span>
+                          <span className="text-sm text-gray-400 ml-1">cal</span>
                         </div>
                       </div>
-                      <div className="text-center py-1">
-                        <span className="text-2xl font-bold text-gray-900">
-                          {Math.round((selected.caloriesPer100g / 100) * selected.servingSizeG * servings)}
-                        </span>
-                        <span className="text-gray-400 text-sm ml-1">calories</span>
-                      </div>
+
                       <button onClick={handleAdd}
-                              className="w-full bg-brand-primary text-white py-4 rounded-xl font-semibold hover:bg-[#3a2270] transition-colors text-base">
+                              className="w-full bg-brand-primary text-white py-3.5 rounded-xl font-semibold hover:bg-[#3a2270] transition-colors">
                         Add to Log
                       </button>
                     </div>
