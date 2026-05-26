@@ -204,6 +204,151 @@ export const FOODS = [
   { id: 'white_bread',       name: 'White Bread',              category: 'grain',   trafficLight: 'orange', caloriesPer100g: 266, servingSizeG: 50,  servingLabel: '2 slices',    keywords: ['white bread', 'bread', 'processed'] },
   { id: 'granola_bar',       name: 'Granola Bar (oats & honey)',category:'snack',   trafficLight: 'orange', caloriesPer100g: 384, servingSizeG: 47,  servingLabel: '1 bar',       keywords: ['granola bar', 'bar', 'snack'] },
   { id: 'coconut_cream',     name: 'Coconut Cream',            category: 'fat',     trafficLight: 'orange', caloriesPer100g: 330, servingSizeG: 60,  servingLabel: '¼ cup',       keywords: ['coconut cream', 'coconut', 'baking'] },
+
+  // ── SMALL MEASUREMENTS / CONDIMENTS ──────────────────────────────────────
+  { id: 'honey_tsp',         name: 'Honey',                    category: 'condiment', trafficLight: 'orange', caloriesPer100g: 304, servingSizeG: 7,   servingLabel: '1 tsp',       keywords: ['honey', 'sweetener', 'tsp'] },
+  { id: 'honey_tbsp',        name: 'Honey (1 tbsp)',           category: 'condiment', trafficLight: 'orange', caloriesPer100g: 304, servingSizeG: 21,  servingLabel: '1 tbsp',      keywords: ['honey', 'sweetener', 'tbsp'] },
+  { id: 'maple_syrup_tbsp',  name: 'Maple Syrup',              category: 'condiment', trafficLight: 'orange', caloriesPer100g: 260, servingSizeG: 20,  servingLabel: '1 tbsp',      keywords: ['maple syrup', 'syrup', 'tbsp'] },
+  { id: 'cacao_nibs_tsp',    name: 'Cacao Nibs',               category: 'fat',       trafficLight: 'orange', caloriesPer100g: 480, servingSizeG: 5,   servingLabel: '1 tsp',       keywords: ['cacao nibs', 'cacao', 'chocolate', 'tsp'] },
+  { id: 'cacao_nibs_tbsp',   name: 'Cacao Nibs (1 tbsp)',      category: 'fat',       trafficLight: 'orange', caloriesPer100g: 480, servingSizeG: 10,  servingLabel: '1 tbsp',      keywords: ['cacao nibs', 'cacao', 'chocolate', 'tbsp'] },
+  { id: 'chia_seeds_tbsp',   name: 'Chia Seeds',               category: 'protein',   trafficLight: 'yellow', caloriesPer100g: 486, servingSizeG: 12,  servingLabel: '1 tbsp',      keywords: ['chia seeds', 'chia', 'omega'] },
+  { id: 'flax_seeds_tbsp',   name: 'Ground Flaxseed',          category: 'fat',       trafficLight: 'yellow', caloriesPer100g: 534, servingSizeG: 10,  servingLabel: '1 tbsp',      keywords: ['flax', 'flaxseed', 'omega'] },
+  { id: 'hemp_seeds_tbsp',   name: 'Hemp Seeds',               category: 'protein',   trafficLight: 'yellow', caloriesPer100g: 553, servingSizeG: 10,  servingLabel: '1 tbsp',      keywords: ['hemp seeds', 'hemp'] },
+  { id: 'peanut_butter_tbsp',name: 'Peanut Butter',            category: 'fat',       trafficLight: 'yellow', caloriesPer100g: 588, servingSizeG: 16,  servingLabel: '1 tbsp',      keywords: ['peanut butter', 'pb', 'tbsp'] },
+  { id: 'almond_butter_tbsp',name: 'Almond Butter',            category: 'fat',       trafficLight: 'yellow', caloriesPer100g: 614, servingSizeG: 16,  servingLabel: '1 tbsp',      keywords: ['almond butter', 'tbsp'] },
+  { id: 'nutella_tbsp',      name: 'Nutella',                  category: 'fat',       trafficLight: 'orange', caloriesPer100g: 539, servingSizeG: 19,  servingLabel: '1 tbsp',      keywords: ['nutella', 'hazelnut spread', 'chocolate'] },
+  { id: 'olive_oil_tbsp',    name: 'Olive Oil',                category: 'fat',       trafficLight: 'yellow', caloriesPer100g: 884, servingSizeG: 14,  servingLabel: '1 tbsp',      keywords: ['olive oil', 'oil', 'tbsp'] },
+  { id: 'coconut_oil_tbsp',  name: 'Coconut Oil',              category: 'fat',       trafficLight: 'orange', caloriesPer100g: 862, servingSizeG: 14,  servingLabel: '1 tbsp',      keywords: ['coconut oil', 'oil', 'tbsp'] },
+  { id: 'butter_tbsp',       name: 'Butter',                   category: 'fat',       trafficLight: 'orange', caloriesPer100g: 717, servingSizeG: 14,  servingLabel: '1 tbsp',      keywords: ['butter', 'tbsp'] },
+  { id: 'cream_cheese_tbsp', name: 'Cream Cheese',             category: 'fat',       trafficLight: 'orange', caloriesPer100g: 342, servingSizeG: 15,  servingLabel: '1 tbsp',      keywords: ['cream cheese', 'tbsp'] },
+  { id: 'sour_cream_tbsp',   name: 'Sour Cream',               category: 'fat',       trafficLight: 'orange', caloriesPer100g: 193, servingSizeG: 15,  servingLabel: '1 tbsp',      keywords: ['sour cream', 'tbsp'] },
+  { id: 'hot_sauce_tsp',     name: "Frank's RedHot Sauce",     category: 'condiment', trafficLight: 'green',  caloriesPer100g: 25,  servingSizeG: 5,   servingLabel: '1 tsp',       keywords: ['hot sauce', 'franks', 'sriracha', 'sauce'] },
+  { id: 'salsa_tbsp',        name: 'Salsa',                    category: 'condiment', trafficLight: 'green',  caloriesPer100g: 36,  servingSizeG: 30,  servingLabel: '2 tbsp',      keywords: ['salsa', 'condiment'] },
+  { id: 'hummus_tbsp',       name: 'Hummus',                   category: 'protein',   trafficLight: 'yellow', caloriesPer100g: 177, servingSizeG: 30,  servingLabel: '2 tbsp',      keywords: ['hummus', 'dip'] },
+  { id: 'ketchup_tbsp',      name: 'Ketchup (Heinz)',          category: 'condiment', trafficLight: 'orange', caloriesPer100g: 101, servingSizeG: 17,  servingLabel: '1 tbsp',      keywords: ['ketchup', 'heinz', 'condiment'] },
+  { id: 'mayo_tbsp',         name: 'Mayonnaise (Hellmann\'s)', category: 'fat',       trafficLight: 'orange', caloriesPer100g: 680, servingSizeG: 14,  servingLabel: '1 tbsp',      keywords: ['mayo', 'mayonnaise', 'hellmanns'] },
+  { id: 'mustard_tsp',       name: 'Yellow Mustard',           category: 'condiment', trafficLight: 'green',  caloriesPer100g: 60,  servingSizeG: 5,   servingLabel: '1 tsp',       keywords: ['mustard', 'condiment'] },
+  { id: 'ranch_tbsp',        name: 'Ranch Dressing (Hidden Valley)', category: 'fat', trafficLight: 'orange', caloriesPer100g: 467, servingSizeG: 30,  servingLabel: '2 tbsp',      keywords: ['ranch', 'dressing', 'hidden valley'] },
+
+  // ── BRANDED DAIRY & YOGURT ────────────────────────────────────────────────
+  { id: 'greek_yogurt_plain_cup',   name: 'Plain Greek Yogurt (1 cup)', category: 'protein', trafficLight: 'green', caloriesPer100g: 57, servingSizeG: 227, servingLabel: '1 cup',  keywords: ['greek yogurt', 'yogurt', 'plain', 'protein'] },
+  { id: 'chobani_plain_2pct',       name: 'Chobani Plain 2% Greek Yogurt', category: 'protein', trafficLight: 'green', caloriesPer100g: 73, servingSizeG: 150, servingLabel: '1 container (5.3oz)', keywords: ['chobani', 'greek yogurt', 'yogurt'] },
+  { id: 'chobani_nonfat',           name: 'Chobani Nonfat Plain Greek Yogurt', category: 'protein', trafficLight: 'green', caloriesPer100g: 60, servingSizeG: 150, servingLabel: '1 container (5.3oz)', keywords: ['chobani', 'nonfat', 'greek yogurt'] },
+  { id: 'fage_0pct',                name: 'Fage Total 0% Greek Yogurt', category: 'protein', trafficLight: 'green', caloriesPer100g: 57, servingSizeG: 227, servingLabel: '1 cup',  keywords: ['fage', 'greek yogurt', '0%'] },
+  { id: 'fage_2pct',                name: 'Fage Total 2% Greek Yogurt', category: 'protein', trafficLight: 'green', caloriesPer100g: 73, servingSizeG: 227, servingLabel: '1 cup',  keywords: ['fage', 'greek yogurt', '2%'] },
+  { id: 'tj_greek_yogurt',          name: "Trader Joe's Plain Greek Yogurt", category: 'protein', trafficLight: 'green', caloriesPer100g: 57, servingSizeG: 227, servingLabel: '1 cup', keywords: ['trader joes', 'tj', 'greek yogurt', 'yogurt'] },
+  { id: 'siggis_plain',             name: "Siggi's Plain Skyr (0%)",  category: 'protein', trafficLight: 'green', caloriesPer100g: 73, servingSizeG: 150, servingLabel: '1 container (5.3oz)', keywords: ['siggis', 'skyr', 'icelandic', 'yogurt'] },
+  { id: 'oikos_triple_zero',        name: 'Dannon Oikos Triple Zero Vanilla', category: 'protein', trafficLight: 'green', caloriesPer100g: 67, servingSizeG: 150, servingLabel: '1 container (5.3oz)', keywords: ['oikos', 'dannon', 'triple zero', 'yogurt'] },
+  { id: 'stonyfield_organic',       name: 'Stonyfield Organic Whole Milk Yogurt', category: 'protein', trafficLight: 'yellow', caloriesPer100g: 90, servingSizeG: 170, servingLabel: '¾ cup', keywords: ['stonyfield', 'organic', 'yogurt'] },
+  { id: 'cottage_cheese_half_cup',  name: 'Cottage Cheese (low fat)', category: 'protein', trafficLight: 'green', caloriesPer100g: 72, servingSizeG: 113, servingLabel: '½ cup',   keywords: ['cottage cheese', 'protein'] },
+  { id: 'fairlife_milk',            name: 'Fairlife 2% Ultra-Filtered Milk', category: 'dairy', trafficLight: 'green', caloriesPer100g: 50, servingSizeG: 240, servingLabel: '1 cup (8 fl oz)', keywords: ['fairlife', 'milk', 'ultrafiltered'] },
+  { id: 'whole_milk_cup',           name: 'Whole Milk',               category: 'dairy', trafficLight: 'yellow', caloriesPer100g: 61, servingSizeG: 240, servingLabel: '1 cup',   keywords: ['milk', 'whole milk', 'dairy'] },
+  { id: 'skim_milk_cup',            name: 'Skim Milk',                category: 'dairy', trafficLight: 'green',  caloriesPer100g: 34, servingSizeG: 240, servingLabel: '1 cup',   keywords: ['milk', 'skim milk', 'nonfat milk'] },
+
+  // ── BRANDED PLANT MILKS ───────────────────────────────────────────────────
+  { id: 'almond_milk_unsweet',  name: 'Almond Milk Unsweetened (Blue Diamond)', category: 'dairy', trafficLight: 'green', caloriesPer100g: 13, servingSizeG: 240, servingLabel: '1 cup', keywords: ['almond milk', 'blue diamond', 'unsweetened'] },
+  { id: 'oat_milk_oatly',       name: 'Oat Milk (Oatly Original)',   category: 'dairy', trafficLight: 'yellow', caloriesPer100g: 50, servingSizeG: 240, servingLabel: '1 cup', keywords: ['oat milk', 'oatly'] },
+  { id: 'coconut_milk_beverage',name: 'Coconut Milk Beverage (So Delicious)', category: 'dairy', trafficLight: 'green', caloriesPer100g: 17, servingSizeG: 240, servingLabel: '1 cup', keywords: ['coconut milk', 'so delicious'] },
+  { id: 'soy_milk_unsweet',     name: 'Soy Milk Unsweetened (Silk)', category: 'protein', trafficLight: 'green', caloriesPer100g: 33, servingSizeG: 240, servingLabel: '1 cup', keywords: ['soy milk', 'silk'] },
+
+  // ── BRANDED BREAKFAST / GRAINS ────────────────────────────────────────────
+  { id: 'quaker_oats',          name: 'Quaker Old Fashioned Oats',   category: 'grain', trafficLight: 'yellow', caloriesPer100g: 375, servingSizeG: 40,  servingLabel: '½ cup dry',   keywords: ['oats', 'quaker', 'oatmeal'] },
+  { id: 'quaker_instant',       name: 'Quaker Instant Oatmeal (plain)', category: 'grain', trafficLight: 'yellow', caloriesPer100g: 357, servingSizeG: 28, servingLabel: '1 packet', keywords: ['oatmeal', 'instant oatmeal', 'quaker'] },
+  { id: 'cheerios',             name: 'Cheerios (General Mills)',     category: 'grain', trafficLight: 'yellow', caloriesPer100g: 357, servingSizeG: 28,  servingLabel: '1 cup',       keywords: ['cheerios', 'cereal'] },
+  { id: 'special_k',            name: 'Special K Original (Kellogg\'s)', category: 'grain', trafficLight: 'yellow', caloriesPer100g: 387, servingSizeG: 31, servingLabel: '1 cup',  keywords: ['special k', 'kelloggs', 'cereal'] },
+  { id: 'kodiak_cakes',         name: 'Kodiak Cakes Power Pancake Mix', category: 'grain', trafficLight: 'yellow', caloriesPer100g: 339, servingSizeG: 56, servingLabel: '½ cup mix', keywords: ['kodiak cakes', 'pancake', 'protein pancake'] },
+  { id: 'granola_half_cup',     name: 'Granola (Nature Valley)',      category: 'grain', trafficLight: 'orange', caloriesPer100g: 471, servingSizeG: 60,  servingLabel: '½ cup',       keywords: ['granola', 'nature valley', 'cereal'] },
+
+  // ── BRANDED BARS & SNACKS ─────────────────────────────────────────────────
+  { id: 'quest_bar',            name: 'Quest Protein Bar (Chocolate Chip Cookie Dough)', category: 'protein', trafficLight: 'yellow', caloriesPer100g: 317, servingSizeG: 60, servingLabel: '1 bar', keywords: ['quest bar', 'quest', 'protein bar'] },
+  { id: 'rxbar',                name: 'RXBAR Chocolate Sea Salt',     category: 'protein', trafficLight: 'yellow', caloriesPer100g: 404, servingSizeG: 52,  servingLabel: '1 bar',       keywords: ['rxbar', 'rx bar', 'protein bar'] },
+  { id: 'kind_bar',             name: 'KIND Dark Chocolate Nuts & Sea Salt', category: 'fat', trafficLight: 'yellow', caloriesPer100g: 500, servingSizeG: 40, servingLabel: '1 bar', keywords: ['kind bar', 'kind', 'granola bar'] },
+  { id: 'clif_bar',             name: 'Clif Bar Chocolate Chip',      category: 'grain', trafficLight: 'orange', caloriesPer100g: 368, servingSizeG: 68,  servingLabel: '1 bar',       keywords: ['clif bar', 'clif', 'energy bar'] },
+  { id: 'lara_bar',             name: 'Larabar Apple Pie',            category: 'fruit', trafficLight: 'yellow', caloriesPer100g: 395, servingSizeG: 45,  servingLabel: '1 bar',       keywords: ['larabar', 'lara bar'] },
+  { id: 'skinny_pop',           name: 'SkinnyPop Original Popcorn',   category: 'grain', trafficLight: 'yellow', caloriesPer100g: 495, servingSizeG: 28,  servingLabel: '3¾ cups (1oz)', keywords: ['skinny pop', 'popcorn', 'snack'] },
+  { id: 'rice_cakes_2',         name: 'Rice Cakes Plain (Quaker)',    category: 'grain', trafficLight: 'yellow', caloriesPer100g: 387, servingSizeG: 18,  servingLabel: '2 cakes',     keywords: ['rice cakes', 'quaker', 'snack'] },
+
+  // ── BRANDED BEVERAGES ─────────────────────────────────────────────────────
+  { id: 'la_croix',             name: 'La Croix Sparkling Water',     category: 'beverage', trafficLight: 'green', caloriesPer100g: 0,  servingSizeG: 355, servingLabel: '1 can (12 fl oz)', keywords: ['la croix', 'sparkling water', 'seltzer'] },
+  { id: 'diet_coke',            name: 'Diet Coke',                    category: 'beverage', trafficLight: 'orange', caloriesPer100g: 0, servingSizeG: 355, servingLabel: '1 can (12 fl oz)', keywords: ['diet coke', 'diet soda', 'coke'] },
+  { id: 'coke_can',             name: 'Coca-Cola (regular)',          category: 'beverage', trafficLight: 'orange', caloriesPer100g: 42, servingSizeG: 355, servingLabel: '1 can (12 fl oz)', keywords: ['coke', 'coca cola', 'soda'] },
+  { id: 'orange_juice_cup',     name: 'Orange Juice (Tropicana)',     category: 'beverage', trafficLight: 'orange', caloriesPer100g: 45, servingSizeG: 240, servingLabel: '1 cup (8 fl oz)', keywords: ['orange juice', 'oj', 'tropicana', 'juice'] },
+  { id: 'apple_juice_cup',      name: 'Apple Juice',                  category: 'beverage', trafficLight: 'orange', caloriesPer100g: 46, servingSizeG: 240, servingLabel: '1 cup',           keywords: ['apple juice', 'juice'] },
+  { id: 'protein_shake_fairlife',name: 'Fairlife Core Power Elite (42g Protein)', category: 'protein', trafficLight: 'green', caloriesPer100g: 79, servingSizeG: 414, servingLabel: '1 bottle (14 fl oz)', keywords: ['fairlife', 'protein shake', 'core power'] },
+
+  // ── McDONALD'S ────────────────────────────────────────────────────────────
+  { id: 'mcds_egg_mcmuffin',    name: "McDonald's Egg McMuffin",      category: 'restaurant', trafficLight: 'yellow', caloriesPer100g: 222, servingSizeG: 135, servingLabel: '1 sandwich', keywords: ['mcdonalds', 'egg mcmuffin', 'breakfast sandwich'] },
+  { id: 'mcds_big_mac',         name: "McDonald's Big Mac",           category: 'restaurant', trafficLight: 'orange', caloriesPer100g: 276, servingSizeG: 214, servingLabel: '1 burger',   keywords: ['mcdonalds', 'big mac', 'burger'] },
+  { id: 'mcds_mcchicken',       name: "McDonald's McChicken",         category: 'restaurant', trafficLight: 'orange', caloriesPer100g: 245, servingSizeG: 163, servingLabel: '1 sandwich', keywords: ['mcdonalds', 'mcchicken', 'chicken sandwich'] },
+  { id: 'mcds_fries_sm',        name: "McDonald's French Fries (Small)", category: 'restaurant', trafficLight: 'orange', caloriesPer100g: 324, servingSizeG: 71, servingLabel: '1 small',  keywords: ['mcdonalds', 'fries', 'french fries'] },
+  { id: 'mcds_fries_md',        name: "McDonald's French Fries (Medium)", category: 'restaurant', trafficLight: 'orange', caloriesPer100g: 325, servingSizeG: 117, servingLabel: '1 medium', keywords: ['mcdonalds', 'fries', 'french fries'] },
+  { id: 'mcds_fries_lg',        name: "McDonald's French Fries (Large)", category: 'restaurant', trafficLight: 'orange', caloriesPer100g: 318, servingSizeG: 154, servingLabel: '1 large',  keywords: ['mcdonalds', 'fries', 'french fries'] },
+  { id: 'mcds_sausage_mcmuffin',name: "McDonald's Sausage McMuffin",  category: 'restaurant', trafficLight: 'orange', caloriesPer100g: 351, servingSizeG: 114, servingLabel: '1 sandwich', keywords: ['mcdonalds', 'sausage mcmuffin', 'breakfast'] },
+  { id: 'mcds_hotcakes',        name: "McDonald's Hotcakes (3)",      category: 'restaurant', trafficLight: 'orange', caloriesPer100g: 240, servingSizeG: 242, servingLabel: '3 hotcakes', keywords: ['mcdonalds', 'hotcakes', 'pancakes', 'breakfast'] },
+  { id: 'mcds_qpc',             name: "McDonald's Quarter Pounder w/ Cheese", category: 'restaurant', trafficLight: 'orange', caloriesPer100g: 253, servingSizeG: 238, servingLabel: '1 burger', keywords: ['mcdonalds', 'quarter pounder', 'burger'] },
+  { id: 'mcds_nuggets_10',      name: "McDonald's Chicken McNuggets (10pc)", category: 'restaurant', trafficLight: 'orange', caloriesPer100g: 296, servingSizeG: 162, servingLabel: '10 pieces', keywords: ['mcdonalds', 'nuggets', 'chicken nuggets'] },
+
+  // ── STARBUCKS ─────────────────────────────────────────────────────────────
+  { id: 'sbux_latte_grande',    name: 'Starbucks Latte Grande (2% milk)', category: 'restaurant', trafficLight: 'yellow', caloriesPer100g: 40, servingSizeG: 473, servingLabel: '1 Grande (16 fl oz)', keywords: ['starbucks', 'latte', 'coffee'] },
+  { id: 'sbux_vanilla_latte',   name: 'Starbucks Vanilla Latte Grande', category: 'restaurant', trafficLight: 'orange', caloriesPer100g: 53, servingSizeG: 473, servingLabel: '1 Grande (16 fl oz)', keywords: ['starbucks', 'vanilla latte', 'coffee'] },
+  { id: 'sbux_caramel_mac',     name: 'Starbucks Caramel Macchiato Grande', category: 'restaurant', trafficLight: 'orange', caloriesPer100g: 53, servingSizeG: 473, servingLabel: '1 Grande (16 fl oz)', keywords: ['starbucks', 'caramel macchiato', 'coffee'] },
+  { id: 'sbux_caramel_frap',    name: 'Starbucks Caramel Frappuccino Grande', category: 'restaurant', trafficLight: 'orange', caloriesPer100g: 89, servingSizeG: 473, servingLabel: '1 Grande (16 fl oz)', keywords: ['starbucks', 'frappuccino', 'frap', 'caramel'] },
+  { id: 'sbux_cold_brew',       name: 'Starbucks Cold Brew Grande (unsweetened)', category: 'restaurant', trafficLight: 'green', caloriesPer100g: 1, servingSizeG: 473, servingLabel: '1 Grande (16 fl oz)', keywords: ['starbucks', 'cold brew', 'coffee', 'black'] },
+  { id: 'sbux_pink_drink',      name: 'Starbucks Pink Drink Grande', category: 'restaurant', trafficLight: 'orange', caloriesPer100g: 44, servingSizeG: 473, servingLabel: '1 Grande (16 fl oz)', keywords: ['starbucks', 'pink drink'] },
+  { id: 'sbux_cheese_danish',   name: 'Starbucks Cheese Danish',     category: 'restaurant', trafficLight: 'orange', caloriesPer100g: 344, servingSizeG: 100, servingLabel: '1 danish', keywords: ['starbucks', 'cheese danish', 'pastry'] },
+  { id: 'sbux_egg_bites',       name: 'Starbucks Egg Bites (Bacon & Gruyere)', category: 'restaurant', trafficLight: 'yellow', caloriesPer100g: 179, servingSizeG: 170, servingLabel: '2 bites', keywords: ['starbucks', 'egg bites', 'bacon'] },
+  { id: 'sbux_tall_latte',      name: 'Starbucks Latte Tall (2% milk)', category: 'restaurant', trafficLight: 'yellow', caloriesPer100g: 40, servingSizeG: 355, servingLabel: '1 Tall (12 fl oz)', keywords: ['starbucks', 'latte', 'tall', 'coffee'] },
+
+  // ── CHIPOTLE ─────────────────────────────────────────────────────────────
+  { id: 'chipotle_chicken',     name: 'Chipotle Chicken',             category: 'restaurant', trafficLight: 'green',  caloriesPer100g: 159, servingSizeG: 113, servingLabel: '4oz',        keywords: ['chipotle', 'chicken', 'grilled'] },
+  { id: 'chipotle_steak',       name: 'Chipotle Steak',               category: 'restaurant', trafficLight: 'yellow', caloriesPer100g: 150, servingSizeG: 113, servingLabel: '4oz',        keywords: ['chipotle', 'steak', 'beef'] },
+  { id: 'chipotle_white_rice',  name: 'Chipotle White Rice',          category: 'restaurant', trafficLight: 'yellow', caloriesPer100g: 186, servingSizeG: 113, servingLabel: '4oz scoop',  keywords: ['chipotle', 'white rice', 'rice'] },
+  { id: 'chipotle_brown_rice',  name: 'Chipotle Brown Rice',          category: 'restaurant', trafficLight: 'yellow', caloriesPer100g: 169, servingSizeG: 113, servingLabel: '4oz scoop',  keywords: ['chipotle', 'brown rice', 'rice'] },
+  { id: 'chipotle_black_beans', name: 'Chipotle Black Beans',         category: 'restaurant', trafficLight: 'green',  caloriesPer100g: 115, servingSizeG: 113, servingLabel: '4oz scoop',  keywords: ['chipotle', 'black beans', 'beans'] },
+  { id: 'chipotle_pinto_beans', name: 'Chipotle Pinto Beans',         category: 'restaurant', trafficLight: 'green',  caloriesPer100g: 114, servingSizeG: 113, servingLabel: '4oz scoop',  keywords: ['chipotle', 'pinto beans', 'beans'] },
+  { id: 'chipotle_cheese',      name: 'Chipotle Cheese',              category: 'restaurant', trafficLight: 'orange', caloriesPer100g: 393, servingSizeG: 28,  servingLabel: '1oz',        keywords: ['chipotle', 'cheese', 'shredded cheese'] },
+  { id: 'chipotle_sour_cream',  name: 'Chipotle Sour Cream',          category: 'restaurant', trafficLight: 'orange', caloriesPer100g: 214, servingSizeG: 56,  servingLabel: '2oz',        keywords: ['chipotle', 'sour cream'] },
+  { id: 'chipotle_guac',        name: 'Chipotle Guacamole',           category: 'restaurant', trafficLight: 'yellow', caloriesPer100g: 232, servingSizeG: 99,  servingLabel: '3.5oz side', keywords: ['chipotle', 'guacamole', 'guac'] },
+  { id: 'chipotle_salsa_fresh', name: 'Chipotle Fresh Tomato Salsa',  category: 'restaurant', trafficLight: 'green',  caloriesPer100g: 22,  servingSizeG: 113, servingLabel: '4oz',        keywords: ['chipotle', 'salsa', 'pico'] },
+  { id: 'chipotle_chips',       name: 'Chipotle Chips',               category: 'restaurant', trafficLight: 'orange', caloriesPer100g: 495, servingSizeG: 85,  servingLabel: '1 bag',      keywords: ['chipotle', 'chips', 'tortilla chips'] },
+  { id: 'chipotle_bowl_chicken',name: 'Chipotle Chicken Bowl (rice, beans, salsa)', category: 'restaurant', trafficLight: 'yellow', caloriesPer100g: 142, servingSizeG: 510, servingLabel: '1 bowl', keywords: ['chipotle', 'chicken bowl', 'bowl'] },
+  { id: 'chipotle_burrito_chicken', name: 'Chipotle Chicken Burrito (rice, beans)', category: 'restaurant', trafficLight: 'orange', caloriesPer100g: 212, servingSizeG: 430, servingLabel: '1 burrito', keywords: ['chipotle', 'chicken burrito', 'burrito'] },
+
+  // ── CHICK-FIL-A ───────────────────────────────────────────────────────────
+  { id: 'cfa_sandwich',         name: 'Chick-fil-A Original Sandwich', category: 'restaurant', trafficLight: 'yellow', caloriesPer100g: 212, servingSizeG: 208, servingLabel: '1 sandwich', keywords: ['chick-fil-a', 'chicken sandwich', 'cfa'] },
+  { id: 'cfa_spicy_sandwich',   name: 'Chick-fil-A Spicy Deluxe Sandwich', category: 'restaurant', trafficLight: 'orange', caloriesPer100g: 226, servingSizeG: 243, servingLabel: '1 sandwich', keywords: ['chick-fil-a', 'spicy sandwich', 'cfa'] },
+  { id: 'cfa_nuggets_8',        name: 'Chick-fil-A Nuggets (8ct)',    category: 'restaurant', trafficLight: 'yellow', caloriesPer100g: 230, servingSizeG: 113, servingLabel: '8 pieces',   keywords: ['chick-fil-a', 'nuggets', 'chicken nuggets', 'cfa'] },
+  { id: 'cfa_grilled_nuggets',  name: 'Chick-fil-A Grilled Nuggets (8ct)', category: 'restaurant', trafficLight: 'green', caloriesPer100g: 127, servingSizeG: 110, servingLabel: '8 pieces', keywords: ['chick-fil-a', 'grilled nuggets', 'cfa'] },
+  { id: 'cfa_waffle_fries_md',  name: 'Chick-fil-A Waffle Fries (Medium)', category: 'restaurant', trafficLight: 'orange', caloriesPer100g: 336, servingSizeG: 125, servingLabel: '1 medium', keywords: ['chick-fil-a', 'waffle fries', 'fries', 'cfa'] },
+  { id: 'cfa_mac_cheese',       name: "Chick-fil-A Mac & Cheese (Medium)", category: 'restaurant', trafficLight: 'orange', caloriesPer100g: 163, servingSizeG: 227, servingLabel: '1 medium side', keywords: ['chick-fil-a', 'mac and cheese', 'cfa'] },
+
+  // ── PANERA BREAD ─────────────────────────────────────────────────────────
+  { id: 'panera_broc_cheddar',  name: 'Panera Broccoli Cheddar Soup (cup)', category: 'restaurant', trafficLight: 'orange', caloriesPer100g: 146, servingSizeG: 226, servingLabel: '1 cup', keywords: ['panera', 'broccoli cheddar', 'soup'] },
+  { id: 'panera_turkey_half',   name: 'Panera Turkey Sandwich (half)',     category: 'restaurant', trafficLight: 'yellow', caloriesPer100g: 239, servingSizeG: 155, servingLabel: '½ sandwich', keywords: ['panera', 'turkey sandwich'] },
+  { id: 'panera_caesar_half',   name: 'Panera Caesar Salad (half)',        category: 'restaurant', trafficLight: 'orange', caloriesPer100g: 289, servingSizeG: 135, servingLabel: '½ salad', keywords: ['panera', 'caesar salad', 'salad'] },
+  { id: 'panera_bagel_plain',   name: 'Panera Bagel (Plain)',              category: 'restaurant', trafficLight: 'yellow', caloriesPer100g: 276, servingSizeG: 105, servingLabel: '1 bagel', keywords: ['panera', 'bagel', 'plain bagel'] },
+  { id: 'panera_chicken_sandwich', name: 'Panera Chicken Sandwich',        category: 'restaurant', trafficLight: 'yellow', caloriesPer100g: 214, servingSizeG: 280, servingLabel: '1 sandwich', keywords: ['panera', 'chicken sandwich'] },
+
+  // ── SUBWAY ────────────────────────────────────────────────────────────────
+  { id: 'subway_turkey_6in',    name: 'Subway Turkey Breast 6" (white bread)', category: 'restaurant', trafficLight: 'yellow', caloriesPer100g: 127, servingSizeG: 220, servingLabel: '1 6" sandwich', keywords: ['subway', 'turkey', '6 inch', 'sub'] },
+  { id: 'subway_meatball_6in',  name: 'Subway Meatball Marinara 6"',           category: 'restaurant', trafficLight: 'orange', caloriesPer100g: 171, servingSizeG: 280, servingLabel: '1 6" sandwich', keywords: ['subway', 'meatball', 'marinara', 'sub'] },
+  { id: 'subway_bmt_6in',       name: 'Subway Italian BMT 6"',                 category: 'restaurant', trafficLight: 'orange', caloriesPer100g: 182, servingSizeG: 247, servingLabel: '1 6" sandwich', keywords: ['subway', 'italian bmt', 'bmt', 'sub'] },
+  { id: 'subway_veggie_6in',    name: 'Subway Veggie Delite 6"',               category: 'restaurant', trafficLight: 'green',  caloriesPer100g: 114, servingSizeG: 167, servingLabel: '1 6" sandwich', keywords: ['subway', 'veggie', 'vegetarian', 'sub'] },
+  { id: 'subway_chicken_teriyaki_6in', name: 'Subway Sweet Onion Chicken Teriyaki 6"', category: 'restaurant', trafficLight: 'yellow', caloriesPer100g: 146, servingSizeG: 279, servingLabel: '1 6" sandwich', keywords: ['subway', 'chicken teriyaki', 'sweet onion', 'sub'] },
+
+  // ── PIZZA ─────────────────────────────────────────────────────────────────
+  { id: 'dominos_cheese_slice', name: "Domino's Cheese Pizza (1 slice, 14\")", category: 'restaurant', trafficLight: 'orange', caloriesPer100g: 257, servingSizeG: 105, servingLabel: '1 slice', keywords: ['dominos', 'cheese pizza', 'pizza'] },
+  { id: 'dominos_pepperoni_slice', name: "Domino's Pepperoni Pizza (1 slice, 14\")", category: 'restaurant', trafficLight: 'orange', caloriesPer100g: 265, servingSizeG: 113, servingLabel: '1 slice', keywords: ['dominos', 'pepperoni pizza', 'pizza'] },
+  { id: 'pizza_hut_cheese_slice', name: "Pizza Hut Cheese Pizza (1 slice, large)", category: 'restaurant', trafficLight: 'orange', caloriesPer100g: 245, servingSizeG: 98, servingLabel: '1 slice', keywords: ['pizza hut', 'cheese pizza', 'pizza'] },
+
+  // ── OTHER COMMON BRANDS ───────────────────────────────────────────────────
+  { id: 'whole_wheat_bread_slice', name: 'Whole Wheat Bread (1 slice)',  category: 'grain', trafficLight: 'yellow', caloriesPer100g: 247, servingSizeG: 28, servingLabel: '1 slice', keywords: ['bread', 'whole wheat', 'toast'] },
+  { id: 'white_bread_slice',       name: 'White Bread (1 slice)',         category: 'grain', trafficLight: 'yellow', caloriesPer100g: 266, servingSizeG: 25, servingLabel: '1 slice', keywords: ['bread', 'white bread', 'toast'] },
+  { id: 'dave_killer_bread',       name: "Dave's Killer Bread (21 Whole Grains)", category: 'grain', trafficLight: 'yellow', caloriesPer100g: 268, servingSizeG: 45, servingLabel: '2 slices', keywords: ['daves killer bread', 'bread', 'whole grain'] },
+  { id: 'ezekiel_bread',           name: 'Ezekiel 4:9 Sprouted Bread',   category: 'grain', trafficLight: 'yellow', caloriesPer100g: 247, servingSizeG: 34, servingLabel: '1 slice', keywords: ['ezekiel bread', 'sprouted', 'bread'] },
+  { id: 'tortilla_flour_sm',       name: 'Flour Tortilla (small, 6")',   category: 'grain', trafficLight: 'yellow', caloriesPer100g: 306, servingSizeG: 45, servingLabel: '1 small tortilla', keywords: ['tortilla', 'flour tortilla', 'wrap'] },
+  { id: 'tortilla_flour_lg',       name: 'Flour Tortilla (large, 10")', category: 'grain', trafficLight: 'orange', caloriesPer100g: 306, servingSizeG: 72, servingLabel: '1 large tortilla', keywords: ['tortilla', 'flour tortilla', 'burrito wrap'] },
+  { id: 'mission_corn_tortilla',   name: 'Corn Tortilla (Mission, 2)',   category: 'grain', trafficLight: 'yellow', caloriesPer100g: 218, servingSizeG: 46, servingLabel: '2 tortillas', keywords: ['corn tortilla', 'taco', 'mission'] },
 ]
 
 export function searchFoods(query, filter = 'all') {

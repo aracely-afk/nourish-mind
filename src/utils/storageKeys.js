@@ -10,4 +10,5 @@ export const KEYS = {
   JOURNEY: 'nm_journey',
   WEIGHT_LOG: 'nm_weight_log',
   MILESTONES_SEEN: 'nm_milestones_seen',
+  SAVED_MEALS: 'nm_saved_meals',
 }
