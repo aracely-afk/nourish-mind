@@ -39,7 +39,10 @@ export default function FoodLogPage() {
 
   // Custom food
   const [addCustomOpen, setAddCustomOpen] = useState(false)
-  const [customForm, setCustomForm] = useState({ name: '', caloriesPer100g: '', trafficLight: 'green' })
+  const [customForm, setCustomForm] = useState({
+    name: '', brand: '', servingLabel: '', calories: '',
+    proteinG: '', carbsG: '', fatG: '', trafficLight: 'green',
+  })
   const [, setCustomFoods] = useLocalStorage(KEYS.CUSTOM_FOODS, [])
 
   const dayLog = getDayLog(date)
@@ -125,19 +128,29 @@ export default function FoodLogPage() {
   }
 
   function saveCustomFood() {
-    if (!customForm.name || !customForm.caloriesPer100g) return
+    if (!customForm.name || !customForm.calories) return
+    const calories = parseFloat(customForm.calories)
+    const displayName = customForm.brand
+      ? `${customForm.name} (${customForm.brand})`
+      : customForm.name
     const food = {
       id: 'custom_' + Date.now(),
-      name: customForm.name,
-      caloriesPer100g: parseFloat(customForm.caloriesPer100g),
+      name: displayName,
+      brand: customForm.brand || null,
+      // servingSizeG = 100 so caloriesPer100g == calories per serving
+      caloriesPer100g: Math.round(calories),
+      servingSizeG: 100,
+      servingLabel: customForm.servingLabel.trim() || '1 serving',
       trafficLight: customForm.trafficLight,
       isCustom: true,
       category: 'custom',
-      servingSizeG: 100, servingLabel: '100g',
+      proteinG: customForm.proteinG ? parseFloat(customForm.proteinG) : null,
+      carbsG:   customForm.carbsG   ? parseFloat(customForm.carbsG)   : null,
+      fatG:     customForm.fatG     ? parseFloat(customForm.fatG)     : null,
       createdAt: new Date().toISOString(),
     }
     setCustomFoods(prev => [food, ...prev])
-    setCustomForm({ name: '', caloriesPer100g: '', trafficLight: 'green' })
+    setCustomForm({ name: '', brand: '', servingLabel: '', calories: '', proteinG: '', carbsG: '', fatG: '', trafficLight: 'green' })
     setAddCustomOpen(false)
   }
 
@@ -470,32 +483,93 @@ export default function FoodLogPage() {
       </BottomSheet>
 
       {/* Custom Food Sheet */}
-      <BottomSheet open={addCustomOpen} onClose={() => setAddCustomOpen(false)} title="Add Custom Food">
-        <div className="p-4 space-y-3">
-          <div>
-            <label className="text-sm font-medium text-gray-700 block mb-1">Food name</label>
-            <input type="text" value={customForm.name} onChange={e => setCustomForm(f => ({...f, name: e.target.value}))}
-                   placeholder="e.g. Mom's Soup" className="w-full px-3 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-secondary" />
+      <BottomSheet open={addCustomOpen} onClose={() => setAddCustomOpen(false)} title="Add Custom Food / Drink">
+        <div className="p-4 space-y-3 max-h-[70vh] overflow-y-auto no-scrollbar">
+
+          {/* Name + Brand row */}
+          <div className="space-y-2">
+            <div>
+              <label className="text-xs font-semibold text-gray-500 uppercase tracking-wide block mb-1">Name *</label>
+              <input type="text" value={customForm.name}
+                     onChange={e => setCustomForm(f => ({...f, name: e.target.value}))}
+                     placeholder="e.g. Homemade Smoothie"
+                     className="w-full px-3 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-secondary" />
+            </div>
+            <div>
+              <label className="text-xs font-semibold text-gray-500 uppercase tracking-wide block mb-1">Brand / Restaurant <span className="text-gray-400 font-normal normal-case">(optional)</span></label>
+              <input type="text" value={customForm.brand}
+                     onChange={e => setCustomForm(f => ({...f, brand: e.target.value}))}
+                     placeholder="e.g. Trader Joe's, McDonald's"
+                     className="w-full px-3 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-secondary" />
+            </div>
           </div>
-          <div>
-            <label className="text-sm font-medium text-gray-700 block mb-1">Calories per 100g</label>
-            <input type="number" value={customForm.caloriesPer100g} onChange={e => setCustomForm(f => ({...f, caloriesPer100g: e.target.value}))}
-                   placeholder="e.g. 150" className="w-full px-3 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-secondary" />
+
+          {/* Serving size + Calories row */}
+          <div className="flex gap-2">
+            <div className="flex-1">
+              <label className="text-xs font-semibold text-gray-500 uppercase tracking-wide block mb-1">Serving size <span className="text-gray-400 font-normal normal-case">(optional)</span></label>
+              <input type="text" value={customForm.servingLabel}
+                     onChange={e => setCustomForm(f => ({...f, servingLabel: e.target.value}))}
+                     placeholder="e.g. 1 cup, 12 oz"
+                     className="w-full px-3 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-secondary" />
+            </div>
+            <div className="w-28">
+              <label className="text-xs font-semibold text-gray-500 uppercase tracking-wide block mb-1">Calories *</label>
+              <input type="number" value={customForm.calories}
+                     onChange={e => setCustomForm(f => ({...f, calories: e.target.value}))}
+                     placeholder="e.g. 150"
+                     className="w-full px-3 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-secondary" />
+            </div>
           </div>
+
+          {/* Macros */}
           <div>
-            <label className="text-sm font-medium text-gray-700 block mb-1">Category</label>
+            <label className="text-xs font-semibold text-gray-500 uppercase tracking-wide block mb-2">Macros per serving <span className="text-gray-400 font-normal normal-case">(optional)</span></label>
             <div className="flex gap-2">
-              {['green','yellow','orange'].map(l => (
-                <button key={l} onClick={() => setCustomForm(f => ({...f, trafficLight: l}))}
-                        className={`flex-1 py-2 rounded-xl text-xs font-medium transition-colors capitalize border ${customForm.trafficLight===l ? 'border-brand-primary bg-brand-pale text-indigo-700' : 'border-gray-200 text-gray-600'}`}>
-                  {l}
+              <div className="flex-1">
+                <label className="text-[10px] text-gray-400 block mb-1 text-center">Protein (g)</label>
+                <input type="number" value={customForm.proteinG}
+                       onChange={e => setCustomForm(f => ({...f, proteinG: e.target.value}))}
+                       placeholder="0"
+                       className="w-full px-2 py-2 border border-gray-200 rounded-xl text-sm text-center focus:outline-none focus:ring-2 focus:ring-brand-secondary" />
+              </div>
+              <div className="flex-1">
+                <label className="text-[10px] text-gray-400 block mb-1 text-center">Carbs (g)</label>
+                <input type="number" value={customForm.carbsG}
+                       onChange={e => setCustomForm(f => ({...f, carbsG: e.target.value}))}
+                       placeholder="0"
+                       className="w-full px-2 py-2 border border-gray-200 rounded-xl text-sm text-center focus:outline-none focus:ring-2 focus:ring-brand-secondary" />
+              </div>
+              <div className="flex-1">
+                <label className="text-[10px] text-gray-400 block mb-1 text-center">Fat (g)</label>
+                <input type="number" value={customForm.fatG}
+                       onChange={e => setCustomForm(f => ({...f, fatG: e.target.value}))}
+                       placeholder="0"
+                       className="w-full px-2 py-2 border border-gray-200 rounded-xl text-sm text-center focus:outline-none focus:ring-2 focus:ring-brand-secondary" />
+              </div>
+            </div>
+          </div>
+
+          {/* Category */}
+          <div>
+            <label className="text-xs font-semibold text-gray-500 uppercase tracking-wide block mb-2">Category</label>
+            <div className="flex gap-2">
+              {[
+                { v: 'green',  label: '🟢 Healthy',  desc: 'Whole foods, minimal processing' },
+                { v: 'yellow', label: '🟡 Moderate',  desc: 'Enjoy in reasonable amounts' },
+                { v: 'orange', label: '🟠 Limit',     desc: 'High sugar, fat, or processed' },
+              ].map(({ v, label, desc }) => (
+                <button key={v} onClick={() => setCustomForm(f => ({...f, trafficLight: v}))}
+                        className={`flex-1 py-2 px-1 rounded-xl text-xs font-medium transition-colors text-center border ${customForm.trafficLight===v ? 'border-brand-primary bg-brand-pale text-brand-primary' : 'border-gray-200 text-gray-500'}`}>
+                  <div>{label}</div>
                 </button>
               ))}
             </div>
           </div>
-          <button onClick={saveCustomFood} disabled={!customForm.name || !customForm.caloriesPer100g}
+
+          <button onClick={saveCustomFood} disabled={!customForm.name || !customForm.calories}
                   className="w-full bg-brand-primary text-white py-3.5 rounded-xl font-semibold disabled:opacity-40 hover:bg-[#3a2270] transition-colors">
-            Save Custom Food
+            Save to My Foods
           </button>
         </div>
       </BottomSheet>
