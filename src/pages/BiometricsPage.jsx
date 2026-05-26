@@ -76,6 +76,16 @@ export default function BiometricsPage() {
             </div>
             <span className="text-xs text-gray-400">{(Number(localSteps)||0).toLocaleString()} / 10,000</span>
           </div>
+          {/* Motivator */}
+          <div className={`mt-3 rounded-xl px-3 py-2 text-xs leading-relaxed transition-colors ${
+            (Number(localSteps)||0) >= 5000
+              ? 'bg-green-50 text-green-700 border border-green-200'
+              : 'bg-gray-50 text-gray-400 border border-gray-100'
+          }`}>
+            {(Number(localSteps)||0) >= 5000
+              ? '🎉 You\'ve walked 2+ miles today — that counts as your exercise for the day!'
+              : '👟 Reach 5,000 steps (about 2 miles) and your walk automatically counts as exercise for the day.'}
+          </div>
         </Section>
 
         {/* Water */}
@@ -139,9 +149,20 @@ export default function BiometricsPage() {
             </div>
             <h3 className="font-medium text-sm text-gray-800 flex-1">Exercise</h3>
           </div>
-          {bio.exercise.length === 0 ? (
+          {/* Steps-as-exercise credit banner */}
+          {bio.steps >= 5000 && (
+            <div className="flex items-center gap-2 px-4 py-2.5 bg-green-50 border-b border-green-100">
+              <span className="text-base">🚶</span>
+              <div className="flex-1">
+                <p className="text-sm text-green-800 font-medium">Walk — from steps</p>
+                <p className="text-xs text-green-600">{bio.steps.toLocaleString()} steps · ~{Math.round(bio.steps / 2500 * 10) / 10} miles</p>
+              </div>
+              <span className="text-[10px] font-semibold text-green-600 bg-green-100 px-2 py-0.5 rounded-full">Auto</span>
+            </div>
+          )}
+          {bio.exercise.length === 0 && bio.steps < 5000 ? (
             <p className="text-xs text-gray-400 px-4 py-3">No exercise logged</p>
-          ) : (
+          ) : bio.exercise.length > 0 ? (
             <div className="divide-y divide-gray-50">
               {bio.exercise.map(e => (
                 <div key={e.id} className="flex items-center gap-3 px-4 py-2.5">
@@ -153,7 +174,7 @@ export default function BiometricsPage() {
                 </div>
               ))}
             </div>
-          )}
+          ) : null}
           <button onClick={() => setExSheet(true)}
                   className="w-full flex items-center gap-2 px-4 py-3 text-brand-primary text-sm font-medium hover:bg-indigo-50 transition-colors border-t border-gray-50">
             <Plus size={16} /> Log exercise

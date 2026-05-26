@@ -13,7 +13,7 @@ export default function LessonDetailPage() {
   const { day } = useParams()
   const navigate = useNavigate()
   const lesson = LESSONS.find(l => l.day === Number(day))
-  const { isCompleted, isUnlocked, completeLesson } = useLessons()
+  const { progress, isCompleted, isUnlocked, isWaitingForTomorrow, completeLesson } = useLessons()
   const { recordLessonComplete } = useStreak()
 
   const [quizStarted, setQuizStarted] = useState(false)
@@ -51,13 +51,43 @@ export default function LessonDetailPage() {
   }
 
   if (!lesson) return <div className="p-4 text-gray-500">Lesson not found.</div>
-  if (!isUnlocked(lesson.day)) return (
-    <div className="p-6 text-center">
-      <div className="text-5xl mb-4">🔒</div>
-      <p className="text-gray-600 font-medium">Complete Day {lesson.day - 1} to unlock this lesson.</p>
-      <button onClick={() => navigate('/lessons')} className="mt-4 text-brand-primary text-sm font-medium">Back to Lessons</button>
-    </div>
-  )
+
+  if (!isUnlocked(lesson.day)) {
+    const waitingTomorrow = isWaitingForTomorrow(lesson.day)
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center p-8 text-center bg-white">
+        {waitingTomorrow ? (
+          <>
+            <div className="text-6xl mb-5">🌙</div>
+            <h2 className="text-xl font-bold text-gray-900 font-brand mb-2">Great work today!</h2>
+            <p className="text-gray-500 text-sm leading-relaxed mb-1">
+              You've already completed a lesson today.
+            </p>
+            <p className="text-gray-500 text-sm leading-relaxed mb-6">
+              Come back tomorrow to continue Day {lesson.day}. One lesson a day keeps the growth steady.
+            </p>
+            <p className="text-xs text-brand-gold italic font-display mb-6">
+              "His mercies are new every morning." — Lamentations 3:23
+            </p>
+          </>
+        ) : (
+          <>
+            <div className="text-6xl mb-5">🔒</div>
+            <h2 className="text-xl font-bold text-gray-900 font-brand mb-2">Not yet unlocked</h2>
+            <p className="text-gray-500 text-sm leading-relaxed mb-6">
+              Complete Day {lesson.day - 1} first to unlock this lesson.
+            </p>
+          </>
+        )}
+        <button
+          onClick={() => navigate('/lessons')}
+          className="bg-brand-primary text-white px-8 py-3 rounded-xl font-semibold text-sm hover:bg-[#3a2270] transition-colors"
+        >
+          Back to Lessons
+        </button>
+      </div>
+    )
+  }
 
   const completed = isCompleted(lesson.day)
   const score = submitted ? lesson.quiz.filter((q, i) => answers[i] === q.correctIndex).length : 0

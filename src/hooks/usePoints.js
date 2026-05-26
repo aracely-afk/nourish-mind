@@ -58,8 +58,8 @@ export function usePoints() {
     // Steps: 1 pt for 7,500+
     if (bio.steps >= 7500) { breakdown.steps = 1; points += 1 }
 
-    // Exercise logged: 1 pt
-    if (bio.exercise?.length > 0) { breakdown.exercise = 1; points += 1 }
+    // Exercise: 1 pt if explicitly logged OR steps >= 5,000 (walking 2+ miles counts)
+    if (bio.exercise?.length > 0 || bio.steps >= 5000) { breakdown.exercise = 1; points += 1 }
 
     // Lesson completed today: 2 pts
     const completedToday = Object.values(lessonProgress.quizScores || {}).some(s =>

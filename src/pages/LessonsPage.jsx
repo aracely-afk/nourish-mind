@@ -1,6 +1,6 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Lock, CheckCircle, ChevronRight, BookOpen } from 'lucide-react'
+import { Lock, CheckCircle, ChevronRight, BookOpen, Moon } from 'lucide-react'
 import { useLessons } from '../hooks/useLessons'
 import { LESSONS } from '../data/lessonData'
 import ProgressBar from '../components/ui/ProgressBar'
@@ -16,7 +16,7 @@ const THEME_COLORS = {
 }
 
 export default function LessonsPage() {
-  const { progress, isCompleted, isUnlocked } = useLessons()
+  const { progress, isCompleted, isUnlocked, isWaitingForTomorrow } = useLessons()
   const navigate = useNavigate()
   const done = progress.completedLessons.length
 
@@ -34,6 +34,7 @@ export default function LessonsPage() {
         {LESSONS.map(lesson => {
           const completed = isCompleted(lesson.day)
           const unlocked = isUnlocked(lesson.day)
+          const waitingTomorrow = isWaitingForTomorrow(lesson.day)
           const milestone = isMilestone(lesson.day) ? getMilestone(lesson.day) : null
           return (
             <button
@@ -44,6 +45,7 @@ export default function LessonsPage() {
                 milestone && unlocked && !completed ? 'bg-gradient-to-r from-amber-50 to-yellow-50 border-amber-300 shadow-sm' :
                 completed ? 'bg-green-50 border-green-200' :
                 unlocked ? 'bg-white border-gray-200 hover:border-brand-secondary hover:shadow-sm' :
+                waitingTomorrow ? 'bg-indigo-50 border-indigo-200 opacity-80' :
                 'bg-gray-50 border-gray-100 opacity-60'
               }`}
             >
@@ -51,9 +53,13 @@ export default function LessonsPage() {
                 completed ? 'bg-green-500 text-white' :
                 milestone && unlocked ? 'bg-gradient-to-br from-amber-400 to-orange-500 text-white' :
                 unlocked ? 'bg-brand-pale text-brand-primary' :
+                waitingTomorrow ? 'bg-indigo-100 text-indigo-400' :
                 'bg-gray-200 text-gray-400'
               }`}>
-                {completed ? <CheckCircle size={20} /> : unlocked ? lesson.day : <Lock size={16} />}
+                {completed ? <CheckCircle size={20} /> :
+                 waitingTomorrow ? <Moon size={16} /> :
+                 unlocked ? lesson.day :
+                 <Lock size={16} />}
               </div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-1.5 mb-0.5 flex-wrap">
@@ -67,15 +73,19 @@ export default function LessonsPage() {
                   </span>
                   <span className="text-[10px] text-gray-400">{lesson.readTimeMin} min</span>
                 </div>
-                <p className={`text-sm font-medium leading-tight ${unlocked ? 'text-gray-800' : 'text-gray-400'}`}>{lesson.title}</p>
+                <p className={`text-sm font-medium leading-tight ${unlocked ? 'text-gray-800' : waitingTomorrow ? 'text-indigo-400' : 'text-gray-400'}`}>{lesson.title}</p>
                 {completed && progress.quizScores[lesson.day] && (
                   <p className="text-xs text-green-600 mt-0.5">
                     Quiz: {progress.quizScores[lesson.day].score}/{progress.quizScores[lesson.day].total} correct
                   </p>
                 )}
+                {waitingTomorrow && (
+                  <p className="text-xs text-indigo-400 mt-0.5">Come back tomorrow to continue</p>
+                )}
               </div>
               {unlocked && !completed && <ChevronRight size={18} className="text-gray-400 flex-shrink-0" />}
               {completed && <CheckCircle size={18} className="text-green-500 flex-shrink-0" />}
+              {waitingTomorrow && <Moon size={16} className="text-indigo-300 flex-shrink-0" />}
             </button>
           )
         })}
