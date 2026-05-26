@@ -25,7 +25,7 @@ export default function FoodLogPage() {
   const [query, setQuery] = useState('')
   const [filter, setFilter] = useState('all')
   const [selected, setSelected] = useState(null)
-  const [grams, setGrams] = useState('')
+  const [servings, setServings] = useState(1)
   const [addCustomOpen, setAddCustomOpen] = useState(false)
   const [customForm, setCustomForm] = useState({ name: '', caloriesPer100g: '', trafficLight: 'green' })
   const [, setCustomFoods] = useLocalStorage(KEYS.CUSTOM_FOODS, [])
@@ -37,18 +37,17 @@ export default function FoodLogPage() {
     query ? customFoods.filter(f => f.name.toLowerCase().includes(query.toLowerCase())) : []
   ).slice(0, 30)
 
-  function openAdd(meal) { setSheet({ meal }); setQuery(''); setFilter('all'); setSelected(null); setGrams('') }
-  function closeSheet() { setSheet(null); setSelected(null); setGrams('') }
+  function openAdd(meal) { setSheet({ meal }); setQuery(''); setFilter('all'); setSelected(null); setServings(1) }
+  function closeSheet() { setSheet(null); setSelected(null); setServings(1) }
 
   function handleAdd() {
-    if (!selected || !grams) return
-    const g = parseFloat(grams)
-    if (isNaN(g) || g <= 0) return
+    if (!selected) return
+    const grams = selected.servingSizeG * servings
     addEntry(date, sheet.meal, {
       foodId: selected.id,
       name: selected.name,
-      grams: g,
-      calories: calcCaloriesForGrams(selected, g),
+      grams: Math.round(grams),
+      calories: Math.round((selected.caloriesPer100g / 100) * grams),
       trafficLight: selected.trafficLight,
     })
     closeSheet()
@@ -175,25 +174,46 @@ export default function FoodLogPage() {
               </button>
             </div>
           ) : (
-            <div className="space-y-3">
-              <div className="flex items-center gap-2 p-3 bg-gray-50 rounded-xl">
+            <div className="space-y-4">
+              {/* Selected food card */}
+              <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-xl">
                 <TrafficDot light={selected.trafficLight} size={10} />
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-medium text-gray-800 truncate">{selected.name}</p>
-                  <p className="text-xs text-gray-500">{selected.caloriesPer100g} cal per 100g</p>
+                  <p className="text-xs text-gray-500">1 serving = {selected.servingLabel}</p>
                 </div>
-                <button onClick={() => setSelected(null)} className="text-xs text-gray-400 hover:text-gray-600">Change</button>
+                <button onClick={() => setSelected(null)} className="text-xs text-brand-primary font-medium">Change</button>
               </div>
-              <div>
-                <label className="text-sm font-medium text-gray-700 block mb-1">Grams</label>
-                <input type="number" value={grams} onChange={e => setGrams(e.target.value)} min="1"
-                       className="w-full px-3 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-secondary" />
-                <p className="text-xs text-gray-400 mt-1">
-                  ≈ {grams ? Math.round((selected.caloriesPer100g/100)*parseFloat(grams)||0) : 0} calories
-                </p>
+
+              {/* Serving size picker */}
+              <div className="bg-white border border-gray-200 rounded-2xl p-4">
+                <p className="text-xs text-gray-500 mb-3 text-center">How many servings?</p>
+                <div className="flex items-center justify-center gap-6">
+                  <button
+                    onClick={() => setServings(s => Math.max(0.5, Math.round((s - 0.5) * 2) / 2))}
+                    className="w-11 h-11 rounded-full bg-gray-100 text-gray-700 text-xl font-bold flex items-center justify-center hover:bg-gray-200 active:scale-95 transition-all"
+                  >−</button>
+                  <div className="text-center">
+                    <div className="text-3xl font-bold text-brand-primary">{servings}</div>
+                    <div className="text-xs text-gray-400">serving{servings !== 1 ? 's' : ''}</div>
+                  </div>
+                  <button
+                    onClick={() => setServings(s => Math.round((s + 0.5) * 2) / 2)}
+                    className="w-11 h-11 rounded-full bg-brand-primary text-white text-xl font-bold flex items-center justify-center hover:bg-[#3a2270] active:scale-95 transition-all"
+                  >+</button>
+                </div>
               </div>
+
+              {/* Calorie preview */}
+              <div className="text-center py-1">
+                <span className="text-2xl font-bold text-gray-900">
+                  {Math.round((selected.caloriesPer100g / 100) * selected.servingSizeG * servings)}
+                </span>
+                <span className="text-gray-400 text-sm ml-1">calories</span>
+              </div>
+
               <button onClick={handleAdd}
-                      className="w-full bg-brand-primary text-white py-3.5 rounded-xl font-semibold hover:bg-[#3a2270] transition-colors">
+                      className="w-full bg-brand-primary text-white py-4 rounded-xl font-semibold hover:bg-[#3a2270] transition-colors text-base">
                 Add to Log
               </button>
             </div>

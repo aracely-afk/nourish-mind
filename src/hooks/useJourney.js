@@ -24,7 +24,7 @@ export function useJourney() {
     const start = new Date(journey.startDate)
     const today = new Date()
     const daysSinceStart = Math.floor((today - start) / (1000 * 60 * 60 * 24))
-    return Math.max(1, daysSinceStart - journey.pausedDays + 1)
+    return Math.max(1, daysSinceStart - (journey.pausedDays || 0) + 1)
   }, [journey])
 
   const totalDays = journey.length + journey.extensionDays
