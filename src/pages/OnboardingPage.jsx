@@ -6,7 +6,8 @@ import {
   calcBMR, calcTDEE, calcCalorieRange, lbsToKg, ftInToCm, calcBMI, bmiCategory,
   ACTIVITY_LEVELS, GOALS, COMMITMENT_LEVELS, DIET_STYLES, getRecommendedLength,
 } from '../utils/calorieCalc'
-import { ChevronRight, ChevronLeft, Leaf, Heart, AlertTriangle, Phone } from 'lucide-react'
+import { parseBackup, restoreBackup } from '../utils/backup'
+import { ChevronRight, ChevronLeft, Leaf, Heart, AlertTriangle, Phone, RotateCcw } from 'lucide-react'
 
 const ED_OPTIONS = [
   { value: 'healthy',    label: 'Generally healthy',                              desc: 'I just want to build better habits',                        emoji: '✅' },
@@ -19,6 +20,32 @@ export default function OnboardingPage({ onFinish }) {
   const [step, setStep] = useState(0)
   const [, setProfile] = useLocalStorage(KEYS.PROFILE, {})
   const { initJourney } = useJourney()
+
+  // Restore-journey overlay state
+  const [showRestore, setShowRestore] = useState(false)
+  const [restoreCode, setRestoreCode] = useState('')
+  const [restorePreview, setRestorePreview] = useState(null) // parsed backup info
+  const [restoreError, setRestoreError] = useState('')
+
+  function handleRestoreInput(val) {
+    setRestoreCode(val)
+    setRestoreError('')
+    if (val.trim().length > 20) {
+      const parsed = parseBackup(val)
+      setRestorePreview(parsed)
+    } else {
+      setRestorePreview(null)
+    }
+  }
+
+  function handleRestoreConfirm() {
+    const ok = restoreBackup(restoreCode)
+    if (ok) {
+      onFinish() // localStorage is now populated; gate will pass
+    } else {
+      setRestoreError('That code doesn\'t look right. Double-check it and try again.')
+    }
+  }
 
   const [edAnswer, setEdAnswer] = useState(null)
   const [form, setForm] = useState({
@@ -82,6 +109,57 @@ export default function OnboardingPage({ onFinish }) {
         paddingBottom: 'max(2rem, env(safe-area-inset-bottom))',
       }}
     >
+      {/* Restore overlay */}
+      {showRestore && (
+        <div className="absolute inset-0 z-20 bg-[#1f2933]/98 flex flex-col p-6 text-left"
+             style={{ paddingTop: 'max(1.5rem, env(safe-area-inset-top))' }}>
+          <button onClick={() => { setShowRestore(false); setRestoreCode(''); setRestorePreview(null); setRestoreError('') }}
+                  className="self-start mb-5 flex items-center gap-1.5 text-[#f5f6f8]/60 text-sm">
+            <ChevronLeft size={18} /> Back
+          </button>
+          <h2 className="font-brand font-bold text-2xl text-[#D4AF37] mb-1">Restore Your Journey</h2>
+          <p className="text-[#f5f6f8]/70 text-sm mb-5 leading-relaxed">
+            Paste the backup code you saved earlier. Your progress, lessons, and food log will be restored.
+          </p>
+
+          <textarea
+            value={restoreCode}
+            onChange={e => handleRestoreInput(e.target.value)}
+            placeholder="Paste your backup code here..."
+            rows={5}
+            className="w-full bg-white/10 border border-white/20 rounded-2xl px-4 py-3 text-[#f5f6f8] text-xs font-mono placeholder-white/30 focus:outline-none focus:border-[#D4AF37] resize-none"
+          />
+
+          {restoreError && (
+            <p className="mt-2 text-red-400 text-xs">{restoreError}</p>
+          )}
+
+          {restorePreview && !restoreError && (
+            <div className="mt-3 bg-green-900/40 border border-green-500/30 rounded-2xl p-4">
+              <p className="text-green-300 text-xs font-semibold uppercase tracking-wide mb-1">Journey found</p>
+              {restorePreview.name && (
+                <p className="text-[#f5f6f8] font-semibold">{restorePreview.name}'s Journey</p>
+              )}
+              <p className="text-[#f5f6f8]/70 text-sm">
+                Day {restorePreview.currentDay} · {restorePreview.lessonsCompleted} lesson{restorePreview.lessonsCompleted !== 1 ? 's' : ''} completed
+              </p>
+            </div>
+          )}
+
+          <button
+            onClick={handleRestoreConfirm}
+            disabled={!restoreCode.trim() || (!restorePreview && !restoreError)}
+            className="mt-5 w-full bg-[#D4AF37] text-[#1f2933] font-bold py-4 rounded-2xl text-base shadow-xl disabled:opacity-40 active:scale-95 transition-all"
+          >
+            Restore &amp; Continue
+          </button>
+
+          <p className="mt-4 text-[#f5f6f8]/40 text-xs text-center leading-relaxed">
+            Don't have a backup code? Tap Back and start fresh — you can create a backup from the Progress page once you're in the app.
+          </p>
+        </div>
+      )}
+
       {/* Icon + wordmark */}
       <div className="flex-1 w-full flex flex-col items-center justify-center px-8 pt-4 min-h-0 gap-4">
         <img
@@ -101,9 +179,9 @@ export default function OnboardingPage({ onFinish }) {
       </div>
 
       {/* Accent + Quote + CTA */}
-      <div className="relative z-10 flex flex-col items-center px-6 w-full pb-2">
-        <img src="/accent.png" alt="" className="w-32 mb-3 opacity-90" />
-        <blockquote className="text-[#f5f6f8] text-sm font-display italic max-w-xs mb-5 leading-relaxed text-center">
+      <div className="relative z-10 flex flex-col items-center px-6 w-full pb-2 gap-3">
+        <img src="/accent.png" alt="" className="w-32 mb-1 opacity-90" />
+        <blockquote className="text-[#f5f6f8] text-sm font-display italic max-w-xs mb-2 leading-relaxed text-center">
           <p>"...be transformed by the renewing of your mind..."</p>
           <p className="mt-1">Romans 12:2</p>
         </blockquote>
@@ -112,6 +190,12 @@ export default function OnboardingPage({ onFinish }) {
           className="bg-[#D4AF37] text-[#1f2933] font-bold px-6 py-4 rounded-2xl text-base shadow-xl flex items-center gap-2 hover:bg-[#c9a430] active:scale-95 transition-all w-full max-w-xs justify-center"
         >
           Begin My Journey <ChevronRight size={20} />
+        </button>
+        <button
+          onClick={() => setShowRestore(true)}
+          className="flex items-center gap-2 text-[#f5f6f8]/60 text-sm hover:text-[#f5f6f8] transition-colors py-2"
+        >
+          <RotateCcw size={15} /> Restore my journey
         </button>
       </div>
     </div>

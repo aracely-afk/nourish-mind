@@ -11,7 +11,8 @@ import { KEYS } from '../utils/storageKeys'
 import { getLast7Days, getLast30Days, todayStr } from '../utils/dateHelpers'
 import { COMMITMENT_LEVELS, DIET_STYLES } from '../utils/calorieCalc'
 import BottomSheet from '../components/ui/BottomSheet'
-import { Pause, Play, RefreshCw, Plus, AlertTriangle } from 'lucide-react'
+import { Pause, Play, RefreshCw, Plus, AlertTriangle, Download, RotateCcw, Copy, Check } from 'lucide-react'
+import { generateBackup, parseBackup, restoreBackup } from '../utils/backup'
 
 export default function ProgressPage() {
   const [range, setRange] = useState('week')
@@ -32,6 +33,54 @@ export default function ProgressPage() {
   const [confirmAction, setConfirmAction] = useState(null) // 'pause'|'resume'|'restart'|'extend'
   const [confirmed, setConfirmed] = useState(false)
   const [extendDays, setExtendDays] = useState(30)
+
+  // Backup / restore state
+  const [backupSheet, setBackupSheet] = useState(false)
+  const [backupCode, setBackupCode] = useState('')
+  const [copied, setCopied] = useState(false)
+  const [restoreMode, setRestoreMode] = useState(false)
+  const [restoreInput, setRestoreInput] = useState('')
+  const [restorePreview, setRestorePreview] = useState(null)
+  const [restoreError, setRestoreError] = useState('')
+  const [restoreDone, setRestoreDone] = useState(false)
+
+  function openBackupSheet() {
+    setBackupCode(generateBackup())
+    setRestoreMode(false)
+    setRestoreInput('')
+    setRestorePreview(null)
+    setRestoreError('')
+    setRestoreDone(false)
+    setBackupSheet(true)
+  }
+
+  function handleCopy() {
+    navigator.clipboard.writeText(backupCode).catch(() => {})
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2500)
+  }
+
+  function handleRestoreInput(val) {
+    setRestoreInput(val)
+    setRestoreError('')
+    setRestoreDone(false)
+    if (val.trim().length > 20) {
+      setRestorePreview(parseBackup(val))
+    } else {
+      setRestorePreview(null)
+    }
+  }
+
+  function handleRestoreConfirm() {
+    const ok = restoreBackup(restoreInput)
+    if (ok) {
+      setRestoreDone(true)
+      // Reload so all hooks re-initialize from the restored localStorage
+      setTimeout(() => window.location.reload(), 1200)
+    } else {
+      setRestoreError('That code doesn\'t look right. Double-check and try again.')
+    }
+  }
 
   const days = range === 'week' ? getLast7Days() : getLast30Days()
 
@@ -210,6 +259,30 @@ export default function ProgressPage() {
             </div>
           </div>
         </div>
+        {/* Backup & Restore */}
+        <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4">
+          <div className="flex items-center gap-2 mb-1">
+            <Download size={15} className="text-brand-primary" />
+            <h2 className="font-semibold text-gray-800 text-sm">Backup &amp; Restore</h2>
+          </div>
+          <p className="text-xs text-gray-400 mb-3 leading-relaxed">
+            Save a backup code to your Notes app or email. If you ever clear your browser or switch devices, paste it back to restore your full journey.
+          </p>
+          <div className="flex gap-2">
+            <button
+              onClick={openBackupSheet}
+              className="flex-1 flex items-center justify-center gap-2 bg-brand-primary text-white py-3 rounded-xl text-sm font-semibold hover:bg-[#3a2270] transition-colors"
+            >
+              <Download size={15} /> Create Backup
+            </button>
+            <button
+              onClick={() => { setRestoreMode(true); setBackupCode(''); setBackupSheet(true) }}
+              className="flex-1 flex items-center justify-center gap-2 bg-gray-100 text-gray-700 py-3 rounded-xl text-sm font-semibold hover:bg-gray-200 transition-colors"
+            >
+              <RotateCcw size={15} /> Restore
+            </button>
+          </div>
+        </div>
       </div>
 
       {/* Journey Management Sheet */}
@@ -296,6 +369,82 @@ export default function ProgressPage() {
             </div>
           </div>
         )}
+      </BottomSheet>
+
+      {/* Backup / Restore Sheet */}
+      <BottomSheet
+        open={backupSheet}
+        onClose={() => setBackupSheet(false)}
+        title={restoreMode ? 'Restore Journey' : 'Backup My Journey'}
+      >
+        <div className="p-4 space-y-4">
+          {!restoreMode ? (
+            <>
+              <p className="text-sm text-gray-500 leading-relaxed">
+                Copy this code and save it somewhere safe — your Notes app, an email to yourself, or anywhere you won't lose it. You'll need it to restore your journey.
+              </p>
+              <div className="relative">
+                <textarea
+                  readOnly
+                  value={backupCode}
+                  rows={5}
+                  className="w-full bg-gray-50 border border-gray-200 rounded-2xl px-4 py-3 text-xs font-mono text-gray-700 focus:outline-none resize-none select-all"
+                  onFocus={e => e.target.select()}
+                />
+              </div>
+              <button
+                onClick={handleCopy}
+                className={`w-full flex items-center justify-center gap-2 py-3.5 rounded-xl font-semibold text-sm transition-all ${
+                  copied ? 'bg-green-500 text-white' : 'bg-brand-primary text-white hover:bg-[#3a2270]'
+                }`}
+              >
+                {copied ? <><Check size={16} /> Copied!</> : <><Copy size={16} /> Copy Code</>}
+              </button>
+              <p className="text-[10px] text-gray-400 text-center leading-relaxed">
+                This code contains all your progress, food logs, and lessons. Keep it private.
+              </p>
+              <button
+                onClick={() => setRestoreMode(true)}
+                className="w-full text-xs text-gray-400 text-center py-1 hover:text-gray-600 transition-colors"
+              >
+                Want to restore instead?
+              </button>
+            </>
+          ) : (
+            <>
+              <p className="text-sm text-gray-500 leading-relaxed">
+                Paste your backup code below to restore your journey. This will overwrite your current data.
+              </p>
+              <textarea
+                value={restoreInput}
+                onChange={e => handleRestoreInput(e.target.value)}
+                placeholder="Paste your backup code here..."
+                rows={5}
+                className="w-full bg-gray-50 border border-gray-200 rounded-2xl px-4 py-3 text-xs font-mono text-gray-700 placeholder-gray-300 focus:outline-none focus:border-brand-secondary resize-none"
+              />
+              {restoreError && <p className="text-red-500 text-xs">{restoreError}</p>}
+              {restorePreview && !restoreError && (
+                <div className="bg-green-50 border border-green-200 rounded-2xl p-3">
+                  <p className="text-green-700 text-xs font-semibold mb-0.5">Journey found</p>
+                  {restorePreview.name && <p className="text-gray-800 font-medium text-sm">{restorePreview.name}'s Journey</p>}
+                  <p className="text-gray-500 text-xs">Day {restorePreview.currentDay} · {restorePreview.lessonsCompleted} lessons completed</p>
+                </div>
+              )}
+              {restoreDone && (
+                <div className="bg-green-50 border border-green-200 rounded-2xl p-3 text-center">
+                  <p className="text-green-700 font-semibold text-sm">Restored! Reloading...</p>
+                </div>
+              )}
+              <button
+                onClick={handleRestoreConfirm}
+                disabled={!restoreInput.trim() || restoreDone}
+                className="w-full bg-brand-primary text-white py-3.5 rounded-xl font-semibold text-sm disabled:opacity-40 hover:bg-[#3a2270] transition-colors"
+              >
+                Restore &amp; Reload
+              </button>
+            </>
+          )}
+        </div>
       </BottomSheet>
     </div>
   )
