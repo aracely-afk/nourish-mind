@@ -15,10 +15,9 @@ const ED_OPTIONS = [
   { value: 'ed',         label: 'I am or have struggled with an eating disorder', desc: 'Past or present — I want to approach this mindfully',      emoji: '🌱' },
 ]
 
-export default function OnboardingPage() {
+export default function OnboardingPage({ onFinish }) {
   const [step, setStep] = useState(0)
   const [, setProfile] = useLocalStorage(KEYS.PROFILE, {})
-  const [, setOnboarded] = useLocalStorage(KEYS.ONBOARDED, false)
   const { initJourney } = useJourney()
 
   const [edAnswer, setEdAnswer] = useState(null)
@@ -70,7 +69,7 @@ export default function OnboardingPage() {
       edScreeningAnswer: edAnswer,
       weightTrackingEnabled: false,
     })
-    setOnboarded(true)
+    onFinish()
   }
 
   // Step 0: Welcome

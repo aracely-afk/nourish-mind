@@ -13,13 +13,13 @@ import BiometricsPage from './pages/BiometricsPage'
 import ProgressPage from './pages/ProgressPage'
 
 export default function App() {
-  const [onboarded] = useLocalStorage(KEYS.ONBOARDED, false)
+  const [onboarded, setOnboarded] = useLocalStorage(KEYS.ONBOARDED, false)
 
   return (
     <BrowserRouter>
       <Routes>
         {!onboarded ? (
-          <Route path="*" element={<OnboardingPage />} />
+          <Route path="*" element={<OnboardingPage onFinish={() => setOnboarded(true)} />} />
         ) : (
           <Route element={<AppShell />}>
             <Route index element={<DashboardPage />} />
