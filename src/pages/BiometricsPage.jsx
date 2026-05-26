@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { Footprints, Droplets, Weight, Dumbbell, Plus, Trash2, ChevronLeft, ChevronRight, Activity } from 'lucide-react'
+import React, { useState, useEffect, useRef } from 'react'
+import { Footprints, Droplets, Weight, Dumbbell, Plus, Trash2, ChevronLeft, ChevronRight, Activity, Check } from 'lucide-react'
 import { useBiometrics } from '../hooks/useBiometrics'
 import { useProfile } from '../hooks/useProfile'
 import { todayStr, formatDate, addDays, isToday } from '../utils/dateHelpers'
@@ -13,7 +13,34 @@ export default function BiometricsPage() {
   const { profile } = useProfile()
   const [exSheet, setExSheet] = useState(false)
   const [exForm, setExForm] = useState({ type: 'Walk', durationMin: '', caloriesBurned: '' })
+  const [saved, setSaved] = useState(false)
   const bio = getDay(date)
+
+  // Local draft state — only written to storage when Save is tapped
+  const [localSteps, setLocalSteps] = useState(bio.steps || '')
+  const [localWeight, setLocalWeight] = useState(bio.weightKg != null ? bio.weightKg : '')
+
+  // Sync drafts whenever the selected date changes
+  const prevDateRef = useRef(date)
+  useEffect(() => {
+    if (prevDateRef.current !== date) {
+      prevDateRef.current = date
+      const b = getDay(date)
+      setLocalSteps(b.steps || '')
+      setLocalWeight(b.weightKg != null ? b.weightKg : '')
+      setSaved(false)
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [date])
+
+  function handleSave() {
+    updateDay(date, {
+      steps: Number(localSteps) || 0,
+      weightKg: localWeight !== '' ? parseFloat(localWeight) : null,
+    })
+    setSaved(true)
+    setTimeout(() => setSaved(false), 2500)
+  }
 
   function handleAddExercise() {
     if (!exForm.durationMin) return
@@ -37,15 +64,17 @@ export default function BiometricsPage() {
         {/* Steps */}
         <Section icon={Footprints} iconBg="bg-green-50" iconColor="text-green-600" title="Steps">
           <div className="flex items-center gap-3">
-            <input type="number" min="0" value={bio.steps || ''} onChange={e => updateDay(date, { steps: Number(e.target.value) || 0 })}
+            <input type="number" min="0" value={localSteps}
+                   onChange={e => { setLocalSteps(e.target.value); setSaved(false) }}
                    placeholder="0" className={inputCls} />
             <span className="text-sm text-gray-500 flex-shrink-0">steps</span>
           </div>
           <div className="flex items-center gap-2 mt-2">
             <div className="flex-1 h-2 bg-gray-100 rounded-full overflow-hidden">
-              <div className="h-full bg-green-500 rounded-full transition-all" style={{ width: `${Math.min((bio.steps/10000)*100,100)}%` }} />
+              <div className="h-full bg-green-500 rounded-full transition-all"
+                   style={{ width: `${Math.min(((Number(localSteps)||0)/10000)*100,100)}%` }} />
             </div>
-            <span className="text-xs text-gray-400">{bio.steps.toLocaleString()} / 10,000</span>
+            <span className="text-xs text-gray-400">{(Number(localSteps)||0).toLocaleString()} / 10,000</span>
           </div>
         </Section>
 
@@ -65,7 +94,8 @@ export default function BiometricsPage() {
         {/* Weight */}
         <Section icon={Weight} iconBg="bg-purple-50" iconColor="text-purple-600" title="Weight (optional)">
           <div className="flex items-center gap-3">
-            <input type="number" step="0.1" min="50" max="500" value={bio.weightKg != null ? bio.weightKg : ''} onChange={e => updateDay(date, { weightKg: e.target.value ? parseFloat(e.target.value) : null })}
+            <input type="number" step="0.1" min="50" max="500" value={localWeight}
+                   onChange={e => { setLocalWeight(e.target.value); setSaved(false) }}
                    placeholder="lbs" className={inputCls} />
             <span className="text-sm text-gray-500 flex-shrink-0">lbs</span>
           </div>
@@ -129,6 +159,19 @@ export default function BiometricsPage() {
             <Plus size={16} /> Log exercise
           </button>
         </div>
+
+        {/* Save button */}
+        <button
+          onClick={handleSave}
+          className={`w-full py-4 rounded-2xl font-semibold text-base flex items-center justify-center gap-2 transition-all active:scale-[0.98] shadow-sm
+            ${saved
+              ? 'bg-green-500 text-white'
+              : 'bg-brand-primary text-white hover:bg-[#3a2270]'
+            }`}
+        >
+          <Check size={18} />
+          {saved ? 'Saved!' : 'Save'}
+        </button>
       </div>
 
       <BottomSheet open={exSheet} onClose={() => setExSheet(false)} title="Log Exercise">
