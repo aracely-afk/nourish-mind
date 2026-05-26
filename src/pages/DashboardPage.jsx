@@ -200,9 +200,9 @@ export default function DashboardPage() {
 
         {/* Quick Stats */}
         <div className="flex gap-3">
-          <StatTile icon={Droplets} label="Water" value={`${bio.waterCups}/8`} color="text-blue-500" bg="bg-blue-50" />
-          <StatTile icon={Footprints} label="Steps" value={bio.steps.toLocaleString()} color="text-green-600" bg="bg-green-50" />
-          <StatTile icon={Flame} label="Streak" value={`${streaks.currentLoginStreak}d`} color="text-orange-500" bg="bg-orange-50" />
+          <StatTile icon={Droplets} label="Water" value={`${bio.waterCups}/8`} color="text-blue-500" bg="bg-blue-50" onClick={() => navigate('/track')} />
+          <StatTile icon={Footprints} label="Steps" value={bio.steps.toLocaleString()} color="text-green-600" bg="bg-green-50" onClick={() => navigate('/track')} />
+          <StatTile icon={Flame} label="Streak" value={`${streaks.currentLoginStreak}d`} color="text-orange-500" bg="bg-orange-50" onClick={() => navigate('/progress')} />
         </div>
 
         {/* Complete My Day */}
@@ -278,14 +278,17 @@ export default function DashboardPage() {
   )
 }
 
-function StatTile({ icon: Icon, label, value, color, bg }) {
+function StatTile({ icon: Icon, label, value, color, bg, onClick }) {
   return (
-    <div className="flex-1 bg-white rounded-2xl p-3 border border-gray-100 shadow-sm flex flex-col items-center gap-1">
+    <button
+      onClick={onClick}
+      className="flex-1 bg-white rounded-2xl p-3 border border-gray-100 shadow-sm flex flex-col items-center gap-1 active:scale-95 transition-transform"
+    >
       <div className={`w-8 h-8 rounded-xl flex items-center justify-center ${bg}`}>
         <Icon size={16} className={color} />
       </div>
       <span className="text-base font-bold text-gray-900 leading-none">{value}</span>
       <span className="text-[10px] text-gray-500">{label}</span>
-    </div>
+    </button>
   )
 }
