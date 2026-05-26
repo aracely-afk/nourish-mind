@@ -247,6 +247,26 @@ export default function FoodLogPage() {
     ? 'Create New Meal'
     : sheet ? `Add to ${MEAL_LABELS[sheet.meal]}` : ''
 
+  // Footer button — always pinned at the bottom of the sheet, never scrolls away
+  let sheetFooter = null
+  if (sheet && selected) {
+    if (creatingMeal) {
+      sheetFooter = (
+        <button onClick={handleAddToMeal}
+                className="w-full bg-brand-primary text-white py-3.5 rounded-xl font-semibold hover:bg-[#3a2270] active:scale-[0.98] transition-all">
+          + Add to Meal
+        </button>
+      )
+    } else if (sheetTab === 'foods') {
+      sheetFooter = (
+        <button onClick={handleAdd}
+                className="w-full bg-brand-primary text-white py-3.5 rounded-xl font-semibold hover:bg-[#3a2270] active:scale-[0.98] transition-all text-base">
+          Add to Log
+        </button>
+      )
+    }
+  }
+
   return (
     <div className="pb-4">
       {/* Header */}
@@ -314,7 +334,7 @@ export default function FoodLogPage() {
       </div>
 
       {/* Add Food / Meals Sheet */}
-      <BottomSheet open={!!sheet} onClose={closeSheet} title={sheetTitle}>
+      <BottomSheet open={!!sheet} onClose={closeSheet} title={sheetTitle} footer={sheetFooter}>
         <div className="p-3 space-y-2">
 
           {/* ── CREATE MEAL FLOW ── */}
@@ -412,11 +432,6 @@ export default function FoodLogPage() {
                       <span className="text-sm text-gray-400 ml-1">cal</span>
                     </div>
                   </div>
-
-                  <button onClick={handleAddToMeal}
-                          className="w-full bg-brand-primary text-white py-3.5 rounded-xl font-semibold hover:bg-[#3a2270] transition-colors">
-                    + Add to Meal
-                  </button>
                 </div>
               )}
 
@@ -536,11 +551,6 @@ export default function FoodLogPage() {
                           <span className="text-sm text-gray-400 ml-1">cal</span>
                         </div>
                       </div>
-
-                      <button onClick={handleAdd}
-                              className="w-full bg-brand-primary text-white py-3.5 rounded-xl font-semibold hover:bg-[#3a2270] transition-colors">
-                        Add to Log
-                      </button>
                     </div>
                   )}
                 </>
