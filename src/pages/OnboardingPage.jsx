@@ -43,7 +43,7 @@ export default function OnboardingPage({ onFinish }) {
     const heightCm = ftInToCm(Number(form.heightFt), Number(form.heightIn))
     const bmr = calcBMR({ weightKg, heightCm, age: Number(form.age), sex: form.sex })
     const tdee = calcTDEE(bmr, form.activityLevel)
-    const { min, max } = calcCalorieRange(tdee, form.goal)
+    const { min, max } = calcCalorieRange(tdee, form.goal, form.sex)
     const recommended = getRecommendedLength(form.goal, commitment)
     setJourneyLength(recommended)
     setResult({ tdee, min, max, recommended })

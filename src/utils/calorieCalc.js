@@ -88,10 +88,24 @@ export function calcTDEE(bmr, activityLevel) {
   return Math.round(bmr * activityLevel)
 }
 
-export function calcCalorieRange(tdee, goal) {
-  if (goal === 'lose')  return { min: tdee - 500, max: tdee - 300 }
-  if (goal === 'gain')  return { min: tdee + 200, max: tdee + 400 }
-  return { min: tdee - 100, max: tdee + 100 }
+// Healthy minimums per medical consensus (NIH / Academy of Nutrition and Dietetics)
+export const CALORIE_FLOOR = { female: 1200, male: 1500 }
+
+export function calcCalorieRange(tdee, goal, sex = 'female') {
+  const floor = CALORIE_FLOOR[sex] ?? 1200
+
+  let min, max
+  if (goal === 'lose')  { min = tdee - 500; max = tdee - 300 }
+  else if (goal === 'gain') { min = tdee + 200; max = tdee + 400 }
+  else { min = tdee - 100; max = tdee + 100 }
+
+  // Never recommend below the healthy floor
+  if (min < floor) {
+    min = floor
+    if (max < min + 200) max = min + 200  // keep a sensible 200-cal spread
+  }
+
+  return { min: Math.round(min), max: Math.round(max) }
 }
 
 export function lbsToKg(lbs) { return parseFloat((lbs * 0.453592).toFixed(1)) }
