@@ -25,6 +25,15 @@ export default {
         display: ['"Playfair Display"', 'Georgia', 'serif'],
         brand: ['Cinzel', 'Georgia', 'serif'],
       },
+      animation: {
+        'scan-line': 'scan-line 2s ease-in-out infinite',
+      },
+      keyframes: {
+        'scan-line': {
+          '0%, 100%': { top: '8%', opacity: '1' },
+          '50%':       { top: '88%', opacity: '0.7' },
+        },
+      },
     },
   },
   plugins: [],

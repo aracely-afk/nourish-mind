@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Plus, Trash2, ChevronLeft, ChevronRight } from 'lucide-react'
+import { Plus, Trash2, ChevronLeft, ChevronRight, ScanLine, Loader } from 'lucide-react'
 import { useFoodLog } from '../hooks/useFoodLog'
 import { useLocalStorage } from '../hooks/useLocalStorage'
 import { useProfile } from '../hooks/useProfile'
@@ -11,6 +11,54 @@ import TrafficLightBadge from '../components/ui/TrafficLightBadge'
 import BottomSheet from '../components/ui/BottomSheet'
 import SearchBar from '../components/ui/SearchBar'
 import ProgressBar from '../components/ui/ProgressBar'
+import BarcodeScanner from '../components/ui/BarcodeScanner'
+
+// ── Open Food Facts lookup ────────────────────────────────────────────────────
+async function lookupBarcode(barcode) {
+  try {
+    const res = await fetch(
+      `https://world.openfoodfacts.org/api/v2/product/${barcode}.json?fields=product_name,product_name_en,brands,serving_size,serving_quantity,nutriments`,
+      { signal: AbortSignal.timeout(10000) }
+    )
+    if (!res.ok) return null
+    const data = await res.json()
+    if (data.status !== 1 || !data.product) return null
+
+    const p = data.product
+    const n = p.nutriments || {}
+
+    // Try kcal first, fall back to converting kJ
+    const cal100g =
+      n['energy-kcal_100g'] ??
+      (n['energy-kj_100g'] ? Math.round(n['energy-kj_100g'] / 4.184) : null)
+    if (!cal100g) return null
+
+    const servingSizeG  = parseFloat(p.serving_quantity) || 100
+    const servingLabel  = p.serving_size || '1 serving'
+    const productName   = p.product_name || p.product_name_en || 'Unknown Product'
+    const brandName     = p.brands ? p.brands.split(',')[0].trim() : null
+    const displayName   = brandName ? `${productName} (${brandName})` : productName
+    const trafficLight  = cal100g < 300 ? 'green' : cal100g < 500 ? 'yellow' : 'orange'
+
+    return {
+      id:             `barcode_${barcode}`,
+      name:           displayName,
+      brand:          brandName,
+      barcode,
+      caloriesPer100g: Math.round(cal100g),
+      servingSizeG,
+      servingLabel,
+      proteinG: n.proteins_100g        ?? null,
+      carbsG:   n.carbohydrates_100g   ?? null,
+      fatG:     n.fat_100g             ?? null,
+      trafficLight,
+      isCustom:  true,
+      category:  'custom',
+    }
+  } catch {
+    return null
+  }
+}
 
 const MEALS = ['breakfast', 'lunch', 'dinner', 'snacks']
 const MEAL_LABELS = { breakfast: '☀️ Breakfast', lunch: '🌤️ Lunch', dinner: '🌙 Dinner', snacks: '🍎 Snacks' }
@@ -44,6 +92,11 @@ export default function FoodLogPage() {
     proteinG: '', carbsG: '', fatG: '', trafficLight: 'green',
   })
   const [, setCustomFoods] = useLocalStorage(KEYS.CUSTOM_FOODS, [])
+
+  // Barcode scanner
+  const [scannerOpen, setScannerOpen] = useState(false)
+  const [scanLoading, setScanLoading] = useState(false)
+  const [scanError, setScanError] = useState(null) // 'not_found' | 'error' | null
 
   const dayLog = getDayLog(date)
   const totalCal = getDayCalories(date)
@@ -152,6 +205,39 @@ export default function FoodLogPage() {
     setCustomFoods(prev => [food, ...prev])
     setCustomForm({ name: '', brand: '', servingLabel: '', calories: '', proteinG: '', carbsG: '', fatG: '', trafficLight: 'green' })
     setAddCustomOpen(false)
+  }
+
+  async function handleBarcodeScan(barcode) {
+    setScannerOpen(false)
+    setScanLoading(true)
+    setScanError(null)
+
+    // Check if we already saved this barcode before
+    const existing = customFoods.find(f => f.barcode === barcode)
+    if (existing) {
+      setSelected(existing)
+      setServings(1)
+      setScanLoading(false)
+      return
+    }
+
+    // Query Open Food Facts
+    const food = await lookupBarcode(barcode)
+    setScanLoading(false)
+
+    if (food) {
+      // Cache it in custom foods so future scans are instant
+      setCustomFoods(prev =>
+        prev.find(f => f.id === food.id) ? prev : [food, ...prev]
+      )
+      setSelected(food)
+      setServings(1)
+    } else {
+      // Not found — open the custom form so the user can fill it in
+      setScanError('not_found')
+      setCustomForm(f => ({ ...f, name: `Scanned item (${barcode})`, brand: '' }))
+      setAddCustomOpen(true)
+    }
   }
 
   const inRange = totalCal >= profile.calorieMin && totalCal <= profile.calorieMax
@@ -364,7 +450,33 @@ export default function FoodLogPage() {
               {/* ── FOODS TAB ── */}
               {sheetTab === 'foods' && (
                 <>
-                  <SearchBar value={query} onChange={setQuery} autoFocus />
+                  {/* Search + scan row */}
+                  <div className="flex gap-2 items-center">
+                    <div className="flex-1">
+                      <SearchBar value={query} onChange={setQuery} autoFocus />
+                    </div>
+                    <button
+                      onClick={() => setScannerOpen(true)}
+                      className="flex-shrink-0 w-11 h-11 rounded-xl bg-brand-primary flex items-center justify-center text-white hover:bg-[#3a2270] active:scale-95 transition-all"
+                      title="Scan barcode"
+                    >
+                      {scanLoading
+                        ? <Loader size={18} className="animate-spin" />
+                        : <ScanLine size={18} />}
+                    </button>
+                  </div>
+
+                  {/* Scan error banner */}
+                  {scanError === 'not_found' && (
+                    <div className="flex items-center gap-2 bg-amber-50 border border-amber-200 rounded-xl px-3 py-2.5">
+                      <span className="text-amber-500 text-sm">⚠️</span>
+                      <p className="text-xs text-amber-700 flex-1">
+                        Item not found in database. Fill in the details below to save it for next time.
+                      </p>
+                      <button onClick={() => setScanError(null)} className="text-amber-400 hover:text-amber-600 text-xs font-bold">✕</button>
+                    </div>
+                  )}
+
                   <div className="flex gap-2">
                     {['all','green','yellow','orange'].map(f => (
                       <button key={f} onClick={() => setFilter(f)}
@@ -482,8 +594,27 @@ export default function FoodLogPage() {
         </div>
       </BottomSheet>
 
+      {/* Barcode Scanner */}
+      {scannerOpen && (
+        <BarcodeScanner
+          onResult={handleBarcodeScan}
+          onClose={() => setScannerOpen(false)}
+        />
+      )}
+
+      {/* Scan loading overlay (shown after scanner closes while fetching) */}
+      {scanLoading && (
+        <div className="fixed inset-0 z-40 bg-black/60 flex items-center justify-center">
+          <div className="bg-white rounded-2xl p-6 mx-8 text-center shadow-2xl">
+            <Loader size={36} className="animate-spin text-brand-primary mx-auto mb-3" />
+            <p className="font-semibold text-gray-800">Looking up product...</p>
+            <p className="text-xs text-gray-400 mt-1">Checking Open Food Facts database</p>
+          </div>
+        </div>
+      )}
+
       {/* Custom Food Sheet */}
-      <BottomSheet open={addCustomOpen} onClose={() => setAddCustomOpen(false)} title="Add Custom Food / Drink">
+      <BottomSheet open={addCustomOpen} onClose={() => { setAddCustomOpen(false); setScanError(null) }} title="Add Custom Food / Drink">
         <div className="p-4 space-y-3 max-h-[70vh] overflow-y-auto no-scrollbar">
 
           {/* Name + Brand row */}
