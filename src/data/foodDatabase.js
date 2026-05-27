@@ -453,6 +453,147 @@ export const FOODS = [
   { id: 'tj_ebtb_seasoning',          name: "Trader Joe's Everything But the Bagel Sesame Seasoning", category: 'condiment', trafficLight: 'green', caloriesPer100g: 467, servingSizeG: 1, servingLabel: '¼ tsp',            keywords: ["trader joe's", 'tj', 'everything but the bagel', 'ebtb', 'seasoning', 'everything bagel'] },
   { id: 'tj_organic_peanut_butter',   name: "Trader Joe's Organic Peanut Butter (creamy)", category: 'fat',      trafficLight: 'orange', caloriesPer100g: 594, servingSizeG: 32,  servingLabel: '2 tbsp',                   keywords: ["trader joe's", 'tj', 'peanut butter', 'organic peanut butter', 'pb'] },
   { id: 'tj_almond_butter',           name: "Trader Joe's Almond Butter (crunchy)",        category: 'fat',       trafficLight: 'orange', caloriesPer100g: 625, servingSizeG: 32,  servingLabel: '2 tbsp',                   keywords: ["trader joe's", 'tj', 'almond butter', 'nut butter'] },
+
+  // ── GLOBAL CUISINES ──────────────────────────────────────────────────────────
+
+  // Mexican & Latin American — Green
+  { id: 'nopales',             name: 'Nopales (cooked cactus)',           category: 'veggie',  trafficLight: 'green',  caloriesPer100g: 20,  servingSizeG: 90,  servingLabel: '½ cup',       keywords: ['nopales', 'cactus', 'mexican', 'nopal'] },
+  { id: 'calabacitas',         name: 'Calabacitas (Mexican zucchini stew)', category: 'dish',  trafficLight: 'green',  caloriesPer100g: 45,  servingSizeG: 240, servingLabel: '1 cup',       keywords: ['calabacitas', 'zucchini', 'squash', 'mexican', 'calabaza'] },
+  { id: 'ceviche',             name: 'Ceviche (shrimp & fish)',           category: 'protein', trafficLight: 'green',  caloriesPer100g: 80,  servingSizeG: 150, servingLabel: '¾ cup',       keywords: ['ceviche', 'seafood', 'lime', 'mexican', 'latin', 'shrimp'] },
+  { id: 'salsa_verde',         name: 'Salsa Verde (tomatillo)',           category: 'condiment', trafficLight: 'green', caloriesPer100g: 28, servingSizeG: 60,  servingLabel: '¼ cup',       keywords: ['salsa verde', 'tomatillo', 'green salsa', 'mexican'] },
+  { id: 'pico_de_gallo',       name: 'Pico de Gallo',                    category: 'condiment', trafficLight: 'green', caloriesPer100g: 35, servingSizeG: 60,  servingLabel: '¼ cup',       keywords: ['pico de gallo', 'salsa fresca', 'mexican', 'tomato'] },
+  { id: 'sopa_lima',           name: 'Sopa de Lima (Yucatan lime soup)', category: 'dish',    trafficLight: 'green',  caloriesPer100g: 65,  servingSizeG: 350, servingLabel: '1½ cups',     keywords: ['sopa de lima', 'lime soup', 'yucatan', 'mexican'] },
+  { id: 'frijoles_de_olla',    name: 'Frijoles de Olla (pot beans)',     category: 'legume',  trafficLight: 'green',  caloriesPer100g: 95,  servingSizeG: 200, servingLabel: '¾ cup',       keywords: ['frijoles', 'frijoles de olla', 'black beans', 'pot beans', 'mexican', 'beans'] },
+  { id: 'frijoles_charros',    name: 'Frijoles Charros (cowboy beans)',  category: 'dish',    trafficLight: 'green',  caloriesPer100g: 100, servingSizeG: 200, servingLabel: '¾ cup',       keywords: ['frijoles charros', 'cowboy beans', 'pinto beans', 'mexican'] },
+  { id: 'chicken_tinga',       name: 'Chicken Tinga (chipotle shredded)', category: 'protein', trafficLight: 'green', caloriesPer100g: 125, servingSizeG: 120, servingLabel: '4 oz',        keywords: ['chicken tinga', 'tinga', 'shredded chicken', 'chipotle', 'mexican'] },
+  { id: 'pozole',              name: 'Pozole Blanco (hominy soup)',      category: 'dish',    trafficLight: 'green',  caloriesPer100g: 88,  servingSizeG: 400, servingLabel: '1⅔ cups',     keywords: ['pozole', 'hominy', 'mexican', 'soup', 'posole'] },
+  { id: 'birria',              name: 'Birria (beef stew)',               category: 'dish',    trafficLight: 'green',  caloriesPer100g: 145, servingSizeG: 250, servingLabel: '1 cup',       keywords: ['birria', 'beef', 'stew', 'mexican', 'tacos de birria'] },
+  { id: 'agua_fresca',         name: 'Agua Fresca (hibiscus/tamarind)', category: 'beverage', trafficLight: 'green',  caloriesPer100g: 40,  servingSizeG: 360, servingLabel: '12 oz',       keywords: ['agua fresca', 'hibiscus', 'tamarind', 'mexican drink', 'jamaica'] },
+  { id: 'horchata',            name: 'Horchata',                         category: 'beverage', trafficLight: 'green',  caloriesPer100g: 62,  servingSizeG: 360, servingLabel: '12 oz',       keywords: ['horchata', 'rice drink', 'mexican', 'drink', 'agua fresca'] },
+  { id: 'platano_maduro',      name: 'Plátano Maduro (sweet baked plantain)', category: 'fruit', trafficLight: 'green', caloriesPer100g: 122, servingSizeG: 100, servingLabel: '½ plantain', keywords: ['platano maduro', 'sweet plantain', 'baked plantain', 'latin', 'caribbean', 'plantain'] },
+
+  // Mexican & Latin American — Yellow
+  { id: 'tamale_chicken',      name: 'Tamale (chicken & green chile)',  category: 'dish',    trafficLight: 'yellow', caloriesPer100g: 215, servingSizeG: 130, servingLabel: '1 tamale',    keywords: ['tamale', 'tamales', 'chicken tamale', 'mexican', 'masa'] },
+  { id: 'tamale_pork',         name: 'Tamale (pork & red chile)',       category: 'dish',    trafficLight: 'yellow', caloriesPer100g: 225, servingSizeG: 130, servingLabel: '1 tamale',    keywords: ['tamale', 'tamales', 'pork tamale', 'mexican', 'masa'] },
+  { id: 'enchiladas_chicken',  name: 'Enchiladas de Pollo (2 pcs)',     category: 'dish',    trafficLight: 'yellow', caloriesPer100g: 175, servingSizeG: 280, servingLabel: '2 enchiladas', keywords: ['enchiladas', 'chicken enchiladas', 'mexican', 'tortilla'] },
+  { id: 'mole_negro_chicken',  name: 'Mole Negro con Pollo',            category: 'dish',    trafficLight: 'yellow', caloriesPer100g: 165, servingSizeG: 280, servingLabel: '1 cup',       keywords: ['mole', 'mole negro', 'chicken mole', 'mexican', 'chocolate sauce'] },
+  { id: 'tacos_al_pastor',     name: 'Tacos al Pastor (2 tacos)',       category: 'dish',    trafficLight: 'yellow', caloriesPer100g: 190, servingSizeG: 160, servingLabel: '2 tacos',     keywords: ['tacos al pastor', 'pastor', 'pork tacos', 'mexican', 'al pastor'] },
+  { id: 'chile_relleno',       name: 'Chile Relleno (baked)',           category: 'dish',    trafficLight: 'yellow', caloriesPer100g: 160, servingSizeG: 200, servingLabel: '1 chile',     keywords: ['chile relleno', 'stuffed pepper', 'mexican', 'pepper'] },
+  { id: 'burrito_chicken_mx',  name: 'Chicken Burrito (homemade)',      category: 'dish',    trafficLight: 'yellow', caloriesPer100g: 185, servingSizeG: 350, servingLabel: '1 burrito',   keywords: ['burrito', 'chicken burrito', 'mexican', 'wrap'] },
+  { id: 'quesadilla',          name: 'Quesadilla (flour tortilla + cheese)', category: 'dish', trafficLight: 'yellow', caloriesPer100g: 265, servingSizeG: 150, servingLabel: '½ quesadilla', keywords: ['quesadilla', 'cheese quesadilla', 'mexican', 'tortilla', 'queso'] },
+  { id: 'tostones',            name: 'Tostones (fried green plantains)', category: 'dish',   trafficLight: 'yellow', caloriesPer100g: 250, servingSizeG: 90,  servingLabel: '4 pieces',    keywords: ['tostones', 'fried plantains', 'green plantains', 'latin', 'caribbean', 'patacones'] },
+  { id: 'elote',               name: 'Elote (Mexican street corn)',     category: 'dish',    trafficLight: 'yellow', caloriesPer100g: 160, servingSizeG: 130, servingLabel: '1 ear',       keywords: ['elote', 'street corn', 'corn', 'mexican', 'cotija', 'esquites'] },
+  { id: 'pupusas',             name: 'Pupusas (El Salvadoran, 2 pcs)', category: 'dish',    trafficLight: 'yellow', caloriesPer100g: 235, servingSizeG: 200, servingLabel: '2 pupusas',   keywords: ['pupusas', 'pupusa', 'el salvador', 'latin', 'stuffed corn cake'] },
+  { id: 'arroz_rojo',          name: 'Arroz Rojo (Mexican red rice)',   category: 'grain',   trafficLight: 'yellow', caloriesPer100g: 160, servingSizeG: 180, servingLabel: '¾ cup',       keywords: ['arroz rojo', 'mexican rice', 'red rice', 'spanish rice', 'arroz'] },
+
+  // Mexican & Latin American — Orange
+  { id: 'churros',             name: 'Churros (fried pastry)',          category: 'dessert', trafficLight: 'orange', caloriesPer100g: 420, servingSizeG: 50,  servingLabel: '2 sticks',    keywords: ['churros', 'churro', 'fried pastry', 'mexican dessert', 'cinnamon sugar'] },
+  { id: 'flautas',             name: 'Flautas / Taquitos (fried, 3 pcs)', category: 'dish',  trafficLight: 'orange', caloriesPer100g: 385, servingSizeG: 120, servingLabel: '3 flautas',   keywords: ['flautas', 'taquitos', 'fried tacos', 'rolled tacos', 'mexican'] },
+
+  // Japanese — Green
+  { id: 'miso_soup',           name: 'Miso Soup',                       category: 'soup',    trafficLight: 'green',  caloriesPer100g: 36,  servingSizeG: 240, servingLabel: '1 bowl',      keywords: ['miso soup', 'miso', 'japanese', 'soup', 'dashi'] },
+  { id: 'edamame',             name: 'Edamame (shelled)',               category: 'legume',  trafficLight: 'green',  caloriesPer100g: 122, servingSizeG: 155, servingLabel: '1 cup',       keywords: ['edamame', 'soybeans', 'japanese', 'soy', 'green soybeans'] },
+  { id: 'sunomono',            name: 'Sunomono (Japanese cucumber salad)', category: 'veggie', trafficLight: 'green', caloriesPer100g: 25,  servingSizeG: 100, servingLabel: '½ cup',       keywords: ['sunomono', 'cucumber salad', 'japanese', 'vinegar'] },
+  { id: 'seaweed_salad',       name: 'Seaweed Salad (wakame)',          category: 'veggie',  trafficLight: 'green',  caloriesPer100g: 70,  servingSizeG: 100, servingLabel: '½ cup',       keywords: ['seaweed salad', 'wakame', 'japanese', 'algae', 'seaweed'] },
+  { id: 'california_roll',     name: 'California Roll (8 pcs)',         category: 'dish',    trafficLight: 'green',  caloriesPer100g: 145, servingSizeG: 175, servingLabel: '8 pieces',    keywords: ['california roll', 'sushi', 'crab', 'avocado', 'japanese', 'maki'] },
+  { id: 'yakitori',            name: 'Yakitori (chicken skewers, 3 pcs)', category: 'protein', trafficLight: 'green', caloriesPer100g: 140, servingSizeG: 90, servingLabel: '3 skewers',   keywords: ['yakitori', 'chicken skewer', 'japanese', 'grilled chicken', 'teriyaki'] },
+  { id: 'ramen_bowl',          name: 'Ramen (tonkotsu/shoyu, 1 bowl)', category: 'dish',    trafficLight: 'green',  caloriesPer100g: 95,  servingSizeG: 550, servingLabel: '1 bowl',      keywords: ['ramen', 'ramen bowl', 'ramen noodles', 'japanese', 'noodle soup', 'shoyu', 'tonkotsu'] },
+
+  // Japanese — Yellow
+  { id: 'salmon_sushi_roll',   name: 'Salmon Sushi Roll (8 pcs)',       category: 'dish',    trafficLight: 'yellow', caloriesPer100g: 185, servingSizeG: 175, servingLabel: '8 pieces',    keywords: ['salmon roll', 'sushi', 'salmon', 'japanese', 'maki'] },
+  { id: 'spicy_tuna_roll',     name: 'Spicy Tuna Roll (8 pcs)',         category: 'dish',    trafficLight: 'yellow', caloriesPer100g: 175, servingSizeG: 175, servingLabel: '8 pieces',    keywords: ['spicy tuna roll', 'spicy tuna', 'sushi', 'japanese', 'maki'] },
+  { id: 'dragon_roll',         name: 'Dragon Roll (8 pcs)',             category: 'dish',    trafficLight: 'yellow', caloriesPer100g: 230, servingSizeG: 175, servingLabel: '8 pieces',    keywords: ['dragon roll', 'sushi', 'avocado', 'japanese', 'maki'] },
+  { id: 'gyoza_steamed',       name: 'Gyoza / Dumplings (steamed, 6 pcs)', category: 'dish', trafficLight: 'yellow', caloriesPer100g: 165, servingSizeG: 120, servingLabel: '6 pieces',   keywords: ['gyoza', 'dumplings', 'potstickers', 'japanese', 'chinese', 'dumpling'] },
+  { id: 'chicken_teriyaki_plate', name: 'Chicken Teriyaki (with rice)', category: 'dish',   trafficLight: 'yellow', caloriesPer100g: 175, servingSizeG: 350, servingLabel: '1 plate',     keywords: ['chicken teriyaki', 'teriyaki', 'japanese', 'chicken rice', 'teriyaki chicken'] },
+  { id: 'onigiri',             name: 'Onigiri (rice ball, salmon)',     category: 'dish',    trafficLight: 'yellow', caloriesPer100g: 190, servingSizeG: 110, servingLabel: '1 rice ball', keywords: ['onigiri', 'rice ball', 'japanese', 'salmon rice', 'musubi'] },
+  { id: 'soba_noodles',        name: 'Soba Noodles (cooked)',           category: 'grain',   trafficLight: 'yellow', caloriesPer100g: 180, servingSizeG: 200, servingLabel: '1 cup',       keywords: ['soba', 'soba noodles', 'buckwheat noodles', 'japanese'] },
+  { id: 'udon_noodles',        name: 'Udon Noodles (cooked)',           category: 'grain',   trafficLight: 'yellow', caloriesPer100g: 175, servingSizeG: 200, servingLabel: '1 cup',       keywords: ['udon', 'udon noodles', 'japanese', 'thick noodles'] },
+
+  // Japanese — Orange
+  { id: 'tempura_shrimp',      name: 'Tempura Shrimp (4 pcs)',          category: 'dish',    trafficLight: 'orange', caloriesPer100g: 375, servingSizeG: 80,  servingLabel: '4 pieces',    keywords: ['tempura', 'tempura shrimp', 'fried shrimp', 'japanese', 'battered'] },
+
+  // Chinese — Green
+  { id: 'congee',              name: 'Congee / Jook (rice porridge)',   category: 'dish',    trafficLight: 'green',  caloriesPer100g: 45,  servingSizeG: 400, servingLabel: '1⅔ cups',     keywords: ['congee', 'jook', 'rice porridge', 'chinese', 'porridge'] },
+  { id: 'hot_sour_soup',       name: 'Hot and Sour Soup',               category: 'soup',    trafficLight: 'green',  caloriesPer100g: 40,  servingSizeG: 300, servingLabel: '1 bowl',      keywords: ['hot and sour soup', 'chinese soup', 'chinese', 'spicy soup', 'tofu soup'] },
+  { id: 'egg_drop_soup',       name: 'Egg Drop Soup',                   category: 'soup',    trafficLight: 'green',  caloriesPer100g: 35,  servingSizeG: 300, servingLabel: '1 bowl',      keywords: ['egg drop soup', 'chinese soup', 'chinese', 'egg', 'wonton soup'] },
+  { id: 'mapo_tofu',           name: 'Mapo Tofu (Sichuan)',             category: 'dish',    trafficLight: 'green',  caloriesPer100g: 130, servingSizeG: 260, servingLabel: '1 cup',       keywords: ['mapo tofu', 'tofu', 'chinese', 'spicy tofu', 'sichuan', 'mabo tofu'] },
+
+  // Chinese — Yellow
+  { id: 'fried_rice_chinese',  name: 'Fried Rice (chicken)',            category: 'dish',    trafficLight: 'yellow', caloriesPer100g: 185, servingSizeG: 320, servingLabel: '1½ cups',     keywords: ['fried rice', 'chicken fried rice', 'chinese', 'rice', 'egg fried rice'] },
+  { id: 'kung_pao_chicken',    name: 'Kung Pao Chicken',                category: 'dish',    trafficLight: 'yellow', caloriesPer100g: 155, servingSizeG: 280, servingLabel: '1 cup',       keywords: ['kung pao chicken', 'kung pao', 'chinese', 'spicy chicken', 'peanuts'] },
+  { id: 'lo_mein',             name: 'Lo Mein (vegetable)',             category: 'dish',    trafficLight: 'yellow', caloriesPer100g: 155, servingSizeG: 300, servingLabel: '1½ cups',     keywords: ['lo mein', 'noodles', 'chinese', 'vegetable noodles', 'stir fry noodles'] },
+  { id: 'steamed_dumplings',   name: 'Steamed Pork Dumplings (6 pcs)', category: 'dish',    trafficLight: 'yellow', caloriesPer100g: 175, servingSizeG: 120, servingLabel: '6 pieces',    keywords: ['steamed dumplings', 'dumplings', 'baozi', 'chinese', 'pork', 'dim sum'] },
+  { id: 'char_siu',            name: 'Char Siu (Chinese BBQ pork)',     category: 'protein', trafficLight: 'yellow', caloriesPer100g: 280, servingSizeG: 90,  servingLabel: '3 oz',        keywords: ['char siu', 'bbq pork', 'chinese bbq', 'chinese', 'roast pork', 'charsiu'] },
+  { id: 'chow_mein',           name: 'Chow Mein',                       category: 'dish',    trafficLight: 'yellow', caloriesPer100g: 155, servingSizeG: 300, servingLabel: '1½ cups',     keywords: ['chow mein', 'chinese noodles', 'chinese', 'stir fry', 'crispy noodles'] },
+  { id: 'general_tso_chicken', name: "General Tso's Chicken",           category: 'dish',    trafficLight: 'yellow', caloriesPer100g: 215, servingSizeG: 280, servingLabel: '1 cup',       keywords: ["general tso's", 'general tso', 'chinese', 'sweet chicken', 'crispy chicken'] },
+
+  // Chinese — Orange
+  { id: 'fried_spring_roll',   name: 'Fried Spring Roll (3 pcs)',       category: 'dish',    trafficLight: 'orange', caloriesPer100g: 375, servingSizeG: 120, servingLabel: '3 rolls',     keywords: ['fried spring roll', 'spring roll', 'chinese', 'fried', 'egg roll'] },
+
+  // Korean — Green
+  { id: 'kimchi',              name: 'Kimchi',                           category: 'veggie',  trafficLight: 'green',  caloriesPer100g: 20,  servingSizeG: 80,  servingLabel: '½ cup',       keywords: ['kimchi', 'korean', 'fermented', 'cabbage', 'spicy', 'baechu kimchi'] },
+  { id: 'doenjang_jjigae',     name: 'Doenjang Jjigae (soybean paste soup)', category: 'soup', trafficLight: 'green', caloriesPer100g: 45,  servingSizeG: 400, servingLabel: '1 bowl',      keywords: ['doenjang jjigae', 'korean soup', 'miso soup', 'korean', 'soybean soup'] },
+  { id: 'bibimbap',            name: 'Bibimbap (mixed rice bowl)',       category: 'dish',    trafficLight: 'green',  caloriesPer100g: 130, servingSizeG: 450, servingLabel: '1 bowl',      keywords: ['bibimbap', 'korean rice bowl', 'korean', 'mixed rice', 'dolsot'] },
+  { id: 'japchae',             name: 'Japchae (glass noodles & vegetables)', category: 'dish', trafficLight: 'green', caloriesPer100g: 140, servingSizeG: 200, servingLabel: '1 cup',       keywords: ['japchae', 'glass noodles', 'korean', 'sweet potato noodles', 'japche'] },
+
+  // Korean — Yellow
+  { id: 'bulgogi',             name: 'Bulgogi (Korean BBQ beef)',        category: 'protein', trafficLight: 'yellow', caloriesPer100g: 170, servingSizeG: 150, servingLabel: '5 oz',        keywords: ['bulgogi', 'korean bbq', 'korean', 'grilled beef', 'marinated beef'] },
+  { id: 'tteokbokki',          name: 'Tteokbokki (spicy rice cakes)',   category: 'dish',    trafficLight: 'yellow', caloriesPer100g: 155, servingSizeG: 200, servingLabel: '¾ cup',       keywords: ['tteokbokki', 'rice cakes', 'korean', 'spicy', 'ddeokbokki', 'toppoki'] },
+  { id: 'kimchi_fried_rice',   name: 'Kimchi Fried Rice',                category: 'dish',    trafficLight: 'yellow', caloriesPer100g: 175, servingSizeG: 320, servingLabel: '1½ cups',     keywords: ['kimchi fried rice', 'kimchi rice', 'korean', 'rice', 'bokkeumbap'] },
+  { id: 'galbi',               name: 'Galbi (Korean short ribs)',        category: 'protein', trafficLight: 'yellow', caloriesPer100g: 210, servingSizeG: 120, servingLabel: '4 oz',        keywords: ['galbi', 'korean ribs', 'korean bbq', 'short ribs', 'korean', 'kalbi'] },
+  { id: 'sundubu_jjigae',      name: 'Sundubu Jjigae (soft tofu stew)', category: 'dish',    trafficLight: 'yellow', caloriesPer100g: 165, servingSizeG: 400, servingLabel: '1 bowl',      keywords: ['sundubu jjigae', 'soft tofu stew', 'tofu soup', 'korean', 'spicy tofu'] },
+
+  // Vietnamese — Green
+  { id: 'pho',                 name: 'Phở Bò (beef pho, 1 bowl)',       category: 'dish',    trafficLight: 'green',  caloriesPer100g: 65,  servingSizeG: 600, servingLabel: '1 bowl',      keywords: ['pho', 'pho bo', 'beef pho', 'vietnamese', 'noodle soup', 'pho broth'] },
+  { id: 'goi_cuon',            name: 'Gỏi Cuốn (fresh spring rolls, 2 pcs)', category: 'dish', trafficLight: 'green', caloriesPer100g: 100, servingSizeG: 100, servingLabel: '2 rolls',   keywords: ['goi cuon', 'fresh spring rolls', 'vietnamese', 'rice paper', 'summer rolls'] },
+  { id: 'bun_thit_nuong',      name: 'Bún Thịt Nướng (grilled pork noodle bowl)', category: 'dish', trafficLight: 'green', caloriesPer100g: 145, servingSizeG: 400, servingLabel: '1 bowl', keywords: ['bun thit nuong', 'grilled pork noodles', 'vietnamese', 'rice noodles', 'vermicelli'] },
+  { id: 'pho_ga',              name: 'Phở Gà (chicken pho, 1 bowl)',    category: 'dish',    trafficLight: 'green',  caloriesPer100g: 60,  servingSizeG: 600, servingLabel: '1 bowl',      keywords: ['pho ga', 'chicken pho', 'vietnamese', 'noodle soup', 'pho'] },
+
+  // Vietnamese — Yellow
+  { id: 'banh_mi',             name: 'Bánh Mì Sandwich',                category: 'dish',    trafficLight: 'yellow', caloriesPer100g: 225, servingSizeG: 220, servingLabel: '1 sandwich',  keywords: ['banh mi', 'vietnamese sandwich', 'vietnamese', 'baguette', 'bahn mi'] },
+  { id: 'com_tam',             name: 'Cơm Tấm (broken rice & grilled pork)', category: 'dish', trafficLight: 'yellow', caloriesPer100g: 190, servingSizeG: 400, servingLabel: '1 plate',   keywords: ['com tam', 'broken rice', 'vietnamese', 'grilled pork rice', 'com tam suon'] },
+
+  // Thai — Green
+  { id: 'tom_yum',             name: 'Tom Yum Soup (shrimp)',           category: 'soup',    trafficLight: 'green',  caloriesPer100g: 45,  servingSizeG: 350, servingLabel: '1 bowl',      keywords: ['tom yum', 'thai soup', 'thai', 'lemongrass', 'shrimp soup', 'tom yam'] },
+  { id: 'som_tum',             name: 'Som Tum (green papaya salad)',    category: 'veggie',  trafficLight: 'green',  caloriesPer100g: 50,  servingSizeG: 150, servingLabel: '1 cup',       keywords: ['som tum', 'papaya salad', 'thai', 'green papaya', 'spicy salad', 'som tam'] },
+  { id: 'thai_green_curry',    name: 'Thai Green Curry (chicken)',      category: 'dish',    trafficLight: 'green',  caloriesPer100g: 145, servingSizeG: 300, servingLabel: '1 cup',       keywords: ['green curry', 'thai green curry', 'thai', 'coconut curry', 'gaeng keow wan'] },
+  { id: 'thai_red_curry',      name: 'Thai Red Curry (chicken)',        category: 'dish',    trafficLight: 'green',  caloriesPer100g: 148, servingSizeG: 300, servingLabel: '1 cup',       keywords: ['red curry', 'thai red curry', 'thai', 'coconut curry', 'gaeng daeng'] },
+  { id: 'thai_basil_chicken',  name: 'Thai Basil Chicken (pad kra pao)', category: 'dish',   trafficLight: 'green',  caloriesPer100g: 148, servingSizeG: 280, servingLabel: '1 cup',       keywords: ['thai basil chicken', 'pad kra pao', 'thai', 'basil chicken', 'holy basil'] },
+
+  // Thai — Yellow
+  { id: 'pad_thai',            name: 'Pad Thai',                        category: 'dish',    trafficLight: 'yellow', caloriesPer100g: 155, servingSizeG: 350, servingLabel: '1 plate',     keywords: ['pad thai', 'thai noodles', 'thai', 'stir fry noodles', 'rice noodles'] },
+  { id: 'massaman_curry',      name: 'Massaman Curry (beef)',           category: 'dish',    trafficLight: 'yellow', caloriesPer100g: 155, servingSizeG: 300, servingLabel: '1 cup',       keywords: ['massaman curry', 'thai curry', 'thai', 'peanut curry', 'muslim curry'] },
+  { id: 'sticky_rice_th',      name: 'Sticky Rice / Glutinous Rice',   category: 'grain',   trafficLight: 'yellow', caloriesPer100g: 175, servingSizeG: 175, servingLabel: '¾ cup',       keywords: ['sticky rice', 'glutinous rice', 'sweet rice', 'thai', 'asian', 'jasmine sticky rice'] },
+  { id: 'mango_sticky_rice',   name: 'Mango Sticky Rice (Thai dessert)', category: 'dish',   trafficLight: 'yellow', caloriesPer100g: 185, servingSizeG: 250, servingLabel: '1 serving',   keywords: ['mango sticky rice', 'thai dessert', 'thai', 'mango', 'sticky rice', 'khao niao mamuang'] },
+  { id: 'pad_see_ew',          name: 'Pad See Ew (flat rice noodles)', category: 'dish',    trafficLight: 'yellow', caloriesPer100g: 165, servingSizeG: 350, servingLabel: '1 plate',     keywords: ['pad see ew', 'thai noodles', 'thai', 'flat noodles', 'stir fry', 'wide noodles'] },
+
+  // Indian — Green
+  { id: 'dal_tadka',           name: 'Dal Tadka (lentil curry)',        category: 'dish',    trafficLight: 'green',  caloriesPer100g: 100, servingSizeG: 250, servingLabel: '1 cup',       keywords: ['dal', 'dal tadka', 'lentil curry', 'indian', 'lentils', 'daal'] },
+  { id: 'chana_masala',        name: 'Chana Masala (chickpea curry)',   category: 'dish',    trafficLight: 'green',  caloriesPer100g: 115, servingSizeG: 250, servingLabel: '1 cup',       keywords: ['chana masala', 'chickpea curry', 'indian', 'chickpeas', 'chole', 'chhole'] },
+  { id: 'chicken_tikka_masala',name: 'Chicken Tikka Masala',            category: 'dish',    trafficLight: 'green',  caloriesPer100g: 148, servingSizeG: 300, servingLabel: '1 cup',       keywords: ['chicken tikka masala', 'tikka masala', 'indian', 'curry', 'creamy chicken curry'] },
+  { id: 'raita',               name: 'Raita (cucumber yogurt dip)',     category: 'condiment', trafficLight: 'green', caloriesPer100g: 60,  servingSizeG: 60,  servingLabel: '¼ cup',       keywords: ['raita', 'yogurt dip', 'indian', 'cucumber yogurt', 'tzatziki'] },
+  { id: 'basmati_rice',        name: 'Basmati Rice (cooked)',           category: 'grain',   trafficLight: 'green',  caloriesPer100g: 130, servingSizeG: 186, servingLabel: '1 cup',       keywords: ['basmati rice', 'basmati', 'indian rice', 'rice', 'long grain rice'] },
+
+  // Indian — Yellow
+  { id: 'butter_chicken',      name: 'Butter Chicken (Murgh Makhani)', category: 'dish',    trafficLight: 'yellow', caloriesPer100g: 155, servingSizeG: 300, servingLabel: '1 cup',       keywords: ['butter chicken', 'murgh makhani', 'indian', 'curry', 'creamy chicken', 'makhani'] },
+  { id: 'saag_paneer',         name: 'Saag Paneer (spinach & cheese)', category: 'dish',    trafficLight: 'yellow', caloriesPer100g: 175, servingSizeG: 250, servingLabel: '1 cup',       keywords: ['saag paneer', 'palak paneer', 'spinach paneer', 'indian', 'paneer', 'cheese curry'] },
+  { id: 'biryani_chicken',     name: 'Chicken Biryani',                 category: 'dish',    trafficLight: 'yellow', caloriesPer100g: 215, servingSizeG: 350, servingLabel: '1½ cups',     keywords: ['biryani', 'chicken biryani', 'indian', 'rice', 'aromatic rice', 'hyderabadi'] },
+  { id: 'naan_bread',          name: 'Naan Bread (1 piece)',            category: 'grain',   trafficLight: 'yellow', caloriesPer100g: 310, servingSizeG: 90,  servingLabel: '1 naan',      keywords: ['naan', 'naan bread', 'indian bread', 'indian', 'flatbread', 'garlic naan'] },
+  { id: 'samosa',              name: 'Samosa (fried, 2 pcs)',           category: 'dish',    trafficLight: 'yellow', caloriesPer100g: 260, servingSizeG: 100, servingLabel: '2 samosas',   keywords: ['samosa', 'fried samosa', 'indian', 'potato samosa', 'vegetable samosa'] },
+  { id: 'aloo_gobi',           name: 'Aloo Gobi (potato & cauliflower)', category: 'dish',   trafficLight: 'yellow', caloriesPer100g: 160, servingSizeG: 250, servingLabel: '1 cup',       keywords: ['aloo gobi', 'potato cauliflower', 'indian', 'vegetarian curry'] },
+
+  // Filipino — Green
+  { id: 'sinigang',            name: 'Sinigang (sour tamarind soup)',   category: 'soup',    trafficLight: 'green',  caloriesPer100g: 55,  servingSizeG: 400, servingLabel: '1 bowl',      keywords: ['sinigang', 'filipino soup', 'tamarind soup', 'filipino', 'sour soup'] },
+
+  // Filipino — Yellow
+  { id: 'chicken_adobo',       name: 'Chicken Adobo (Filipino)',        category: 'dish',    trafficLight: 'yellow', caloriesPer100g: 165, servingSizeG: 200, servingLabel: '1 cup',       keywords: ['chicken adobo', 'adobo', 'filipino', 'vinegar chicken', 'soy vinegar'] },
+  { id: 'lumpia',              name: 'Lumpia Shanghai (fried, 4 pcs)', category: 'dish',    trafficLight: 'yellow', caloriesPer100g: 310, servingSizeG: 80,  servingLabel: '4 pieces',    keywords: ['lumpia', 'filipino spring rolls', 'filipino', 'fried rolls', 'shanghai'] },
+  { id: 'pancit',              name: 'Pancit Bihon (Filipino noodles)', category: 'dish',    trafficLight: 'yellow', caloriesPer100g: 165, servingSizeG: 300, servingLabel: '1½ cups',     keywords: ['pancit', 'pancit bihon', 'filipino noodles', 'filipino', 'rice noodles'] },
+
+  // Caribbean — Yellow
+  { id: 'jerk_chicken',        name: 'Jerk Chicken',                    category: 'protein', trafficLight: 'yellow', caloriesPer100g: 165, servingSizeG: 170, servingLabel: '6 oz',        keywords: ['jerk chicken', 'caribbean', 'jamaican', 'spiced chicken', 'jerk seasoning'] },
+  { id: 'rice_and_peas',       name: 'Rice and Peas (Caribbean)',       category: 'dish',    trafficLight: 'yellow', caloriesPer100g: 165, servingSizeG: 200, servingLabel: '¾ cup',       keywords: ['rice and peas', 'caribbean rice', 'jamaican', 'kidney beans rice', 'coconut rice'] },
+  { id: 'roti_caribbean',      name: 'Roti (Caribbean flatbread)',      category: 'grain',   trafficLight: 'yellow', caloriesPer100g: 295, servingSizeG: 80,  servingLabel: '1 roti',      keywords: ['roti', 'caribbean roti', 'flatbread', 'trinidadian', 'indian roti'] },
 ]
 
 export function searchFoods(query, filter = 'all') {
