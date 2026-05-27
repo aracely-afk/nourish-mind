@@ -477,39 +477,104 @@ export default function OnboardingPage({ onFinish }) {
     </div>
   )
 
-  // Step 5: All set — launch
+  // Step 5: Profile summary + commitment CTA
   return (
     <div className="min-h-[100dvh] bg-brand-warm flex flex-col"
          style={{ paddingBottom: 'max(1rem, env(safe-area-inset-bottom))' }}>
-      <div className="flex-1 overflow-y-auto p-6 space-y-5 pb-32">
-        <div className="text-center pt-2">
+      <div className="bg-white border-b border-gray-100 px-4 py-3">
+        <h1 className="font-semibold text-brand-charcoal font-brand">Your Profile</h1>
+        <p className="text-xs text-gray-500">Step 5 of 5 · Review &amp; Begin</p>
+      </div>
+
+      <div className="flex-1 overflow-y-auto p-5 space-y-4 pb-40">
+        {/* Hero */}
+        <div className="text-center pt-1 pb-2">
           <div className="text-5xl mb-3">🌱</div>
-          <h1 className="text-2xl font-bold text-brand-charcoal font-brand">You're all set, {form.name}!</h1>
-          <p className="text-gray-500 text-sm mt-1">Your {journeyLength}-day journey starts today.</p>
-          <p className="text-xs text-brand-secondary mt-2">Your progress is saved to your account automatically.</p>
+          <h2 className="text-xl font-bold text-brand-charcoal font-brand">
+            {form.name ? `Ready, ${form.name}?` : 'Ready to begin?'}
+          </h2>
+          <p className="text-gray-500 text-sm mt-1 leading-relaxed">
+            Here's your personalized plan. When you tap the button below,<br />
+            <strong className="text-brand-primary">Day 1 of your journey begins.</strong>
+          </p>
         </div>
 
-        {/* Feature highlights */}
-        <div className="grid grid-cols-2 gap-3 text-left">
-          {[['📊', 'Calorie Tracking', 'Traffic light food system'],
-            ['📖', 'Daily Lessons', 'CBT + biblical wisdom'],
-            ['🏆', 'Points & Rewards', 'Earn weekly rewards'],
-            ['🏃', 'Track Progress', 'Steps, water, weight']].map(([e, t, d]) => (
-            <div key={t} className="bg-white rounded-2xl p-3 border border-gray-100">
-              <div className="text-2xl mb-1">{e}</div>
-              <div className="font-semibold text-xs text-brand-charcoal">{t}</div>
-              <div className="text-[10px] text-gray-500 mt-0.5">{d}</div>
+        {/* Profile summary card */}
+        <div className="bg-gradient-to-br from-[#4B2E83] to-[#3a2270] rounded-3xl p-5 text-white space-y-3">
+          <p className="text-[#A88FCF] text-xs font-semibold uppercase tracking-widest">Your Plan</p>
+          <div className="grid grid-cols-2 gap-3">
+            <div className="bg-white/10 rounded-2xl p-3">
+              <p className="text-[#A88FCF] text-[10px] uppercase tracking-wide mb-0.5">Goal</p>
+              <p className="text-white font-bold text-sm capitalize">
+                {form.goal === 'lose' ? '⚖️ Lose weight' : form.goal === 'gain' ? '💪 Build muscle' : '🌿 Maintain'}
+              </p>
+            </div>
+            <div className="bg-white/10 rounded-2xl p-3">
+              <p className="text-[#A88FCF] text-[10px] uppercase tracking-wide mb-0.5">Journey</p>
+              <p className="text-white font-bold text-sm">{journeyLength} days</p>
+            </div>
+            <div className="bg-white/10 rounded-2xl p-3">
+              <p className="text-[#A88FCF] text-[10px] uppercase tracking-wide mb-0.5">Daily Calories</p>
+              <p className="text-[#D4AF37] font-bold text-sm">{result?.min}–{result?.max}</p>
+            </div>
+            <div className="bg-white/10 rounded-2xl p-3">
+              <p className="text-[#A88FCF] text-[10px] uppercase tracking-wide mb-0.5">Eating Style</p>
+              <p className="text-white font-bold text-sm capitalize">{dietStyle}</p>
+            </div>
+          </div>
+          {form.goal === 'lose' && form.goalWeightLbs && (
+            <div className="bg-white/10 rounded-2xl p-3">
+              <p className="text-[#A88FCF] text-[10px] uppercase tracking-wide mb-0.5">Goal Weight</p>
+              <p className="text-white font-bold text-sm">{form.goalWeightLbs} lbs</p>
+            </div>
+          )}
+        </div>
+
+        {/* What's included */}
+        <div className="bg-white rounded-2xl border border-gray-100 p-4 space-y-2.5">
+          <p className="font-semibold text-sm text-brand-charcoal mb-1">What's included every day</p>
+          {[['📖', 'Daily Lesson', 'CBT + biblical wisdom, one day at a time'],
+            ['🥗', 'Meal Logging', 'Traffic light food system to guide choices'],
+            ['🏆', 'Points & Streaks', 'Earn rewards for consistency'],
+            ['📈', 'Progress Tracking', 'Steps, water, weight, and biometrics']].map(([e, t, d]) => (
+            <div key={t} className="flex items-start gap-3">
+              <span className="text-xl flex-shrink-0 mt-0.5">{e}</span>
+              <div>
+                <p className="font-medium text-sm text-gray-800 leading-tight">{t}</p>
+                <p className="text-[11px] text-gray-500 mt-0.5">{d}</p>
+              </div>
             </div>
           ))}
         </div>
+
+        {/* Commitment declaration */}
+        <div className="bg-brand-pale border border-brand-secondary/30 rounded-2xl p-4 text-center">
+          <p className="text-xs text-brand-primary font-semibold uppercase tracking-widest mb-2">A Word Before You Begin</p>
+          <p className="text-sm text-gray-600 font-display italic leading-relaxed">
+            "Commit your work to the Lord, and your plans will be established."
+          </p>
+          <p className="text-xs text-brand-gold font-semibold mt-1">— Proverbs 16:3</p>
+        </div>
+
+        <p className="text-[11px] text-gray-400 text-center px-2">
+          Your progress is saved to your account automatically. You can always update your profile later.
+        </p>
       </div>
 
+      {/* Sticky CTA */}
       <div className="fixed bottom-0 left-0 right-0 p-4 bg-white border-t border-gray-100 max-w-lg mx-auto"
            style={{ paddingBottom: 'max(1rem, env(safe-area-inset-bottom))' }}>
-        <button onClick={finish}
-                className="w-full bg-brand-primary text-white font-semibold py-4 rounded-2xl text-base hover:bg-[#3a2270] transition-colors shadow-lg">
-          Start Day 1 →
+        <button
+          onClick={finish}
+          className="w-full py-4 rounded-2xl font-bold text-base transition-all active:scale-[0.98] shadow-lg flex items-center justify-center gap-2"
+          style={{ background: 'linear-gradient(135deg, #4B2E83 0%, #7c4dbd 100%)', color: 'white' }}
+        >
+          <Leaf size={18} />
+          Save Profile &amp; Begin My Journey
         </button>
+        <p className="text-[10px] text-gray-400 text-center mt-2">
+          Day 1 starts the moment you tap above
+        </p>
       </div>
     </div>
   )
