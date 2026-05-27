@@ -1,5 +1,8 @@
 export function todayStr() {
-  return new Date().toISOString().slice(0, 10)
+  // Use LOCAL date components — toISOString() is UTC and shifts the date
+  // for US-timezone users logging in the evening (e.g. 9 PM Pacific = next day UTC).
+  const d = new Date()
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
 }
 
 export function formatDate(dateStr) {
@@ -15,7 +18,7 @@ export function formatDateFull(dateStr) {
 export function addDays(dateStr, n) {
   const d = new Date(dateStr + 'T00:00:00')
   d.setDate(d.getDate() + n)
-  return d.toISOString().slice(0, 10)
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
 }
 
 export function isToday(dateStr) {

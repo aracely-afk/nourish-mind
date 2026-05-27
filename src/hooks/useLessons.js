@@ -1,5 +1,6 @@
 import { useCallback } from 'react'
 import { useLocalStorage } from './useLocalStorage'
+import { useJourney } from './useJourney'
 import { KEYS } from '../utils/storageKeys'
 import { todayStr } from '../utils/dateHelpers'
 
@@ -7,30 +8,29 @@ const DEFAULT = { currentDay: 1, completedLessons: [], quizScores: {}, lastCompl
 
 export function useLessons() {
   const [progress, setProgress] = useLocalStorage(KEYS.LESSON_PROGRESS, DEFAULT)
+  const { currentJourneyDay } = useJourney()
 
   const isCompleted = useCallback((day) => progress.completedLessons.includes(day), [progress])
 
-  /** True when a lesson can be opened.
-   *  - Completed lessons: always accessible (revisit any time)
-   *  - Next lesson: accessible only if no lesson was finished today
-   *  - Future lessons beyond next: locked
+  /**
+   * A lesson is unlocked when its day number is ≤ the user's current journey day.
+   * This lets users catch up on any missed lessons without a one-per-day gate.
+   * Previously completed lessons are always re-readable.
    */
   const isUnlocked = useCallback((day) => {
-    // Already completed — always re-readable
-    if (day === 1 || progress.completedLessons.includes(day)) return true
-    // Next lesson: open only if the daily one-lesson limit hasn't been hit
-    if (day === progress.currentDay) {
-      return progress.lastCompletedDate !== todayStr()
-    }
-    return false
-  }, [progress])
+    return day <= currentJourneyDay()
+  }, [currentJourneyDay])
 
-  /** True when the next lesson exists but is gated until tomorrow */
-  const isWaitingForTomorrow = useCallback((day) => {
-    return day === progress.currentDay &&
-      progress.lastCompletedDate === todayStr() &&
-      !progress.completedLessons.includes(day)
-  }, [progress])
+  /**
+   * True when the lesson is beyond the user's current journey day
+   * (i.e. not yet reachable — come back on a future day).
+   */
+  const isNotYetAvailable = useCallback((day) => {
+    return day > currentJourneyDay()
+  }, [currentJourneyDay])
+
+  // Alias kept so existing page code doesn't break
+  const isWaitingForTomorrow = isNotYetAvailable
 
   const completeLesson = useCallback((day, quizScore, quizTotal) => {
     setProgress(prev => {
@@ -52,5 +52,5 @@ export function useLessons() {
 
   const getQuizScore = useCallback((day) => progress.quizScores[day] || null, [progress])
 
-  return { progress, isCompleted, isUnlocked, isWaitingForTomorrow, completeLesson, getQuizScore }
+  return { progress, isCompleted, isUnlocked, isWaitingForTomorrow, isNotYetAvailable, completeLesson, getQuizScore }
 }
