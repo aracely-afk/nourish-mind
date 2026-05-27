@@ -7,9 +7,8 @@ import {
   ACTIVITY_LEVELS, GOALS, COMMITMENT_LEVELS, DIET_STYLES, getRecommendedLength,
   calcWeightGoalEstimate,
 } from '../utils/calorieCalc'
-import { parseBackup, restoreBackup, generateBackup } from '../utils/backup'
 import { pushToCloud } from '../utils/syncData'
-import { ChevronRight, ChevronLeft, Leaf, Heart, AlertTriangle, Phone, RotateCcw, Copy, Check } from 'lucide-react'
+import { ChevronRight, ChevronLeft, Leaf, Heart, Phone } from 'lucide-react'
 
 const ED_OPTIONS = [
   { value: 'healthy',    label: 'Generally healthy',                              desc: 'I just want to build better habits',                        emoji: '✅' },
@@ -22,36 +21,6 @@ export default function OnboardingPage({ onFinish }) {
   const [step, setStep] = useState(0)
   const [, setProfile] = useLocalStorage(KEYS.PROFILE, {})
   const { initJourney } = useJourney()
-
-  // Step 5 backup code
-  const [step5BackupCode, setStep5BackupCode] = useState('')
-  const [step5Copied, setStep5Copied] = useState(false)
-
-  // Restore-journey overlay state
-  const [showRestore, setShowRestore] = useState(false)
-  const [restoreCode, setRestoreCode] = useState('')
-  const [restorePreview, setRestorePreview] = useState(null) // parsed backup info
-  const [restoreError, setRestoreError] = useState('')
-
-  function handleRestoreInput(val) {
-    setRestoreCode(val)
-    setRestoreError('')
-    if (val.trim().length > 20) {
-      const parsed = parseBackup(val)
-      setRestorePreview(parsed)
-    } else {
-      setRestorePreview(null)
-    }
-  }
-
-  function handleRestoreConfirm() {
-    const ok = restoreBackup(restoreCode)
-    if (ok) {
-      onFinish() // localStorage is now populated; gate will pass
-    } else {
-      setRestoreError('That code doesn\'t look right. Double-check it and try again.')
-    }
-  }
 
   const [edAnswer, setEdAnswer] = useState(null)
   const [form, setForm] = useState({
@@ -117,57 +86,6 @@ export default function OnboardingPage({ onFinish }) {
         paddingBottom: 'max(2rem, env(safe-area-inset-bottom))',
       }}
     >
-      {/* Restore overlay */}
-      {showRestore && (
-        <div className="absolute inset-0 z-20 bg-[#1f2933]/98 flex flex-col p-6 text-left"
-             style={{ paddingTop: 'max(1.5rem, env(safe-area-inset-top))' }}>
-          <button onClick={() => { setShowRestore(false); setRestoreCode(''); setRestorePreview(null); setRestoreError('') }}
-                  className="self-start mb-5 flex items-center gap-1.5 text-[#f5f6f8]/60 text-sm">
-            <ChevronLeft size={18} /> Back
-          </button>
-          <h2 className="font-brand font-bold text-2xl text-[#D4AF37] mb-1">Restore Your Journey</h2>
-          <p className="text-[#f5f6f8]/70 text-sm mb-5 leading-relaxed">
-            Paste the backup code you saved earlier. Your progress, lessons, and food log will be restored.
-          </p>
-
-          <textarea
-            value={restoreCode}
-            onChange={e => handleRestoreInput(e.target.value)}
-            placeholder="Paste your backup code here..."
-            rows={5}
-            className="w-full bg-white/10 border border-white/20 rounded-2xl px-4 py-3 text-[#f5f6f8] text-xs font-mono placeholder-white/30 focus:outline-none focus:border-[#D4AF37] resize-none"
-          />
-
-          {restoreError && (
-            <p className="mt-2 text-red-400 text-xs">{restoreError}</p>
-          )}
-
-          {restorePreview && !restoreError && (
-            <div className="mt-3 bg-green-900/40 border border-green-500/30 rounded-2xl p-4">
-              <p className="text-green-300 text-xs font-semibold uppercase tracking-wide mb-1">Journey found</p>
-              {restorePreview.name && (
-                <p className="text-[#f5f6f8] font-semibold">{restorePreview.name}'s Journey</p>
-              )}
-              <p className="text-[#f5f6f8]/70 text-sm">
-                Day {restorePreview.currentDay} · {restorePreview.lessonsCompleted} lesson{restorePreview.lessonsCompleted !== 1 ? 's' : ''} completed
-              </p>
-            </div>
-          )}
-
-          <button
-            onClick={handleRestoreConfirm}
-            disabled={!restoreCode.trim() || (!restorePreview && !restoreError)}
-            className="mt-5 w-full bg-[#D4AF37] text-[#1f2933] font-bold py-4 rounded-2xl text-base shadow-xl disabled:opacity-40 active:scale-95 transition-all"
-          >
-            Restore &amp; Continue
-          </button>
-
-          <p className="mt-4 text-[#f5f6f8]/40 text-xs text-center leading-relaxed">
-            Don't have a backup code? Tap Back and start fresh — you can create a backup from the Progress page once you're in the app.
-          </p>
-        </div>
-      )}
-
       {/* Icon + wordmark */}
       <div className="flex-1 w-full flex flex-col items-center justify-center px-8 pt-4 min-h-0 gap-4">
         <img
@@ -198,12 +116,6 @@ export default function OnboardingPage({ onFinish }) {
           className="bg-[#D4AF37] text-[#1f2933] font-bold px-6 py-4 rounded-2xl text-base shadow-xl flex items-center gap-2 hover:bg-[#c9a430] active:scale-95 transition-all w-full max-w-xs justify-center"
         >
           Begin My Journey <ChevronRight size={20} />
-        </button>
-        <button
-          onClick={() => setShowRestore(true)}
-          className="flex items-center gap-2 text-[#f5f6f8]/60 text-sm hover:text-[#f5f6f8] transition-colors py-2"
-        >
-          <RotateCcw size={15} /> Restore my journey
         </button>
       </div>
     </div>
@@ -557,7 +469,7 @@ export default function OnboardingPage({ onFinish }) {
       </div>
       <div className="fixed bottom-0 left-0 right-0 p-4 bg-white border-t border-gray-100 max-w-lg mx-auto"
            style={{ paddingBottom: 'max(1rem, env(safe-area-inset-bottom))' }}>
-        <button onClick={() => { setStep5BackupCode(generateBackup()); setStep(5) }}
+        <button onClick={() => setStep(5)}
                 className="w-full bg-brand-primary text-white font-semibold py-4 rounded-2xl text-base hover:bg-[#3a2270] transition-colors">
           This looks great! Let's go
         </button>
@@ -565,7 +477,7 @@ export default function OnboardingPage({ onFinish }) {
     </div>
   )
 
-  // Step 5: Save your backup code, then launch
+  // Step 5: All set — launch
   return (
     <div className="min-h-[100dvh] bg-brand-warm flex flex-col"
          style={{ paddingBottom: 'max(1rem, env(safe-area-inset-bottom))' }}>
@@ -574,38 +486,7 @@ export default function OnboardingPage({ onFinish }) {
           <div className="text-5xl mb-3">🌱</div>
           <h1 className="text-2xl font-bold text-brand-charcoal font-brand">You're all set, {form.name}!</h1>
           <p className="text-gray-500 text-sm mt-1">Your {journeyLength}-day journey starts today.</p>
-        </div>
-
-        {/* Backup code — prominent and required */}
-        <div className="bg-white rounded-2xl border-2 border-brand-primary/30 p-4 space-y-3">
-          <div className="flex items-start gap-2">
-            <AlertTriangle size={16} className="text-amber-500 flex-shrink-0 mt-0.5" />
-            <div>
-              <p className="font-semibold text-gray-900 text-sm">Save your backup code</p>
-              <p className="text-xs text-gray-500 mt-0.5 leading-relaxed">
-                This app stores everything on your device. If you clear your browser or switch devices, <strong>this code is the only way to restore your progress.</strong> Copy it now and save it in your Notes app or email it to yourself.
-              </p>
-            </div>
-          </div>
-          <textarea
-            readOnly
-            value={step5BackupCode}
-            rows={4}
-            onFocus={e => e.target.select()}
-            className="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2 text-[10px] font-mono text-gray-600 focus:outline-none resize-none select-all"
-          />
-          <button
-            onClick={() => {
-              navigator.clipboard.writeText(step5BackupCode).catch(() => {})
-              setStep5Copied(true)
-              setTimeout(() => setStep5Copied(false), 3000)
-            }}
-            className={`w-full flex items-center justify-center gap-2 py-3 rounded-xl font-semibold text-sm transition-all ${
-              step5Copied ? 'bg-green-500 text-white' : 'bg-brand-primary text-white hover:bg-[#3a2270]'
-            }`}
-          >
-            {step5Copied ? <><Check size={15} /> Copied to clipboard!</> : <><Copy size={15} /> Copy backup code</>}
-          </button>
+          <p className="text-xs text-brand-secondary mt-2">Your progress is saved to your account automatically.</p>
         </div>
 
         {/* Feature highlights */}
@@ -629,11 +510,6 @@ export default function OnboardingPage({ onFinish }) {
                 className="w-full bg-brand-primary text-white font-semibold py-4 rounded-2xl text-base hover:bg-[#3a2270] transition-colors shadow-lg">
           Start Day 1 →
         </button>
-        {!step5Copied && (
-          <p className="text-[10px] text-amber-600 text-center mt-2">
-            ⚠ Copy your backup code above before starting
-          </p>
-        )}
       </div>
     </div>
   )
