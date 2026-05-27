@@ -9,16 +9,21 @@ import { useJourney } from '../hooks/useJourney'
 import { useLocalStorage } from '../hooks/useLocalStorage'
 import { KEYS } from '../utils/storageKeys'
 import { getLast7Days, getLast30Days, todayStr } from '../utils/dateHelpers'
-import { COMMITMENT_LEVELS, DIET_STYLES } from '../utils/calorieCalc'
+import {
+  COMMITMENT_LEVELS, DIET_STYLES, ACTIVITY_LEVELS, GOALS,
+  lbsToKg, kgToLbs, ftInToCm, cmToFtIn,
+  calcBMR, calcTDEE, calcCalorieRange, calcBMI,
+  calcWeightGoalEstimate,
+} from '../utils/calorieCalc'
 import BottomSheet from '../components/ui/BottomSheet'
-import { Pause, Play, RefreshCw, Plus, AlertTriangle, Download, RotateCcw, Copy, Check } from 'lucide-react'
+import { Pause, Play, RefreshCw, Plus, AlertTriangle, Download, RotateCcw, Copy, Check, Target, User } from 'lucide-react'
 import { generateBackup, parseBackup, restoreBackup } from '../utils/backup'
 
 export default function ProgressPage() {
   const [range, setRange] = useState('week')
   const { getDayCalories } = useFoodLog()
   const { getDay } = useBiometrics()
-  const { profile } = useProfile()
+  const { profile, setProfile } = useProfile()
   const { progress } = useLessons()
   const { streaks } = useStreak()
   const {
@@ -33,6 +38,18 @@ export default function ProgressPage() {
   const [confirmAction, setConfirmAction] = useState(null) // 'pause'|'resume'|'restart'|'extend'
   const [confirmed, setConfirmed] = useState(false)
   const [extendDays, setExtendDays] = useState(30)
+
+  // My Goals sheet
+  const [goalsSheet, setGoalsSheet] = useState(false)
+  const [goalsForm, setGoalsForm] = useState(null)
+  const [goalsSaved, setGoalsSaved] = useState(false)
+
+  // My Profile sheet
+  const [profileSheet, setProfileSheet] = useState(false)
+  const [profileForm, setProfileForm] = useState(null)
+  const [profileBackupCode, setProfileBackupCode] = useState('')
+  const [profileCopied, setProfileCopied] = useState(false)
+  const [profileSaved, setProfileSaved] = useState(false)
 
   // Backup / restore state
   const [backupSheet, setBackupSheet] = useState(false)
@@ -75,11 +92,67 @@ export default function ProgressPage() {
     const ok = restoreBackup(restoreInput)
     if (ok) {
       setRestoreDone(true)
-      // Reload so all hooks re-initialize from the restored localStorage
       setTimeout(() => window.location.reload(), 1200)
     } else {
       setRestoreError('That code doesn\'t look right. Double-check and try again.')
     }
+  }
+
+  // ── My Goals handlers ──
+  function openGoalsSheet() {
+    const { ft, inches } = cmToFtIn(profile.heightCm || 165)
+    setGoalsForm({
+      weightLbs: String(Math.round(kgToLbs(profile.weightKg || 70))),
+      age: String(profile.age || 30),
+      heightFt: String(ft),
+      heightIn: String(inches),
+      activityLevel: profile.activityLevel || 1.375,
+      goal: profile.goal || 'lose',
+      goalWeightLbs: profile.goalWeightLbs ? String(profile.goalWeightLbs) : '',
+    })
+    setGoalsSaved(false)
+    setGoalsSheet(true)
+  }
+
+  function saveGoals() {
+    if (!goalsForm) return
+    const weightKg = lbsToKg(Number(goalsForm.weightLbs) || 70)
+    const heightCm = ftInToCm(Number(goalsForm.heightFt) || 5, Number(goalsForm.heightIn) || 5)
+    const age = Number(goalsForm.age) || 30
+    const bmr = calcBMR({ weightKg, heightCm, age, sex: profile.sex || 'female' })
+    const tdee = calcTDEE(bmr, goalsForm.activityLevel)
+    const { min, max } = calcCalorieRange(tdee, goalsForm.goal, profile.sex || 'female')
+    const bmi = calcBMI(weightKg, heightCm)
+    setProfile(prev => ({
+      ...prev,
+      weightKg, heightCm, age,
+      activityLevel: goalsForm.activityLevel,
+      goal: goalsForm.goal,
+      goalWeightLbs: goalsForm.goalWeightLbs ? parseFloat(goalsForm.goalWeightLbs) : null,
+      tdee, calorieMin: min, calorieMax: max, bmi,
+    }))
+    setGoalsSaved(true)
+    setTimeout(() => { setGoalsSaved(false); setGoalsSheet(false) }, 1200)
+  }
+
+  // ── My Profile handlers ──
+  function openProfileSheet() {
+    setProfileForm({ name: profile.name || '', age: String(profile.age || 30) })
+    setProfileBackupCode(generateBackup())
+    setProfileCopied(false)
+    setProfileSaved(false)
+    setProfileSheet(true)
+  }
+
+  function saveProfileForm() {
+    if (!profileForm) return
+    setProfile(prev => ({
+      ...prev,
+      name: profileForm.name,
+      age: Number(profileForm.age) || prev.age,
+    }))
+    setProfileSaved(true)
+    setTimeout(() => { setProfileSaved(false); setProfileSheet(false) }, 1200)
   }
 
   const days = range === 'week' ? getLast7Days() : getLast30Days()
@@ -124,6 +197,27 @@ export default function ProgressPage() {
     setJourneySheet(false)
   }
 
+  // Live weight-goal estimate for My Goals sheet
+  let goalsEstimate = null
+  if (goalsForm && goalsForm.goal === 'lose' && goalsForm.goalWeightLbs) {
+    const wKg = lbsToKg(Number(goalsForm.weightLbs) || 70)
+    const hCm = ftInToCm(Number(goalsForm.heightFt) || 5, Number(goalsForm.heightIn) || 5)
+    const age = Number(goalsForm.age) || 30
+    const bmr = calcBMR({ weightKg: wKg, heightCm: hCm, age, sex: profile.sex || 'female' })
+    const previewTdee = calcTDEE(bmr, goalsForm.activityLevel)
+    const { min, max } = calcCalorieRange(previewTdee, goalsForm.goal, profile.sex || 'female')
+    goalsEstimate = calcWeightGoalEstimate({
+      goal: goalsForm.goal,
+      goalWeightLbs: parseFloat(goalsForm.goalWeightLbs),
+      weightKg: wKg, age,
+      activityLevel: goalsForm.activityLevel,
+      tdee: previewTdee, calorieMin: min, calorieMax: max,
+    })
+  }
+
+  // Estimate for main progress page (uses saved profile)
+  const pageEstimate = calcWeightGoalEstimate(profile)
+
   const journeyDay = journey.startDate ? currentJourneyDay() : 1
   const commitmentLabel = COMMITMENT_LEVELS.find(c => c.value === journey.commitmentLevel)?.label || 'Building Habits'
   const dietLabel = DIET_STYLES.find(d => d.value === journey.dietStyle)?.label || 'Balanced'
@@ -132,13 +226,21 @@ export default function ProgressPage() {
     <div className="pb-4">
       <div className="sticky top-0 z-10 bg-white/95 backdrop-blur border-b border-gray-100 px-4 py-3">
         <h1 className="font-semibold text-gray-900 font-brand">Progress</h1>
-        <div className="flex gap-2 mt-2">
+        <div className="flex gap-2 mt-2 overflow-x-auto no-scrollbar pb-0.5">
           {['week', 'month'].map(r => (
             <button key={r} onClick={() => setRange(r)}
-                    className={`px-3 py-1.5 rounded-full text-xs font-medium transition-colors capitalize ${range === r ? 'bg-brand-primary text-white' : 'bg-gray-100 text-gray-600'}`}>
+                    className={`flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-medium transition-colors capitalize ${range === r ? 'bg-brand-primary text-white' : 'bg-gray-100 text-gray-600'}`}>
               {r === 'week' ? 'This Week' : 'This Month'}
             </button>
           ))}
+          <button onClick={openGoalsSheet}
+                  className="flex-shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium bg-brand-pale text-brand-primary border border-brand-secondary/30 transition-colors hover:bg-brand-secondary/20">
+            <Target size={11} /> My Goals
+          </button>
+          <button onClick={openProfileSheet}
+                  className="flex-shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium bg-gray-50 text-gray-700 border border-gray-200 transition-colors hover:bg-gray-100">
+            <User size={11} /> My Profile
+          </button>
         </div>
       </div>
 
@@ -149,6 +251,18 @@ export default function ProgressPage() {
           <StatBox label="In Range" value={`${inRangeDays}d`} />
           <StatBox label="Lessons" value={`${progress.completedLessons.length}/90`} />
         </div>
+
+        {/* Weight goal estimate card */}
+        {pageEstimate && (
+          <div className="bg-gradient-to-r from-brand-primary to-brand-secondary rounded-2xl p-4 text-white">
+            <p className="text-white/60 text-[10px] uppercase tracking-wide mb-1">⏱ Estimated Time to Goal</p>
+            <p className="font-bold text-2xl">{pageEstimate.rangeLabel}</p>
+            <p className="text-white/80 text-sm mt-0.5">
+              to lose {pageEstimate.lbsToLose} lbs · ~{pageEstimate.lbsPerWeek} lbs/wk
+            </p>
+            <p className="text-white/40 text-[10px] mt-2 italic">Results vary — consistency is the key factor.</p>
+          </div>
+        )}
 
         {/* Journey Banner */}
         {journey.startDate && (
@@ -371,6 +485,135 @@ export default function ProgressPage() {
         )}
       </BottomSheet>
 
+      {/* My Goals Sheet */}
+      <BottomSheet open={goalsSheet} onClose={() => setGoalsSheet(false)} title="My Goals">
+        {goalsForm && (
+          <div className="p-4 space-y-4">
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <label className="text-xs font-medium text-gray-600 block mb-1">Current weight (lbs)</label>
+                <input type="number" value={goalsForm.weightLbs}
+                       onChange={e => setGoalsForm(f => ({ ...f, weightLbs: e.target.value }))}
+                       className={inputCls} />
+              </div>
+              <div>
+                <label className="text-xs font-medium text-gray-600 block mb-1">Age</label>
+                <input type="number" min="16" max="80" value={goalsForm.age}
+                       onChange={e => setGoalsForm(f => ({ ...f, age: e.target.value }))}
+                       className={inputCls} />
+              </div>
+            </div>
+            <div>
+              <label className="text-xs font-medium text-gray-600 block mb-1">Height</label>
+              <div className="flex gap-2">
+                <div className="flex-1">
+                  <input type="number" min="4" max="7" value={goalsForm.heightFt}
+                         onChange={e => setGoalsForm(f => ({ ...f, heightFt: e.target.value }))}
+                         placeholder="ft" className={inputCls} />
+                  <span className="text-[10px] text-gray-400 pl-1">feet</span>
+                </div>
+                <div className="flex-1">
+                  <input type="number" min="0" max="11" value={goalsForm.heightIn}
+                         onChange={e => setGoalsForm(f => ({ ...f, heightIn: e.target.value }))}
+                         placeholder="in" className={inputCls} />
+                  <span className="text-[10px] text-gray-400 pl-1">inches</span>
+                </div>
+              </div>
+            </div>
+            <div>
+              <label className="text-xs font-medium text-gray-600 block mb-2">Activity level</label>
+              <div className="space-y-1.5">
+                {ACTIVITY_LEVELS.map(a => (
+                  <button key={a.value} onClick={() => setGoalsForm(f => ({ ...f, activityLevel: a.value }))}
+                          className={`w-full text-left px-3 py-2.5 rounded-xl border text-sm transition-colors ${goalsForm.activityLevel === a.value ? 'border-brand-primary bg-brand-pale text-brand-primary' : 'border-gray-200 bg-white text-gray-700'}`}>
+                    <span className="font-medium">{a.label}</span>
+                    <span className="text-xs opacity-60 ml-1">— {a.desc}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+            <div>
+              <label className="text-xs font-medium text-gray-600 block mb-2">Goal</label>
+              <div className="grid grid-cols-3 gap-2">
+                {GOALS.map(g => (
+                  <button key={g.value} onClick={() => setGoalsForm(f => ({ ...f, goal: g.value, goalWeightLbs: g.value !== 'lose' ? '' : f.goalWeightLbs }))}
+                          className={`py-2.5 rounded-xl border text-center text-xs font-medium transition-colors ${goalsForm.goal === g.value ? 'border-brand-primary bg-brand-pale text-brand-primary' : 'border-gray-200 bg-white text-gray-600'}`}>
+                    <div className="text-lg mb-0.5">{g.emoji}</div>{g.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+            {goalsForm.goal === 'lose' && (
+              <div>
+                <label className="text-xs font-medium text-gray-600 block mb-1">Goal weight (lbs) — optional</label>
+                <input type="number" min="80" max="500" value={goalsForm.goalWeightLbs}
+                       onChange={e => setGoalsForm(f => ({ ...f, goalWeightLbs: e.target.value }))}
+                       placeholder="e.g. 145" className={inputCls} />
+              </div>
+            )}
+            {/* Live estimate */}
+            {goalsEstimate && (
+              <div className="bg-brand-pale border border-brand-secondary/30 rounded-2xl p-3">
+                <p className="text-xs text-brand-primary font-semibold mb-0.5">⏱ Estimated time to goal</p>
+                <p className="text-xl font-bold text-brand-primary">{goalsEstimate.rangeLabel}</p>
+                <p className="text-xs text-gray-500 mt-0.5">to lose {goalsEstimate.lbsToLose} lbs · ~{goalsEstimate.lbsPerWeek} lbs/wk</p>
+                <p className="text-[10px] text-gray-400 mt-1 italic">Individual results vary. Consistency matters most.</p>
+              </div>
+            )}
+            <button onClick={saveGoals}
+                    className={`w-full py-3.5 rounded-xl font-semibold text-sm transition-all ${goalsSaved ? 'bg-green-500 text-white' : 'bg-brand-primary text-white hover:bg-[#3a2270]'}`}>
+              {goalsSaved ? '✓ Saved!' : 'Save Goals'}
+            </button>
+          </div>
+        )}
+      </BottomSheet>
+
+      {/* My Profile Sheet */}
+      <BottomSheet open={profileSheet} onClose={() => setProfileSheet(false)} title="My Profile">
+        {profileForm && (
+          <div className="p-4 space-y-4">
+            <div>
+              <label className="text-xs font-medium text-gray-600 block mb-1">First name</label>
+              <input type="text" value={profileForm.name}
+                     onChange={e => setProfileForm(f => ({ ...f, name: e.target.value }))}
+                     placeholder="Your name" className={inputCls} />
+            </div>
+            <div>
+              <label className="text-xs font-medium text-gray-600 block mb-1">Age</label>
+              <input type="number" min="16" max="80" value={profileForm.age}
+                     onChange={e => setProfileForm(f => ({ ...f, age: e.target.value }))}
+                     className={inputCls} />
+            </div>
+            <button onClick={saveProfileForm}
+                    className={`w-full py-3.5 rounded-xl font-semibold text-sm transition-all ${profileSaved ? 'bg-green-500 text-white' : 'bg-brand-primary text-white hover:bg-[#3a2270]'}`}>
+              {profileSaved ? '✓ Saved!' : 'Save Profile'}
+            </button>
+            {/* Backup code */}
+            <div className="border-t border-gray-100 pt-4 space-y-3">
+              <div>
+                <p className="text-sm font-semibold text-gray-800 mb-0.5">Backup Code</p>
+                <p className="text-xs text-gray-400 leading-relaxed">
+                  Save this code in your Notes app or email it to yourself. It's the only way to restore your progress if you lose access.
+                </p>
+              </div>
+              <textarea readOnly value={profileBackupCode} rows={4}
+                        onFocus={e => e.target.select()}
+                        className="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2 text-[10px] font-mono text-gray-600 focus:outline-none resize-none" />
+              <button
+                onClick={() => {
+                  navigator.clipboard.writeText(profileBackupCode).catch(() => {})
+                  setProfileCopied(true)
+                  setTimeout(() => setProfileCopied(false), 2500)
+                }}
+                className={`w-full flex items-center justify-center gap-2 py-3 rounded-xl font-semibold text-sm transition-all ${profileCopied ? 'bg-green-500 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`}
+              >
+                {profileCopied ? <><Check size={15} /> Copied!</> : <><Copy size={15} /> Copy backup code</>}
+              </button>
+            </div>
+          </div>
+        )}
+      </BottomSheet>
+
       {/* Backup / Restore Sheet */}
       <BottomSheet
         open={backupSheet}
@@ -449,6 +692,8 @@ export default function ProgressPage() {
     </div>
   )
 }
+
+const inputCls = 'w-full px-3 py-2.5 rounded-xl border border-gray-200 bg-white text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-brand-secondary focus:border-transparent'
 
 function StatBox({ label, value }) {
   return (

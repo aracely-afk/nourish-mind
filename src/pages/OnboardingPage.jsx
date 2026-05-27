@@ -5,9 +5,10 @@ import { KEYS } from '../utils/storageKeys'
 import {
   calcBMR, calcTDEE, calcCalorieRange, lbsToKg, ftInToCm, calcBMI, bmiCategory,
   ACTIVITY_LEVELS, GOALS, COMMITMENT_LEVELS, DIET_STYLES, getRecommendedLength,
+  calcWeightGoalEstimate,
 } from '../utils/calorieCalc'
-import { parseBackup, restoreBackup } from '../utils/backup'
-import { ChevronRight, ChevronLeft, Leaf, Heart, AlertTriangle, Phone, RotateCcw } from 'lucide-react'
+import { parseBackup, restoreBackup, generateBackup } from '../utils/backup'
+import { ChevronRight, ChevronLeft, Leaf, Heart, AlertTriangle, Phone, RotateCcw, Copy, Check } from 'lucide-react'
 
 const ED_OPTIONS = [
   { value: 'healthy',    label: 'Generally healthy',                              desc: 'I just want to build better habits',                        emoji: '✅' },
@@ -20,6 +21,10 @@ export default function OnboardingPage({ onFinish }) {
   const [step, setStep] = useState(0)
   const [, setProfile] = useLocalStorage(KEYS.PROFILE, {})
   const { initJourney } = useJourney()
+
+  // Step 5 backup code
+  const [step5BackupCode, setStep5BackupCode] = useState('')
+  const [step5Copied, setStep5Copied] = useState(false)
 
   // Restore-journey overlay state
   const [showRestore, setShowRestore] = useState(false)
@@ -486,6 +491,31 @@ export default function OnboardingPage({ onFinish }) {
           <div className="mt-2 text-xs text-gray-400">Based on TDEE of {result.tdee.toLocaleString()} cal/day · Hi {form.name}!</div>
         </div>
 
+        {/* Weight goal estimate */}
+        {form.goal === 'lose' && form.goalWeightLbs && (() => {
+          const est = calcWeightGoalEstimate({
+            goal: form.goal,
+            goalWeightLbs: parseFloat(form.goalWeightLbs),
+            weightKg: lbsToKg(Number(form.weightLbs)),
+            age: Number(form.age),
+            activityLevel: form.activityLevel,
+            tdee: result.tdee,
+            calorieMin: result.min,
+            calorieMax: result.max,
+          })
+          if (!est) return null
+          return (
+            <div className="bg-white rounded-2xl p-4 border border-gray-100">
+              <p className="text-xs text-gray-400 uppercase tracking-wide mb-1">⏱ Time to Goal Weight</p>
+              <div className="text-2xl font-bold text-brand-primary">{est.rangeLabel}</div>
+              <p className="text-sm text-gray-600 mt-0.5">to lose {est.lbsToLose} lbs · ~{est.lbsPerWeek} lbs/wk</p>
+              <p className="text-[10px] text-gray-400 mt-2 leading-relaxed italic">
+                Estimate based on your age, activity level, and calorie targets. Individual results vary based on consistency, sleep, hormones, and metabolism.
+              </p>
+            </div>
+          )
+        })()}
+
         {/* Points system explainer */}
         <div className="bg-white rounded-2xl p-4 border border-gray-100">
           <p className="font-semibold text-brand-charcoal mb-3">🏆 How Points Work</p>
@@ -524,7 +554,7 @@ export default function OnboardingPage({ onFinish }) {
       </div>
       <div className="fixed bottom-0 left-0 right-0 p-4 bg-white border-t border-gray-100 max-w-lg mx-auto"
            style={{ paddingBottom: 'max(1rem, env(safe-area-inset-bottom))' }}>
-        <button onClick={() => setStep(5)}
+        <button onClick={() => { setStep5BackupCode(generateBackup()); setStep(5) }}
                 className="w-full bg-brand-primary text-white font-semibold py-4 rounded-2xl text-base hover:bg-[#3a2270] transition-colors">
           This looks great! Let's go
         </button>
@@ -532,30 +562,76 @@ export default function OnboardingPage({ onFinish }) {
     </div>
   )
 
-  // Step 5: Done
+  // Step 5: Save your backup code, then launch
   return (
-    <div className="min-h-[100dvh] bg-brand-warm flex flex-col items-center justify-center p-6 text-center">
-      <div className="text-6xl mb-4">🌱</div>
-      <h1 className="text-2xl font-bold text-brand-charcoal mb-2 font-brand">You're all set, {form.name}!</h1>
-      <p className="text-gray-500 text-sm mb-8 max-w-xs leading-relaxed">
-        Your {journeyLength}-day journey to food freedom starts today. Remember: progress, not perfection.
-      </p>
-      <div className="grid grid-cols-2 gap-3 w-full max-w-xs mb-8 text-left">
-        {[['📊', 'Daily Calorie Tracking', 'Log meals with traffic light guidance'],
-          ['📖', 'Daily Lessons', 'CBT + biblical wisdom in 5–15 min reads'],
-          ['🏆', 'Points & Rewards', 'Earn points daily, unlock weekly rewards'],
-          ['🏃', 'Biometrics Tracking', 'Steps, water, weight, exercise']].map(([e, t, d]) => (
-          <div key={t} className="bg-white rounded-2xl p-3 border border-gray-100">
-            <div className="text-2xl mb-1">{e}</div>
-            <div className="font-semibold text-xs text-brand-charcoal">{t}</div>
-            <div className="text-[10px] text-gray-500 mt-0.5">{d}</div>
+    <div className="min-h-[100dvh] bg-brand-warm flex flex-col"
+         style={{ paddingBottom: 'max(1rem, env(safe-area-inset-bottom))' }}>
+      <div className="flex-1 overflow-y-auto p-6 space-y-5 pb-32">
+        <div className="text-center pt-2">
+          <div className="text-5xl mb-3">🌱</div>
+          <h1 className="text-2xl font-bold text-brand-charcoal font-brand">You're all set, {form.name}!</h1>
+          <p className="text-gray-500 text-sm mt-1">Your {journeyLength}-day journey starts today.</p>
+        </div>
+
+        {/* Backup code — prominent and required */}
+        <div className="bg-white rounded-2xl border-2 border-brand-primary/30 p-4 space-y-3">
+          <div className="flex items-start gap-2">
+            <AlertTriangle size={16} className="text-amber-500 flex-shrink-0 mt-0.5" />
+            <div>
+              <p className="font-semibold text-gray-900 text-sm">Save your backup code</p>
+              <p className="text-xs text-gray-500 mt-0.5 leading-relaxed">
+                This app stores everything on your device. If you clear your browser or switch devices, <strong>this code is the only way to restore your progress.</strong> Copy it now and save it in your Notes app or email it to yourself.
+              </p>
+            </div>
           </div>
-        ))}
+          <textarea
+            readOnly
+            value={step5BackupCode}
+            rows={4}
+            onFocus={e => e.target.select()}
+            className="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2 text-[10px] font-mono text-gray-600 focus:outline-none resize-none select-all"
+          />
+          <button
+            onClick={() => {
+              navigator.clipboard.writeText(step5BackupCode).catch(() => {})
+              setStep5Copied(true)
+              setTimeout(() => setStep5Copied(false), 3000)
+            }}
+            className={`w-full flex items-center justify-center gap-2 py-3 rounded-xl font-semibold text-sm transition-all ${
+              step5Copied ? 'bg-green-500 text-white' : 'bg-brand-primary text-white hover:bg-[#3a2270]'
+            }`}
+          >
+            {step5Copied ? <><Check size={15} /> Copied to clipboard!</> : <><Copy size={15} /> Copy backup code</>}
+          </button>
+        </div>
+
+        {/* Feature highlights */}
+        <div className="grid grid-cols-2 gap-3 text-left">
+          {[['📊', 'Calorie Tracking', 'Traffic light food system'],
+            ['📖', 'Daily Lessons', 'CBT + biblical wisdom'],
+            ['🏆', 'Points & Rewards', 'Earn weekly rewards'],
+            ['🏃', 'Track Progress', 'Steps, water, weight']].map(([e, t, d]) => (
+            <div key={t} className="bg-white rounded-2xl p-3 border border-gray-100">
+              <div className="text-2xl mb-1">{e}</div>
+              <div className="font-semibold text-xs text-brand-charcoal">{t}</div>
+              <div className="text-[10px] text-gray-500 mt-0.5">{d}</div>
+            </div>
+          ))}
+        </div>
       </div>
-      <button onClick={finish}
-              className="bg-brand-primary text-white font-semibold px-8 py-4 rounded-2xl text-base hover:bg-[#3a2270] transition-colors shadow-lg">
-        Start Day 1 →
-      </button>
+
+      <div className="fixed bottom-0 left-0 right-0 p-4 bg-white border-t border-gray-100 max-w-lg mx-auto"
+           style={{ paddingBottom: 'max(1rem, env(safe-area-inset-bottom))' }}>
+        <button onClick={finish}
+                className="w-full bg-brand-primary text-white font-semibold py-4 rounded-2xl text-base hover:bg-[#3a2270] transition-colors shadow-lg">
+          Start Day 1 →
+        </button>
+        {!step5Copied && (
+          <p className="text-[10px] text-amber-600 text-center mt-2">
+            ⚠ Copy your backup code above before starting
+          </p>
+        )}
+      </div>
     </div>
   )
 }

@@ -128,3 +128,57 @@ export function bmiCategory(bmi) {
   if (bmi < 30)   return { label: 'Overweight', color: '#eab308' }
   return { label: 'Obese', color: '#ef4444' }
 }
+
+/**
+ * Estimate how long it will take to reach a weight-loss goal.
+ * Returns null if goal is not "lose", no goalWeightLbs is set, or they're already there.
+ *
+ * Factors in: calorie deficit, age (metabolism), activity level.
+ * Returns a range to account for real-world variance.
+ */
+export function calcWeightGoalEstimate(profile) {
+  if (profile.goal !== 'lose') return null
+  if (!profile.goalWeightLbs || !profile.weightKg || !profile.tdee) return null
+
+  const currentLbs = kgToLbs(profile.weightKg)
+  const lbsToLose = Math.round((currentLbs - Number(profile.goalWeightLbs)) * 10) / 10
+  if (lbsToLose <= 0) return null
+
+  // Average daily deficit = TDEE minus midpoint of calorie range
+  const midCal = ((profile.calorieMin || 0) + (profile.calorieMax || 0)) / 2
+  const deficitPerDay = Math.max(150, profile.tdee - midCal)
+
+  // 3,500 cal ≈ 1 lb of fat
+  const rawLbsPerWeek = (deficitPerDay * 7) / 3500
+  const lbsPerWeek = Math.max(0.3, Math.round(rawLbsPerWeek * 10) / 10)
+
+  const rawWeeks = lbsToLose / lbsPerWeek
+
+  // Age slows metabolism
+  const ageFactor = profile.age >= 50 ? 1.2
+    : profile.age >= 40 ? 1.1
+    : profile.age >= 30 ? 1.05
+    : 1.0
+
+  // More active = slightly faster fat loss
+  const actFactor = (profile.activityLevel >= 1.725) ? 0.92
+    : (profile.activityLevel >= 1.55) ? 0.96 : 1.0
+
+  const adjustedWeeks = Math.round(rawWeeks * ageFactor * actFactor)
+  const minWeeks = Math.max(1, Math.round(adjustedWeeks * 0.85))
+  const maxWeeks = Math.round(adjustedWeeks * 1.15)
+
+  function fmt(w) {
+    if (w <= 8) return `${w} wk${w !== 1 ? 's' : ''}`
+    const m = Math.round(w / 4.33)
+    return `${m} mo${m !== 1 ? 's' : ''}`
+  }
+
+  return {
+    lbsToLose,
+    lbsPerWeek,
+    minWeeks,
+    maxWeeks,
+    rangeLabel: `${fmt(minWeeks)} – ${fmt(maxWeeks)}`,
+  }
+}
