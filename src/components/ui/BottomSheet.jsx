@@ -4,25 +4,46 @@ export default function BottomSheet({ open, onClose, title, children, footer }) 
   const sheetRef = useRef(null)
   const startYRef = useRef(null)
   const startHeightRef = useRef(null)
-  const [height, setHeight] = useState(null) // null = content-driven up to 90vh
+  const [height, setHeight] = useState(null) // null = content-driven
+  const [kbOffset, setKbOffset] = useState(0) // keyboard height in px
 
+  // Lock body scroll when open
   useEffect(() => {
     if (open) {
       document.body.style.overflow = 'hidden'
     } else {
       document.body.style.overflow = ''
-      setHeight(null) // reset when closed so next open starts fresh
+      setHeight(null)
     }
     return () => { document.body.style.overflow = '' }
   }, [open])
 
+  // Track visual viewport so the sheet lifts above the keyboard on iOS/Android
+  useEffect(() => {
+    if (!open) { setKbOffset(0); return }
+
+    function update() {
+      if (!window.visualViewport) return
+      const offset = window.innerHeight - window.visualViewport.height - window.visualViewport.offsetTop
+      setKbOffset(Math.max(0, offset))
+    }
+
+    window.visualViewport?.addEventListener('resize', update)
+    window.visualViewport?.addEventListener('scroll', update)
+    update()
+
+    return () => {
+      window.visualViewport?.removeEventListener('resize', update)
+      window.visualViewport?.removeEventListener('scroll', update)
+      setKbOffset(0)
+    }
+  }, [open])
+
   /**
-   * Drag-to-resize: attach to the drag handle (and title bar).
-   * Dragging UP expands the sheet up to 96vh.
-   * Dragging DOWN 80px+ below the starting height closes the sheet.
+   * Drag-to-resize: dragging UP expands the sheet.
+   * Dragging DOWN 80px+ below the starting height closes it.
    */
   function onHandlePointerDown(e) {
-    // Don't steal clicks on buttons inside the title area
     if (e.target.closest('button')) return
 
     const clientY = e.touches ? e.touches[0].clientY : e.clientY
@@ -31,17 +52,16 @@ export default function BottomSheet({ open, onClose, title, children, footer }) 
 
     function onMove(ev) {
       if (startYRef.current === null) return
-      if (ev.cancelable) ev.preventDefault() // prevent scroll while dragging
+      if (ev.cancelable) ev.preventDefault()
       const cy = ev.touches ? ev.touches[0].clientY : ev.clientY
-      const delta = startYRef.current - cy   // positive = finger moved up
-      const maxH = window.visualViewport ? window.visualViewport.height * 0.96 : window.innerHeight * 0.96
-      const newH = Math.min(maxH, Math.max(120, startHeightRef.current + delta))
+      const delta = startYRef.current - cy
+      const vh = window.visualViewport ? window.visualViewport.height : window.innerHeight
+      const newH = Math.min(vh * 0.96, Math.max(120, startHeightRef.current + delta))
       setHeight(newH)
     }
 
     function onUp() {
       const currentH = sheetRef.current?.offsetHeight ?? startHeightRef.current ?? 300
-      // Close if dragged down 80+ px below where it started
       if (currentH < (startHeightRef.current ?? 300) - 80) {
         setHeight(null)
         onClose()
@@ -62,7 +82,12 @@ export default function BottomSheet({ open, onClose, title, children, footer }) 
   if (!open) return null
 
   return (
-    <div className="fixed inset-0 z-50 flex flex-col justify-end">
+    // z-[60] beats BottomNav's z-50 so the sheet always renders on top.
+    // bottom is set dynamically so the sheet lifts above the keyboard.
+    <div
+      className="fixed inset-x-0 top-0 z-[60] flex flex-col justify-end"
+      style={{ bottom: `${kbOffset}px` }}
+    >
       {/* Backdrop */}
       <div className="absolute inset-0 bg-black/40" onClick={onClose} />
 
@@ -70,11 +95,9 @@ export default function BottomSheet({ open, onClose, title, children, footer }) 
       <div
         ref={sheetRef}
         className="relative bg-white rounded-t-2xl flex flex-col"
-        style={{
-          ...(height ? { height: `${height}px` } : { maxHeight: '90dvh' }),
-        }}
+        style={height ? { height: `${height}px` } : { maxHeight: '92%' }}
       >
-        {/* Drag handle — primary drag target */}
+        {/* Drag handle */}
         <div
           className="flex justify-center pt-3 pb-2 flex-shrink-0 select-none touch-none cursor-grab active:cursor-grabbing"
           onTouchStart={onHandlePointerDown}
@@ -83,7 +106,7 @@ export default function BottomSheet({ open, onClose, title, children, footer }) 
           <div className="w-12 h-1.5 rounded-full bg-gray-300" />
         </div>
 
-        {/* Title — also draggable */}
+        {/* Title — also a drag target */}
         {title && (
           <div
             className="px-4 pb-2 flex-shrink-0 border-b border-gray-100 select-none touch-none cursor-grab active:cursor-grabbing"
@@ -99,10 +122,16 @@ export default function BottomSheet({ open, onClose, title, children, footer }) 
           {children}
         </div>
 
-        {/* Sticky footer — always visible, never scrolls away */}
+        {/* Sticky footer — always visible, never scrolled away */}
         {footer && (
-          <div className="flex-shrink-0 px-3 pt-2 border-t border-gray-100 bg-white"
-               style={{ paddingBottom: 'max(0.75rem, env(safe-area-inset-bottom))' }}>
+          <div
+            className="flex-shrink-0 px-3 pt-2 border-t border-gray-100 bg-white"
+            style={{
+              paddingBottom: kbOffset > 0
+                ? '0.75rem'
+                : 'max(0.75rem, env(safe-area-inset-bottom))',
+            }}
+          >
             {footer}
           </div>
         )}
