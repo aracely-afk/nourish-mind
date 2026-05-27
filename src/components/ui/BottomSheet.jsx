@@ -34,7 +34,7 @@ export default function BottomSheet({ open, onClose, title, children, footer }) 
       if (ev.cancelable) ev.preventDefault() // prevent scroll while dragging
       const cy = ev.touches ? ev.touches[0].clientY : ev.clientY
       const delta = startYRef.current - cy   // positive = finger moved up
-      const maxH = window.innerHeight * 0.96
+      const maxH = window.visualViewport ? window.visualViewport.height * 0.96 : window.innerHeight * 0.96
       const newH = Math.min(maxH, Math.max(120, startHeightRef.current + delta))
       setHeight(newH)
     }
@@ -71,8 +71,7 @@ export default function BottomSheet({ open, onClose, title, children, footer }) 
         ref={sheetRef}
         className="relative bg-white rounded-t-2xl flex flex-col"
         style={{
-          ...(height ? { height: `${height}px` } : { maxHeight: '90vh' }),
-          paddingBottom: 'env(safe-area-inset-bottom)',
+          ...(height ? { height: `${height}px` } : { maxHeight: '90dvh' }),
         }}
       >
         {/* Drag handle — primary drag target */}
@@ -102,7 +101,8 @@ export default function BottomSheet({ open, onClose, title, children, footer }) 
 
         {/* Sticky footer — always visible, never scrolls away */}
         {footer && (
-          <div className="flex-shrink-0 px-3 pb-3 pt-2 border-t border-gray-100 bg-white">
+          <div className="flex-shrink-0 px-3 pt-2 border-t border-gray-100 bg-white"
+               style={{ paddingBottom: 'max(0.75rem, env(safe-area-inset-bottom))' }}>
             {footer}
           </div>
         )}
