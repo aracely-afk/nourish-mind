@@ -54,5 +54,16 @@ export function useFoodLog() {
     }, { green: 0, yellow: 0, orange: 0 })
   }, [getDayLog])
 
-  return { log, getDayLog, addEntry, removeEntry, getDayCalories, getDayCaloriesByLight }
+  const isDayDone = useCallback((dateStr = todayStr()) => {
+    return log[dateStr]?.done === true
+  }, [log])
+
+  const markDayDone = useCallback((dateStr = todayStr(), done = true) => {
+    setLog(prev => ({
+      ...prev,
+      [dateStr]: { ...(prev[dateStr] || EMPTY_DAY()), done },
+    }))
+  }, [setLog])
+
+  return { log, getDayLog, addEntry, removeEntry, getDayCalories, getDayCaloriesByLight, isDayDone, markDayDone }
 }

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Plus, Trash2, ChevronLeft, ChevronRight, ScanLine, Loader } from 'lucide-react'
+import { Plus, Trash2, ChevronLeft, ChevronRight, ScanLine, Loader, CheckCircle2 } from 'lucide-react'
 import { useFoodLog } from '../hooks/useFoodLog'
 import { useLocalStorage } from '../hooks/useLocalStorage'
 import { useProfile } from '../hooks/useProfile'
@@ -65,7 +65,7 @@ const MEAL_LABELS = { breakfast: '☀️ Breakfast', lunch: '🌤️ Lunch', din
 
 export default function FoodLogPage() {
   const [date, setDate] = useState(todayStr())
-  const { getDayLog, addEntry, removeEntry, getDayCalories } = useFoodLog()
+  const { getDayLog, addEntry, removeEntry, getDayCalories, isDayDone, markDayDone } = useFoodLog()
   const { profile } = useProfile()
   const [customFoods] = useLocalStorage(KEYS.CUSTOM_FOODS, [])
   const [savedMeals, setSavedMeals] = useLocalStorage(KEYS.SAVED_MEALS, [])
@@ -100,6 +100,7 @@ export default function FoodLogPage() {
 
   const dayLog = getDayLog(date)
   const totalCal = getDayCalories(date)
+  const dayDone = isDayDone(date)
   const results = searchFoods(query, filter).concat(
     query ? customFoods.filter(f => f.name.toLowerCase().includes(query.toLowerCase())) : []
   ).slice(0, 30)
@@ -332,6 +333,47 @@ export default function FoodLogPage() {
           )
         })}
       </div>
+
+      {/* Finished logging for the day — today only */}
+      {isToday(date) && (
+        <div className="px-4 pb-6">
+          {dayDone ? (
+            // ── Done banner ──
+            <div className="rounded-2xl overflow-hidden"
+                 style={{ background: 'linear-gradient(135deg, #16a34a 0%, #15803d 100%)' }}>
+              <div className="p-4 flex items-start gap-3">
+                <CheckCircle2 size={22} className="text-white flex-shrink-0 mt-0.5" />
+                <div className="flex-1">
+                  <p className="text-white font-bold text-base leading-tight">All meals logged for today!</p>
+                  <p className="text-white/80 text-xs mt-0.5">
+                    {totalCal > 0
+                      ? `${totalCal.toLocaleString()} cal · ${totalCal >= (profile.calorieMin || 0) && totalCal <= (profile.calorieMax || 9999) ? '✓ In your range' : totalCal > (profile.calorieMax || 9999) ? 'Over range' : 'Below range'}`
+                      : 'Great work staying mindful today'}
+                  </p>
+                </div>
+              </div>
+              <div className="border-t border-white/20 px-4 py-2.5">
+                <button
+                  onClick={() => markDayDone(date, false)}
+                  className="text-white/70 text-xs font-medium hover:text-white transition-colors"
+                >
+                  Forgot something? Tap to add more
+                </button>
+              </div>
+            </div>
+          ) : (
+            // ── Done button ──
+            <button
+              onClick={() => markDayDone(date, true)}
+              disabled={totalCal === 0}
+              className="w-full flex items-center justify-center gap-2 py-4 rounded-2xl border-2 border-green-500 text-green-600 font-semibold text-sm bg-green-50 hover:bg-green-100 active:scale-[0.98] transition-all disabled:opacity-40 disabled:cursor-not-allowed"
+            >
+              <CheckCircle2 size={18} />
+              Finished logging for the day
+            </button>
+          )}
+        </div>
+      )}
 
       {/* Add Food / Meals Sheet */}
       <BottomSheet open={!!sheet} onClose={closeSheet} title={sheetTitle} footer={sheetFooter}>
