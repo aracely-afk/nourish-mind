@@ -16,8 +16,9 @@ import {
   calcWeightGoalEstimate,
 } from '../utils/calorieCalc'
 import BottomSheet from '../components/ui/BottomSheet'
-import { Pause, Play, RefreshCw, Plus, AlertTriangle, Download, RotateCcw, Copy, Check, Target, User } from 'lucide-react'
+import { Pause, Play, RefreshCw, Plus, AlertTriangle, Download, RotateCcw, Copy, Check, Target, User, LogOut } from 'lucide-react'
 import { generateBackup, parseBackup, restoreBackup } from '../utils/backup'
+import { signOutAndClear } from '../utils/syncData'
 
 export default function ProgressPage() {
   const [range, setRange] = useState('week')
@@ -588,27 +589,21 @@ export default function ProgressPage() {
                     className={`w-full py-3.5 rounded-xl font-semibold text-sm transition-all ${profileSaved ? 'bg-green-500 text-white' : 'bg-brand-primary text-white hover:bg-[#3a2270]'}`}>
               {profileSaved ? '✓ Saved!' : 'Save Profile'}
             </button>
-            {/* Backup code */}
-            <div className="border-t border-gray-100 pt-4 space-y-3">
-              <div>
-                <p className="text-sm font-semibold text-gray-800 mb-0.5">Backup Code</p>
-                <p className="text-xs text-gray-400 leading-relaxed">
-                  Save this code in your Notes app or email it to yourself. It's the only way to restore your progress if you lose access.
-                </p>
-              </div>
-              <textarea readOnly value={profileBackupCode} rows={4}
-                        onFocus={e => e.target.select()}
-                        className="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2 text-[10px] font-mono text-gray-600 focus:outline-none resize-none" />
+            {/* Sign out */}
+            <div className="border-t border-gray-100 pt-4">
               <button
                 onClick={() => {
-                  navigator.clipboard.writeText(profileBackupCode).catch(() => {})
-                  setProfileCopied(true)
-                  setTimeout(() => setProfileCopied(false), 2500)
+                  if (window.confirm('Sign out? Your progress is saved to your account.')) {
+                    signOutAndClear().then(() => window.location.reload())
+                  }
                 }}
-                className={`w-full flex items-center justify-center gap-2 py-3 rounded-xl font-semibold text-sm transition-all ${profileCopied ? 'bg-green-500 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`}
+                className="w-full flex items-center justify-center gap-2 py-3 rounded-xl font-semibold text-sm text-red-500 bg-red-50 hover:bg-red-100 transition-all"
               >
-                {profileCopied ? <><Check size={15} /> Copied!</> : <><Copy size={15} /> Copy backup code</>}
+                <LogOut size={15} /> Sign Out
               </button>
+              <p className="text-[10px] text-gray-400 text-center mt-2">
+                Your data is saved to your account and will be here when you sign back in.
+              </p>
             </div>
           </div>
         )}

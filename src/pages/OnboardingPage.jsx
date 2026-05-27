@@ -8,6 +8,7 @@ import {
   calcWeightGoalEstimate,
 } from '../utils/calorieCalc'
 import { parseBackup, restoreBackup, generateBackup } from '../utils/backup'
+import { pushToCloud } from '../utils/syncData'
 import { ChevronRight, ChevronLeft, Leaf, Heart, AlertTriangle, Phone, RotateCcw, Copy, Check } from 'lucide-react'
 
 const ED_OPTIONS = [
@@ -101,6 +102,8 @@ export default function OnboardingPage({ onFinish }) {
       edScreeningAnswer: edAnswer,
       weightTrackingEnabled: false,
     })
+    // Push new user's data to cloud if Supabase is configured
+    pushToCloud()
     onFinish()
   }
 
