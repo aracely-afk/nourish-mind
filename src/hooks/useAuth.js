@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { supabase } from '../utils/supabase'
-import { pullFromCloud } from '../utils/syncData'
+import { pullFromCloud, pushToCloud } from '../utils/syncData'
 
 /**
  * Tracks the current Supabase auth session.
@@ -9,8 +9,14 @@ import { pullFromCloud } from '../utils/syncData'
  * session === null       → not signed in
  * session = object       → signed in
  *
- * On SIGNED_IN: pulls data from cloud, then reloads so all hooks
- * re-initialize from the freshly-written localStorage.
+ * On SIGNED_IN:
+ *   - If local data exists (returning user, session restore on same device):
+ *     push local → cloud to sync any unsaved changes. Do NOT pull — pulling
+ *     would overwrite fresh local data with potentially older cloud data.
+ *     Supabase fires SIGNED_IN on every session restore (app open), so this
+ *     path runs every time the user opens the app while logged in.
+ *   - If no local data (new device / localStorage cleared):
+ *     pull from cloud, then reload so all hooks read the restored data.
  */
 export function useAuth() {
   const [session, setSession] = useState(undefined)
@@ -31,9 +37,17 @@ export function useAuth() {
         setSession(session)
 
         if (event === 'SIGNED_IN') {
-          // Pull cloud data → reload so all hooks read fresh localStorage
-          await pullFromCloud()
-          window.location.reload()
+          const hasLocalData = localStorage.getItem('nm_onboarded') === 'true'
+
+          if (hasLocalData) {
+            // Returning user: push local data to cloud to capture any recent
+            // changes that may not have synced before the app was closed.
+            pushToCloud()
+          } else {
+            // New device or cleared storage: restore from cloud then reload.
+            await pullFromCloud()
+            window.location.reload()
+          }
         }
       }
     )

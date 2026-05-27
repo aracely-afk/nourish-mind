@@ -5,6 +5,7 @@ import { useLocalStorage } from '../hooks/useLocalStorage'
 import { useProfile } from '../hooks/useProfile'
 import { KEYS } from '../utils/storageKeys'
 import { todayStr, formatDate, addDays, isToday } from '../utils/dateHelpers'
+import { pushToCloud } from '../utils/syncData'
 import { FOODS, searchFoods } from '../data/foodDatabase'
 import { TrafficDot } from '../components/ui/TrafficLightBadge'
 import TrafficLightBadge from '../components/ui/TrafficLightBadge'
@@ -364,7 +365,7 @@ export default function FoodLogPage() {
           ) : (
             // ── Done button ──
             <button
-              onClick={() => markDayDone(date, true)}
+              onClick={() => { markDayDone(date, true); pushToCloud() }}
               disabled={totalCal === 0}
               className="w-full flex items-center justify-center gap-2 py-4 rounded-2xl border-2 border-green-500 text-green-600 font-semibold text-sm bg-green-50 hover:bg-green-100 active:scale-[0.98] transition-all disabled:opacity-40 disabled:cursor-not-allowed"
             >

@@ -8,6 +8,7 @@ import PageHeader from '../components/layout/PageHeader'
 import MilestoneCelebration from '../components/celebration/MilestoneCelebration'
 import { getMilestone, isMilestone } from '../data/milestones'
 import { KEYS } from '../utils/storageKeys'
+import { pushToCloud } from '../utils/syncData'
 
 export default function LessonDetailPage() {
   const { day } = useParams()
@@ -96,6 +97,7 @@ export default function LessonDetailPage() {
     setSubmitted(true)
     completeLesson(lesson.day, score, lesson.quiz.length)
     recordLessonComplete()
+    pushToCloud()
     if (isMilestone(lesson.day)) {
       // small delay so the user sees their score land first
       setTimeout(() => setCelebrating(true), 600)
