@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { Plus, Trash2, ChevronLeft, ChevronRight, ScanLine, Loader, CheckCircle2 } from 'lucide-react'
+import React, { useState, useEffect, useRef } from 'react'
+import { Plus, Trash2, ChevronLeft, ChevronRight, ScanLine, Loader, CheckCircle2, Globe } from 'lucide-react'
 import { useFoodLog } from '../hooks/useFoodLog'
 import { useLocalStorage } from '../hooks/useLocalStorage'
 import { useProfile } from '../hooks/useProfile'
@@ -7,6 +7,7 @@ import { KEYS } from '../utils/storageKeys'
 import { todayStr, formatDate, addDays, isToday } from '../utils/dateHelpers'
 import { pushToCloud } from '../utils/syncData'
 import { FOODS, searchFoods } from '../data/foodDatabase'
+import { searchFoodsOnline } from '../utils/searchFoodsOnline'
 import { TrafficDot } from '../components/ui/TrafficLightBadge'
 import TrafficLightBadge from '../components/ui/TrafficLightBadge'
 import BottomSheet from '../components/ui/BottomSheet'
@@ -99,12 +100,53 @@ export default function FoodLogPage() {
   const [scanLoading, setScanLoading] = useState(false)
   const [scanError, setScanError] = useState(null) // 'not_found' | 'error' | null
 
+  // Online food search (Open Food Facts)
+  const [onlineResults, setOnlineResults] = useState([])
+  const [onlineLoading, setOnlineLoading] = useState(false)
+  const onlineAbortRef = useRef(null)
+
+  // Debounced online search: fires 500ms after the query settles
+  useEffect(() => {
+    if (!query || query.trim().length < 2) {
+      setOnlineResults([])
+      setOnlineLoading(false)
+      return
+    }
+    setOnlineLoading(true)
+    const timer = setTimeout(async () => {
+      const controller = new AbortController()
+      onlineAbortRef.current = controller
+      try {
+        const data = await searchFoodsOnline(query, controller.signal)
+        setOnlineResults(data)
+      } catch {
+        setOnlineResults([])
+      } finally {
+        setOnlineLoading(false)
+      }
+    }, 500)
+    return () => {
+      clearTimeout(timer)
+      onlineAbortRef.current?.abort()
+      setOnlineLoading(false)
+    }
+  }, [query])
+
   const dayLog = getDayLog(date)
   const totalCal = getDayCalories(date)
   const dayDone = isDayDone(date)
+  // Local results (database + saved custom foods)
   const results = searchFoods(query, filter).concat(
     query ? customFoods.filter(f => f.name.toLowerCase().includes(query.toLowerCase())) : []
   ).slice(0, 30)
+
+  // Online results: apply traffic-light filter, then deduplicate against local
+  const filteredOnline = (filter !== 'all'
+    ? onlineResults.filter(f => f.trafficLight === filter)
+    : onlineResults
+  )
+  const localNameSet = new Set(results.map(f => f.name.toLowerCase().slice(0, 25)))
+  const newOnline = filteredOnline.filter(f => !localNameSet.has(f.name.toLowerCase().slice(0, 25)))
 
   function openAdd(meal) {
     setSheet({ meal })
@@ -305,10 +347,10 @@ export default function FoodLogPage() {
             <div key={meal} className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
               <div className="flex items-center justify-between px-4 py-3 border-b border-gray-50">
                 <span className="font-medium text-sm text-gray-800">{MEAL_LABELS[meal]}</span>
-                <span className="text-xs text-gray-400">{mealCal > 0 ? `${mealCal} cal` : '0 cal'}</span>
+                <span className="text-xs text-gray-500">{mealCal > 0 ? `${mealCal} cal` : '0 cal'}</span>
               </div>
               {entries.length === 0 ? (
-                <p className="text-xs text-gray-400 px-4 py-3">Nothing logged yet</p>
+                <p className="text-xs text-gray-500 px-4 py-3">Nothing logged yet</p>
               ) : (
                 <div className="divide-y divide-gray-50">
                   {entries.map(e => (
@@ -316,7 +358,7 @@ export default function FoodLogPage() {
                       <TrafficDot light={e.trafficLight} />
                       <div className="flex-1 min-w-0">
                         <p className="text-sm text-gray-800 truncate">{e.name}</p>
-                        <p className="text-xs text-gray-400">{e.grams}g</p>
+                        <p className="text-xs text-gray-500">{e.grams}g</p>
                       </div>
                       <span className="text-sm font-medium text-gray-700 w-14 text-right">{e.calories} cal</span>
                       <button onClick={() => removeEntry(date, meal, e.id)} className="p-1 text-gray-300 hover:text-red-400 transition-colors">
@@ -410,7 +452,7 @@ export default function FoodLogPage() {
                       <TrafficDot light={ing.trafficLight} size={8} />
                       <div className="flex-1 min-w-0">
                         <p className="text-xs text-gray-700 truncate">{ing.name}</p>
-                        <p className="text-[10px] text-gray-400">{ing.servings} × {ing.servingLabel}</p>
+                        <p className="text-xs text-gray-500">{ing.servings} × {ing.servingLabel}</p>
                       </div>
                       <span className="text-xs text-gray-500 w-12 text-right">{ing.calories} cal</span>
                       <button onClick={() => setMealIngredients(prev => prev.filter((_, j) => j !== i))}
@@ -434,19 +476,45 @@ export default function FoodLogPage() {
                       </button>
                     ))}
                   </div>
-                  <div className="space-y-1 max-h-36 overflow-y-auto no-scrollbar">
-                    {!query && <p className="text-xs text-gray-400 text-center py-2">Search for an ingredient above</p>}
-                    {query && results.length === 0 && <p className="text-sm text-gray-400 text-center py-3">No foods found</p>}
+                  <div className="space-y-1 max-h-44 overflow-y-auto no-scrollbar">
+                    {!query && <p className="text-xs text-gray-500 text-center py-2">Search for an ingredient above</p>}
+                    {query && results.length === 0 && !onlineLoading && newOnline.length === 0 && (
+                      <p className="text-sm text-gray-500 text-center py-3">No foods found</p>
+                    )}
                     {results.map(f => (
                       <button key={f.id} onClick={() => { setSelected(f); setServings(1) }}
                               className="w-full flex items-center gap-3 p-2.5 rounded-xl hover:bg-gray-50 text-left transition-colors">
                         <TrafficDot light={f.trafficLight} size={8} />
                         <div className="flex-1 min-w-0">
                           <p className="text-sm text-gray-800 truncate">{f.name}</p>
-                          <p className="text-xs text-gray-400">{f.servingLabel} · {Math.round((f.caloriesPer100g / 100) * f.servingSizeG)} cal</p>
+                          <p className="text-xs text-gray-500">{f.servingLabel} · {Math.round((f.caloriesPer100g / 100) * f.servingSizeG)} cal</p>
                         </div>
                       </button>
                     ))}
+                    {onlineLoading && query.trim().length >= 2 && (
+                      <div className="flex items-center gap-2 px-2 py-1.5">
+                        <Loader size={12} className="animate-spin text-brand-secondary flex-shrink-0" />
+                        <span className="text-xs text-gray-500">Searching online...</span>
+                      </div>
+                    )}
+                    {query && newOnline.length > 0 && (
+                      <>
+                        <div className="flex items-center gap-1.5 px-1 pt-1.5 pb-0.5">
+                          <Globe size={10} className="text-gray-400" />
+                          <span className="text-xs text-gray-400 uppercase tracking-wide font-medium">Open Food Facts</span>
+                        </div>
+                        {newOnline.map(f => (
+                          <button key={f.id} onClick={() => { setSelected(f); setServings(1) }}
+                                  className="w-full flex items-center gap-3 p-2.5 rounded-xl hover:bg-gray-50 text-left transition-colors">
+                            <TrafficDot light={f.trafficLight} size={8} />
+                            <div className="flex-1 min-w-0">
+                              <p className="text-sm text-gray-800 truncate">{f.name}</p>
+                              <p className="text-xs text-gray-500">{f.servingLabel} · {Math.round((f.caloriesPer100g / 100) * f.servingSizeG)} cal</p>
+                            </div>
+                          </button>
+                        ))}
+                      </>
+                    )}
                   </div>
                 </div>
               ) : (
@@ -545,19 +613,52 @@ export default function FoodLogPage() {
                     ))}
                   </div>
                   {!selected ? (
-                    <div className="space-y-1 max-h-52 overflow-y-auto no-scrollbar">
-                      {results.length === 0 && <p className="text-sm text-gray-400 text-center py-4">No foods found</p>}
+                    <div className="space-y-1 max-h-64 overflow-y-auto no-scrollbar">
+                      {/* Local results */}
+                      {results.length === 0 && !onlineLoading && newOnline.length === 0 && (
+                        <p className="text-sm text-gray-500 text-center py-4">{query ? 'No foods found' : 'Search above to find foods'}</p>
+                      )}
                       {results.map(f => (
                         <button key={f.id} onClick={() => { setSelected(f); setServings(1) }}
                                 className="w-full flex items-center gap-3 p-2.5 rounded-xl hover:bg-gray-50 text-left transition-colors">
                           <TrafficDot light={f.trafficLight} size={10} />
                           <div className="flex-1 min-w-0">
                             <p className="text-sm text-gray-800 truncate">{f.name}</p>
-                            <p className="text-xs text-gray-400">{Math.round((f.caloriesPer100g / 100) * f.servingSizeG)} cal · {f.servingLabel}</p>
+                            <p className="text-xs text-gray-500">{Math.round((f.caloriesPer100g / 100) * f.servingSizeG)} cal · {f.servingLabel}</p>
                           </div>
                           <TrafficLightBadge light={f.trafficLight} size="xs" />
                         </button>
                       ))}
+
+                      {/* Online search status */}
+                      {onlineLoading && query.trim().length >= 2 && (
+                        <div className="flex items-center gap-2 px-2.5 py-2">
+                          <Loader size={13} className="animate-spin text-brand-secondary flex-shrink-0" />
+                          <span className="text-xs text-gray-500">Searching online...</span>
+                        </div>
+                      )}
+
+                      {/* Online results from Open Food Facts */}
+                      {query && newOnline.length > 0 && (
+                        <>
+                          <div className="flex items-center gap-1.5 px-1 pt-2 pb-0.5">
+                            <Globe size={11} className="text-gray-400" />
+                            <span className="text-xs text-gray-400 uppercase tracking-wide font-medium">Open Food Facts</span>
+                          </div>
+                          {newOnline.map(f => (
+                            <button key={f.id} onClick={() => { setSelected(f); setServings(1) }}
+                                    className="w-full flex items-center gap-3 p-2.5 rounded-xl hover:bg-gray-50 text-left transition-colors">
+                              <TrafficDot light={f.trafficLight} size={10} />
+                              <div className="flex-1 min-w-0">
+                                <p className="text-sm text-gray-800 truncate">{f.name}</p>
+                                <p className="text-xs text-gray-500">{Math.round((f.caloriesPer100g / 100) * f.servingSizeG)} cal · {f.servingLabel}</p>
+                              </div>
+                              <TrafficLightBadge light={f.trafficLight} size="xs" />
+                            </button>
+                          ))}
+                        </>
+                      )}
+
                       <button onClick={() => setAddCustomOpen(true)}
                               className="w-full text-center py-2.5 text-brand-primary text-sm font-medium hover:bg-brand-pale rounded-xl transition-colors">
                         + Add custom food
@@ -606,7 +707,7 @@ export default function FoodLogPage() {
                     <div className="text-center py-8">
                       <div className="text-4xl mb-3">🍽️</div>
                       <p className="text-sm font-medium text-gray-700">No saved meals yet</p>
-                      <p className="text-xs text-gray-400 mt-1">Save your go-to combos for quick logging</p>
+                      <p className="text-xs text-gray-500 mt-1">Save your go-to combos for quick logging</p>
                     </div>
                   ) : (
                     <div className="space-y-2 max-h-64 overflow-y-auto no-scrollbar">
@@ -621,7 +722,7 @@ export default function FoodLogPage() {
                               </button>
                             </div>
                           </div>
-                          <p className="text-xs text-gray-400 mb-2 line-clamp-1">
+                          <p className="text-xs text-gray-500 mb-2 line-clamp-1">
                             {meal.ingredients.map(i => i.name).join(', ')}
                           </p>
                           <button
@@ -711,21 +812,21 @@ export default function FoodLogPage() {
             <label className="text-xs font-semibold text-gray-500 uppercase tracking-wide block mb-2">Macros per serving <span className="text-gray-400 font-normal normal-case">(optional)</span></label>
             <div className="flex gap-2">
               <div className="flex-1">
-                <label className="text-[10px] text-gray-400 block mb-1 text-center">Protein (g)</label>
+                <label className="text-xs text-gray-500 block mb-1 text-center">Protein (g)</label>
                 <input type="number" value={customForm.proteinG}
                        onChange={e => setCustomForm(f => ({...f, proteinG: e.target.value}))}
                        placeholder="0"
                        className="w-full px-2 py-2 border border-gray-200 rounded-xl text-sm text-center focus:outline-none focus:ring-2 focus:ring-brand-secondary" />
               </div>
               <div className="flex-1">
-                <label className="text-[10px] text-gray-400 block mb-1 text-center">Carbs (g)</label>
+                <label className="text-xs text-gray-500 block mb-1 text-center">Carbs (g)</label>
                 <input type="number" value={customForm.carbsG}
                        onChange={e => setCustomForm(f => ({...f, carbsG: e.target.value}))}
                        placeholder="0"
                        className="w-full px-2 py-2 border border-gray-200 rounded-xl text-sm text-center focus:outline-none focus:ring-2 focus:ring-brand-secondary" />
               </div>
               <div className="flex-1">
-                <label className="text-[10px] text-gray-400 block mb-1 text-center">Fat (g)</label>
+                <label className="text-xs text-gray-500 block mb-1 text-center">Fat (g)</label>
                 <input type="number" value={customForm.fatG}
                        onChange={e => setCustomForm(f => ({...f, fatG: e.target.value}))}
                        placeholder="0"

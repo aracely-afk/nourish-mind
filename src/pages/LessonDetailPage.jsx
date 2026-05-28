@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { CheckCircle, ChevronLeft, Clock, Lightbulb } from 'lucide-react'
+import { CheckCircle, ChevronLeft, Clock, Lightbulb, Eye } from 'lucide-react'
 import { LESSONS } from '../data/lessonData'
 import { useLessons } from '../hooks/useLessons'
 import { useStreak } from '../hooks/useStreak'
@@ -53,30 +53,9 @@ export default function LessonDetailPage() {
 
   if (!lesson) return <div className="p-4 text-gray-500">Lesson not found.</div>
 
-  if (!isUnlocked(lesson.day)) {
-    return (
-      <div className="min-h-screen flex flex-col items-center justify-center p-8 text-center bg-white">
-        <div className="text-6xl mb-5">🔒</div>
-        <h2 className="text-xl font-bold text-gray-900 font-brand mb-2">Not yet available</h2>
-        <p className="text-gray-500 text-sm leading-relaxed mb-1">
-          Day {lesson.day} unlocks when you reach that point in your journey.
-        </p>
-        <p className="text-gray-500 text-sm leading-relaxed mb-6">
-          You can catch up on any lessons you've missed — just keep going!
-        </p>
-        <p className="text-xs text-brand-gold italic font-display mb-6">
-          "His mercies are new every morning." — Lamentations 3:23
-        </p>
-        <button
-          onClick={() => navigate('/lessons')}
-          className="bg-brand-primary text-white px-8 py-3 rounded-xl font-semibold text-sm hover:bg-[#3a2270] transition-colors"
-        >
-          Back to Lessons
-        </button>
-      </div>
-    )
-  }
-
+  // isPreview: lesson exists but is not yet part of the user's current journey day.
+  // Instead of a hard lock we show the full content and lock only the quiz.
+  const isPreview = !isUnlocked(lesson.day)
   const completed = isCompleted(lesson.day)
   const score = submitted ? lesson.quiz.filter((q, i) => answers[i] === q.correctIndex).length : 0
 
@@ -100,7 +79,17 @@ export default function LessonDetailPage() {
           onClose={handleCelebrationClose}
         />
       )}
-      <PageHeader title={`Day ${lesson.day}`} subtitle={`${lesson.readTimeMin} min read`} backTo="/lessons" />
+      <PageHeader title={`Day ${lesson.day}`} subtitle={isPreview ? `${lesson.readTimeMin} min read · Preview` : `${lesson.readTimeMin} min read`} backTo="/lessons" />
+
+      {/* Preview banner */}
+      {isPreview && (
+        <div className="mx-4 mt-3 bg-amber-50 border border-amber-200 rounded-2xl p-3 flex items-start gap-2.5">
+          <Eye size={16} className="text-amber-600 flex-shrink-0 mt-0.5" />
+          <p className="text-xs text-amber-800 leading-relaxed">
+            <span className="font-semibold">Reading ahead.</span> The lesson content is fully available to preview. Complete Day {lesson.day - 1} to unlock the quiz and mark this day complete.
+          </p>
+        </div>
+      )}
 
       {/* Lesson content */}
       <div className="p-4 space-y-4">
@@ -154,15 +143,32 @@ export default function LessonDetailPage() {
           <p className="text-sm text-brand-primary leading-relaxed">{lesson.challenge}</p>
         </div>
 
+        {/* Quiz — locked in preview mode */}
+        {isPreview && (
+          <div className="bg-gray-50 border border-gray-200 rounded-2xl p-5 text-center">
+            <div className="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center mx-auto mb-3">
+              <Eye size={22} className="text-gray-400" />
+            </div>
+            <p className="font-semibold text-gray-800 text-sm mb-1">Quiz not yet available</p>
+            <p className="text-xs text-gray-600 leading-relaxed max-w-xs mx-auto">
+              Complete Day {lesson.day - 1} to unlock this quiz and mark Day {lesson.day} as done.
+            </p>
+            <button onClick={() => navigate('/lessons')}
+                    className="mt-4 bg-brand-primary text-white px-6 py-2.5 rounded-xl text-sm font-semibold hover:bg-[#3a2270] transition-colors">
+              Back to Lessons
+            </button>
+          </div>
+        )}
+
         {/* Quiz */}
-        {!completed && !quizStarted && (
+        {!isPreview && !completed && !quizStarted && (
           <button onClick={() => setQuizStarted(true)}
                   className="w-full bg-brand-primary text-white py-4 rounded-2xl font-semibold hover:bg-[#3a2270] transition-colors">
             Take the Quiz ({lesson.quiz.length} questions)
           </button>
         )}
 
-        {(quizStarted || completed) && (
+        {!isPreview && (quizStarted || completed) && (
           <div className="space-y-4">
             <h3 className="font-semibold text-gray-900">Knowledge Check</h3>
             {lesson.quiz.map((q, i) => (

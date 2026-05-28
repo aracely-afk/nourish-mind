@@ -53,7 +53,7 @@ export const FOODS = [
   // Lean Proteins
   { id: 'chicken_breast',    name: 'Chicken Breast (cooked)',  category: 'protein', trafficLight: 'green',  caloriesPer100g: 110, servingSizeG: 150, servingLabel: '5 oz',        keywords: ['chicken', 'poultry', 'lean'] },
   { id: 'turkey_breast',     name: 'Turkey Breast (cooked)',   category: 'protein', trafficLight: 'green',  caloriesPer100g: 104, servingSizeG: 150, servingLabel: '5 oz',        keywords: ['turkey', 'poultry', 'lean'] },
-  { id: 'tuna_canned_water', name: 'Tuna (canned in water)',   category: 'protein', trafficLight: 'green',  caloriesPer100g: 84,  servingSizeG: 85,  servingLabel: '3 oz',        keywords: ['tuna', 'fish', 'canned'] },
+  { id: 'tuna_canned_water', name: 'Tuna (canned in water)',   category: 'protein', trafficLight: 'green',  caloriesPer100g: 84,  servingSizeG: 85,  servingLabel: '3 oz',        keywords: ['tuna', 'fish', 'canned', 'salad', 'tuna salad'] },
   { id: 'shrimp',            name: 'Shrimp (cooked)',          category: 'protein', trafficLight: 'green',  caloriesPer100g: 99,  servingSizeG: 85,  servingLabel: '3 oz',        keywords: ['shrimp', 'seafood'] },
   { id: 'tilapia',           name: 'Tilapia (baked)',          category: 'protein', trafficLight: 'green',  caloriesPer100g: 96,  servingSizeG: 113, servingLabel: '4 oz',        keywords: ['tilapia', 'fish', 'white fish'] },
   { id: 'cod',               name: 'Cod (baked)',              category: 'protein', trafficLight: 'green',  caloriesPer100g: 82,  servingSizeG: 113, servingLabel: '4 oz',        keywords: ['cod', 'fish', 'white fish'] },
@@ -594,15 +594,168 @@ export const FOODS = [
   { id: 'jerk_chicken',        name: 'Jerk Chicken',                    category: 'protein', trafficLight: 'yellow', caloriesPer100g: 165, servingSizeG: 170, servingLabel: '6 oz',        keywords: ['jerk chicken', 'caribbean', 'jamaican', 'spiced chicken', 'jerk seasoning'] },
   { id: 'rice_and_peas',       name: 'Rice and Peas (Caribbean)',       category: 'dish',    trafficLight: 'yellow', caloriesPer100g: 165, servingSizeG: 200, servingLabel: '¾ cup',       keywords: ['rice and peas', 'caribbean rice', 'jamaican', 'kidney beans rice', 'coconut rice'] },
   { id: 'roti_caribbean',      name: 'Roti (Caribbean flatbread)',      category: 'grain',   trafficLight: 'yellow', caloriesPer100g: 295, servingSizeG: 80,  servingLabel: '1 roti',      keywords: ['roti', 'caribbean roti', 'flatbread', 'trinidadian', 'indian roti'] },
+
+  // ── EGGS & BREAKFAST ──────────────────────────────────────────────────────────
+  { id: 'egg_whole_boiled',    name: 'Egg (hard boiled)',               category: 'protein', trafficLight: 'green',  caloriesPer100g: 155, servingSizeG: 50,  servingLabel: '1 large',     keywords: ['egg', 'boiled egg', 'hard boiled', 'eggs'] },
+  { id: 'egg_scrambled',       name: 'Scrambled Eggs (2 eggs, butter)', category: 'protein', trafficLight: 'green',  caloriesPer100g: 149, servingSizeG: 100, servingLabel: '2 eggs',      keywords: ['scrambled eggs', 'eggs', 'breakfast', 'scrambled'] },
+  { id: 'egg_fried',           name: 'Fried Egg (1 egg)',               category: 'protein', trafficLight: 'green',  caloriesPer100g: 196, servingSizeG: 46,  servingLabel: '1 egg',       keywords: ['fried egg', 'egg', 'eggs', 'breakfast'] },
+  { id: 'omelet_plain',        name: 'Omelet (2 eggs, plain)',          category: 'protein', trafficLight: 'green',  caloriesPer100g: 154, servingSizeG: 100, servingLabel: '1 omelet',    keywords: ['omelet', 'omelette', 'eggs', 'breakfast'] },
+  { id: 'bacon_crispy',        name: 'Bacon (crispy, 3 strips)',        category: 'protein', trafficLight: 'orange', caloriesPer100g: 541, servingSizeG: 35,  servingLabel: '3 strips',    keywords: ['bacon', 'pork bacon', 'breakfast', 'crispy bacon'] },
+  { id: 'turkey_bacon',        name: 'Turkey Bacon (3 strips)',         category: 'protein', trafficLight: 'yellow', caloriesPer100g: 218, servingSizeG: 42,  servingLabel: '3 strips',    keywords: ['turkey bacon', 'bacon', 'breakfast', 'lean bacon'] },
+  { id: 'sausage_pork',        name: 'Breakfast Sausage (pork, 2 links)',category:'protein', trafficLight: 'orange', caloriesPer100g: 322, servingSizeG: 56,  servingLabel: '2 links',     keywords: ['breakfast sausage', 'sausage', 'pork sausage', 'breakfast'] },
+  { id: 'turkey_sausage',      name: 'Turkey Sausage (2 links)',        category: 'protein', trafficLight: 'yellow', caloriesPer100g: 196, servingSizeG: 56,  servingLabel: '2 links',     keywords: ['turkey sausage', 'sausage', 'breakfast', 'lean sausage'] },
+  { id: 'pancakes',            name: 'Pancakes (2 medium, plain)',      category: 'grain',   trafficLight: 'yellow', caloriesPer100g: 227, servingSizeG: 114, servingLabel: '2 pancakes',  keywords: ['pancakes', 'flapjacks', 'breakfast', 'hotcakes'] },
+  { id: 'waffles',             name: 'Waffles (1 large, plain)',        category: 'grain',   trafficLight: 'yellow', caloriesPer100g: 291, servingSizeG: 75,  servingLabel: '1 waffle',    keywords: ['waffles', 'waffle', 'breakfast'] },
+  { id: 'french_toast',        name: 'French Toast (2 slices)',         category: 'grain',   trafficLight: 'yellow', caloriesPer100g: 229, servingSizeG: 130, servingLabel: '2 slices',    keywords: ['french toast', 'breakfast', 'toast'] },
+  { id: 'granola',             name: 'Granola (with oats & honey)',     category: 'grain',   trafficLight: 'yellow', caloriesPer100g: 471, servingSizeG: 55,  servingLabel: '½ cup',       keywords: ['granola', 'breakfast', 'cereal', 'oats'] },
+  { id: 'cereal_corn_flakes',  name: 'Cornflakes Cereal',               category: 'grain',   trafficLight: 'yellow', caloriesPer100g: 357, servingSizeG: 30,  servingLabel: '1 cup',       keywords: ['corn flakes', 'cereal', 'breakfast', 'kelloggs'] },
+  { id: 'cereal_cheerios',     name: 'Cheerios (Original)',             category: 'grain',   trafficLight: 'yellow', caloriesPer100g: 371, servingSizeG: 28,  servingLabel: '¾ cup',       keywords: ['cheerios', 'cereal', 'breakfast', 'oat cereal'] },
+  { id: 'acai_bowl',           name: 'Açaí Bowl (medium)',              category: 'dish',    trafficLight: 'yellow', caloriesPer100g: 130, servingSizeG: 400, servingLabel: '1 bowl',      keywords: ['acai bowl', 'acai', 'breakfast bowl', 'smoothie bowl', 'fruit bowl'] },
+
+  // ── BREAD, WRAPS & GRAINS ─────────────────────────────────────────────────────
+  { id: 'white_bread',         name: 'White Bread (1 slice)',           category: 'grain',   trafficLight: 'yellow', caloriesPer100g: 265, servingSizeG: 30,  servingLabel: '1 slice',     keywords: ['white bread', 'bread', 'toast', 'sandwich bread'] },
+  { id: 'whole_wheat_bread',   name: 'Whole Wheat Bread (1 slice)',     category: 'grain',   trafficLight: 'green',  caloriesPer100g: 247, servingSizeG: 30,  servingLabel: '1 slice',     keywords: ['whole wheat bread', 'wheat bread', 'bread', 'toast', 'whole grain'] },
+  { id: 'sourdough_bread',     name: 'Sourdough Bread (1 slice)',       category: 'grain',   trafficLight: 'yellow', caloriesPer100g: 260, servingSizeG: 40,  servingLabel: '1 slice',     keywords: ['sourdough', 'sourdough bread', 'bread', 'toast'] },
+  { id: 'english_muffin',      name: 'English Muffin (1 whole)',        category: 'grain',   trafficLight: 'yellow', caloriesPer100g: 223, servingSizeG: 57,  servingLabel: '1 muffin',    keywords: ['english muffin', 'muffin', 'breakfast', 'toast'] },
+  { id: 'bagel_plain',         name: 'Bagel (plain, 1 whole)',          category: 'grain',   trafficLight: 'yellow', caloriesPer100g: 270, servingSizeG: 98,  servingLabel: '1 bagel',     keywords: ['bagel', 'plain bagel', 'breakfast', 'bread'] },
+  { id: 'flour_tortilla',      name: 'Flour Tortilla (10-inch)',        category: 'grain',   trafficLight: 'yellow', caloriesPer100g: 296, servingSizeG: 72,  servingLabel: '1 tortilla',  keywords: ['flour tortilla', 'tortilla', 'wrap', 'burrito wrap'] },
+  { id: 'corn_tortilla',       name: 'Corn Tortilla (6-inch, 2 pcs)',  category: 'grain',   trafficLight: 'green',  caloriesPer100g: 218, servingSizeG: 56,  servingLabel: '2 tortillas', keywords: ['corn tortilla', 'tortilla', 'taco shell', 'taco'] },
+  { id: 'pita_bread',          name: 'Pita Bread (1 whole)',            category: 'grain',   trafficLight: 'yellow', caloriesPer100g: 275, servingSizeG: 60,  servingLabel: '1 pita',      keywords: ['pita', 'pita bread', 'flatbread', 'pocket bread'] },
+  { id: 'pasta_cooked',        name: 'Pasta (cooked, 1 cup)',           category: 'grain',   trafficLight: 'yellow', caloriesPer100g: 158, servingSizeG: 140, servingLabel: '1 cup',       keywords: ['pasta', 'spaghetti', 'noodles', 'penne', 'fettuccine', 'linguine'] },
+  { id: 'pasta_whole_wheat',   name: 'Whole Wheat Pasta (cooked)',      category: 'grain',   trafficLight: 'green',  caloriesPer100g: 149, servingSizeG: 140, servingLabel: '1 cup',       keywords: ['whole wheat pasta', 'pasta', 'noodles', 'wheat pasta'] },
+
+  // ── DAIRY & CHEESE ────────────────────────────────────────────────────────────
+  { id: 'milk_whole',          name: 'Whole Milk (1 cup)',              category: 'dairy',   trafficLight: 'yellow', caloriesPer100g: 61,  servingSizeG: 244, servingLabel: '1 cup',       keywords: ['whole milk', 'milk', 'dairy', 'cow milk'] },
+  { id: 'milk_2pct',           name: '2% Milk (1 cup)',                 category: 'dairy',   trafficLight: 'green',  caloriesPer100g: 50,  servingSizeG: 244, servingLabel: '1 cup',       keywords: ['2% milk', 'milk', 'dairy', 'reduced fat milk'] },
+  { id: 'milk_skim',           name: 'Skim Milk (1 cup)',               category: 'dairy',   trafficLight: 'green',  caloriesPer100g: 34,  servingSizeG: 245, servingLabel: '1 cup',       keywords: ['skim milk', 'nonfat milk', 'milk', 'dairy'] },
+  { id: 'almond_milk_unswt',   name: 'Almond Milk (unsweetened)',       category: 'dairy',   trafficLight: 'green',  caloriesPer100g: 15,  servingSizeG: 244, servingLabel: '1 cup',       keywords: ['almond milk', 'plant milk', 'dairy free', 'non-dairy'] },
+  { id: 'oat_milk',            name: 'Oat Milk (barista)',              category: 'dairy',   trafficLight: 'yellow', caloriesPer100g: 45,  servingSizeG: 244, servingLabel: '1 cup',       keywords: ['oat milk', 'plant milk', 'dairy free', 'non-dairy', 'oatly'] },
+  { id: 'cheddar_cheese',      name: 'Cheddar Cheese (1 oz)',           category: 'dairy',   trafficLight: 'yellow', caloriesPer100g: 402, servingSizeG: 28,  servingLabel: '1 oz',        keywords: ['cheddar', 'cheddar cheese', 'cheese', 'dairy'] },
+  { id: 'mozzarella_cheese',   name: 'Mozzarella Cheese (part-skim)',   category: 'dairy',   trafficLight: 'yellow', caloriesPer100g: 254, servingSizeG: 28,  servingLabel: '1 oz',        keywords: ['mozzarella', 'mozzarella cheese', 'cheese', 'dairy', 'string cheese'] },
+  { id: 'parmesan_cheese',     name: 'Parmesan Cheese (2 tbsp)',        category: 'dairy',   trafficLight: 'yellow', caloriesPer100g: 420, servingSizeG: 10,  servingLabel: '2 tbsp grated',keywords: ['parmesan', 'parmigiano', 'cheese', 'dairy'] },
+  { id: 'feta_cheese',         name: 'Feta Cheese (¼ cup crumbled)',    category: 'dairy',   trafficLight: 'yellow', caloriesPer100g: 264, servingSizeG: 38,  servingLabel: '¼ cup',       keywords: ['feta', 'feta cheese', 'cheese', 'greek cheese', 'dairy'] },
+  { id: 'american_cheese',     name: 'American Cheese (1 slice)',       category: 'dairy',   trafficLight: 'yellow', caloriesPer100g: 313, servingSizeG: 21,  servingLabel: '1 slice',     keywords: ['american cheese', 'cheese', 'processed cheese', 'dairy'] },
+  { id: 'cream_cheese_light',  name: 'Cream Cheese (light, 2 tbsp)',    category: 'dairy',   trafficLight: 'yellow', caloriesPer100g: 153, servingSizeG: 29,  servingLabel: '2 tbsp',      keywords: ['cream cheese', 'light cream cheese', 'cheese', 'dairy', 'spread'] },
+  { id: 'greek_yogurt_2pct',   name: 'Greek Yogurt (2%, plain)',        category: 'dairy',   trafficLight: 'green',  caloriesPer100g: 73,  servingSizeG: 170, servingLabel: '6 oz',        keywords: ['greek yogurt', 'yogurt', 'dairy', 'protein'] },
+  { id: 'yogurt_vanilla',      name: 'Yogurt (low-fat vanilla)',        category: 'dairy',   trafficLight: 'yellow', caloriesPer100g: 96,  servingSizeG: 170, servingLabel: '6 oz',        keywords: ['yogurt', 'vanilla yogurt', 'dairy', 'low fat yogurt'] },
+  { id: 'butter_tbsp',         name: 'Butter (1 tbsp)',                 category: 'fat',     trafficLight: 'orange', caloriesPer100g: 717, servingSizeG: 14,  servingLabel: '1 tbsp',      keywords: ['butter', 'dairy', 'fat', 'spread'] },
+
+  // ── PROTEINS: DELI & MEAT ─────────────────────────────────────────────────────
+  { id: 'salmon_baked',        name: 'Salmon (baked, 4 oz)',            category: 'protein', trafficLight: 'green',  caloriesPer100g: 208, servingSizeG: 113, servingLabel: '4 oz',        keywords: ['salmon', 'fish', 'baked salmon', 'seafood', 'atlantic salmon'] },
+  { id: 'ground_beef_90',      name: 'Ground Beef (90/10, cooked)',     category: 'protein', trafficLight: 'yellow', caloriesPer100g: 195, servingSizeG: 113, servingLabel: '4 oz',        keywords: ['ground beef', 'beef', 'hamburger meat', 'lean ground beef'] },
+  { id: 'ground_turkey',       name: 'Ground Turkey (93%, cooked)',     category: 'protein', trafficLight: 'green',  caloriesPer100g: 170, servingSizeG: 113, servingLabel: '4 oz',        keywords: ['ground turkey', 'turkey', 'lean turkey', 'turkey meat'] },
+  { id: 'steak_sirloin',       name: 'Sirloin Steak (grilled, 4 oz)',   category: 'protein', trafficLight: 'yellow', caloriesPer100g: 207, servingSizeG: 113, servingLabel: '4 oz',        keywords: ['sirloin', 'steak', 'beef steak', 'grilled steak', 'top sirloin'] },
+  { id: 'pork_chop',           name: 'Pork Chop (grilled, 4 oz)',       category: 'protein', trafficLight: 'yellow', caloriesPer100g: 187, servingSizeG: 113, servingLabel: '4 oz',        keywords: ['pork chop', 'pork', 'chop', 'grilled pork'] },
+  { id: 'ham_deli',            name: 'Deli Ham (3 oz)',                 category: 'protein', trafficLight: 'yellow', caloriesPer100g: 145, servingSizeG: 85,  servingLabel: '3 oz',        keywords: ['ham', 'deli ham', 'deli meat', 'lunch meat', 'cold cuts'] },
+  { id: 'turkey_deli',         name: 'Deli Turkey (3 oz)',              category: 'protein', trafficLight: 'green',  caloriesPer100g: 107, servingSizeG: 85,  servingLabel: '3 oz',        keywords: ['deli turkey', 'turkey', 'deli meat', 'lunch meat', 'cold cuts', 'sliced turkey'] },
+  { id: 'chicken_thigh',       name: 'Chicken Thigh (baked, bone-in)', category: 'protein', trafficLight: 'yellow', caloriesPer100g: 209, servingSizeG: 150, servingLabel: '1 thigh',     keywords: ['chicken thigh', 'chicken', 'dark meat', 'baked chicken'] },
+  { id: 'sardines_canned',     name: 'Sardines (canned in olive oil)',  category: 'protein', trafficLight: 'green',  caloriesPer100g: 208, servingSizeG: 92,  servingLabel: '1 can',       keywords: ['sardines', 'fish', 'canned fish', 'seafood'] },
+  { id: 'turkey_ground',       name: 'Turkey Meatballs (4 medium)',     category: 'protein', trafficLight: 'yellow', caloriesPer100g: 176, servingSizeG: 120, servingLabel: '4 meatballs', keywords: ['turkey meatballs', 'meatballs', 'turkey', 'italian'] },
+  { id: 'beef_meatballs',      name: 'Beef Meatballs (4 medium)',       category: 'protein', trafficLight: 'yellow', caloriesPer100g: 243, servingSizeG: 120, servingLabel: '4 meatballs', keywords: ['meatballs', 'beef meatballs', 'italian', 'spaghetti'] },
+
+  // ── SALADS & PREPARED DISHES ──────────────────────────────────────────────────
+  { id: 'tuna_salad',          name: 'Tuna Salad (with mayo)',          category: 'dish',    trafficLight: 'yellow', caloriesPer100g: 170, servingSizeG: 130, servingLabel: '½ cup',       keywords: ['tuna salad', 'tuna', 'salad', 'tuna mayo', 'tuna sandwich filling'] },
+  { id: 'chicken_salad',       name: 'Chicken Salad (with mayo)',       category: 'dish',    trafficLight: 'yellow', caloriesPer100g: 185, servingSizeG: 130, servingLabel: '½ cup',       keywords: ['chicken salad', 'chicken', 'salad', 'chicken mayo', 'chicken sandwich'] },
+  { id: 'egg_salad',           name: 'Egg Salad (with mayo)',           category: 'dish',    trafficLight: 'yellow', caloriesPer100g: 168, servingSizeG: 130, servingLabel: '½ cup',       keywords: ['egg salad', 'egg', 'salad', 'egg mayo', 'eggs'] },
+  { id: 'caesar_salad',        name: 'Caesar Salad (with dressing)',    category: 'dish',    trafficLight: 'yellow', caloriesPer100g: 116, servingSizeG: 200, servingLabel: '2 cups',      keywords: ['caesar salad', 'caesar', 'salad', 'romaine', 'dressing'] },
+  { id: 'garden_salad',        name: 'Garden Salad (no dressing)',      category: 'dish',    trafficLight: 'green',  caloriesPer100g: 15,  servingSizeG: 200, servingLabel: '2 cups',      keywords: ['garden salad', 'salad', 'green salad', 'mixed salad', 'house salad'] },
+  { id: 'greek_salad',         name: 'Greek Salad (with feta)',         category: 'dish',    trafficLight: 'green',  caloriesPer100g: 80,  servingSizeG: 250, servingLabel: '2 cups',      keywords: ['greek salad', 'salad', 'mediterranean', 'feta salad'] },
+  { id: 'cobb_salad',          name: 'Cobb Salad (with dressing)',      category: 'dish',    trafficLight: 'yellow', caloriesPer100g: 120, servingSizeG: 350, servingLabel: '1 full salad',keywords: ['cobb salad', 'salad', 'chicken salad', 'bacon salad', 'avocado salad'] },
+  { id: 'cole_slaw',           name: 'Coleslaw (creamy)',               category: 'dish',    trafficLight: 'yellow', caloriesPer100g: 155, servingSizeG: 113, servingLabel: '½ cup',       keywords: ['coleslaw', 'cole slaw', 'salad', 'cabbage slaw', 'creamy slaw'] },
+  { id: 'pasta_salad',         name: 'Pasta Salad (classic)',           category: 'dish',    trafficLight: 'yellow', caloriesPer100g: 175, servingSizeG: 180, servingLabel: '¾ cup',       keywords: ['pasta salad', 'pasta', 'salad', 'cold pasta', 'macaroni salad'] },
+  { id: 'quinoa_salad',        name: 'Quinoa Salad (veggie)',           category: 'dish',    trafficLight: 'green',  caloriesPer100g: 130, servingSizeG: 200, servingLabel: '1 cup',       keywords: ['quinoa salad', 'quinoa', 'salad', 'grain salad', 'veggie quinoa'] },
+  { id: 'salmon_salad',        name: 'Salmon Salad (with greens)',      category: 'dish',    trafficLight: 'green',  caloriesPer100g: 90,  servingSizeG: 300, servingLabel: '1 bowl',      keywords: ['salmon salad', 'salad', 'fish salad', 'salmon', 'greens'] },
+
+  // ── SANDWICHES & WRAPS ────────────────────────────────────────────────────────
+  { id: 'turkey_sandwich',     name: 'Turkey Sandwich (on wheat)',      category: 'dish',    trafficLight: 'green',  caloriesPer100g: 167, servingSizeG: 210, servingLabel: '1 sandwich',  keywords: ['turkey sandwich', 'sandwich', 'turkey', 'deli sandwich', 'lunch'] },
+  { id: 'grilled_cheese',      name: 'Grilled Cheese Sandwich',         category: 'dish',    trafficLight: 'yellow', caloriesPer100g: 304, servingSizeG: 120, servingLabel: '1 sandwich',  keywords: ['grilled cheese', 'sandwich', 'cheese', 'comfort food'] },
+  { id: 'pbj_sandwich',        name: 'PB&J Sandwich (on wheat)',        category: 'dish',    trafficLight: 'yellow', caloriesPer100g: 317, servingSizeG: 100, servingLabel: '1 sandwich',  keywords: ['peanut butter jelly', 'pbj', 'sandwich', 'peanut butter', 'jelly'] },
+  { id: 'blt_sandwich',        name: 'BLT Sandwich',                    category: 'dish',    trafficLight: 'yellow', caloriesPer100g: 265, servingSizeG: 170, servingLabel: '1 sandwich',  keywords: ['blt', 'bacon lettuce tomato', 'sandwich', 'bacon sandwich'] },
+  { id: 'chicken_wrap',        name: 'Grilled Chicken Wrap',            category: 'dish',    trafficLight: 'yellow', caloriesPer100g: 200, servingSizeG: 250, servingLabel: '1 wrap',      keywords: ['chicken wrap', 'wrap', 'grilled chicken', 'tortilla wrap', 'lunch'] },
+  { id: 'tuna_sandwich',       name: 'Tuna Salad Sandwich',             category: 'dish',    trafficLight: 'yellow', caloriesPer100g: 220, servingSizeG: 200, servingLabel: '1 sandwich',  keywords: ['tuna sandwich', 'tuna salad sandwich', 'sandwich', 'tuna', 'salad', 'lunch'] },
+
+  // ── SOUPS & STEWS ─────────────────────────────────────────────────────────────
+  { id: 'chicken_noodle_soup', name: 'Chicken Noodle Soup (1 bowl)',    category: 'soup',    trafficLight: 'green',  caloriesPer100g: 62,  servingSizeG: 360, servingLabel: '1½ cups',     keywords: ['chicken noodle soup', 'soup', 'chicken soup', 'noodle soup', 'comfort food'] },
+  { id: 'tomato_soup',         name: 'Tomato Soup (1 cup)',             category: 'soup',    trafficLight: 'green',  caloriesPer100g: 74,  servingSizeG: 244, servingLabel: '1 cup',       keywords: ['tomato soup', 'soup', 'tomato', 'cream of tomato'] },
+  { id: 'lentil_soup',         name: 'Lentil Soup (1 bowl)',            category: 'soup',    trafficLight: 'green',  caloriesPer100g: 99,  servingSizeG: 360, servingLabel: '1½ cups',     keywords: ['lentil soup', 'soup', 'lentils', 'legume soup'] },
+  { id: 'minestrone_soup',     name: 'Minestrone Soup (1 bowl)',        category: 'soup',    trafficLight: 'green',  caloriesPer100g: 51,  servingSizeG: 360, servingLabel: '1½ cups',     keywords: ['minestrone', 'soup', 'vegetable soup', 'italian soup', 'pasta soup'] },
+  { id: 'chili_beef',          name: 'Beef Chili (1 cup)',              category: 'dish',    trafficLight: 'yellow', caloriesPer100g: 150, servingSizeG: 253, servingLabel: '1 cup',       keywords: ['beef chili', 'chili', 'beans', 'chili con carne', 'stew'] },
+
+  // ── FATS, OILS & SPREADS ──────────────────────────────────────────────────────
+  { id: 'peanut_butter',       name: 'Peanut Butter (2 tbsp)',          category: 'fat',     trafficLight: 'yellow', caloriesPer100g: 588, servingSizeG: 32,  servingLabel: '2 tbsp',      keywords: ['peanut butter', 'pb', 'nut butter', 'spread', 'nuts'] },
+  { id: 'almond_butter',       name: 'Almond Butter (2 tbsp)',          category: 'fat',     trafficLight: 'yellow', caloriesPer100g: 614, servingSizeG: 32,  servingLabel: '2 tbsp',      keywords: ['almond butter', 'nut butter', 'spread', 'almonds'] },
+  { id: 'hummus',              name: 'Hummus (3 tbsp)',                  category: 'fat',     trafficLight: 'green',  caloriesPer100g: 177, servingSizeG: 50,  servingLabel: '3 tbsp',      keywords: ['hummus', 'chickpea dip', 'dip', 'spread', 'mediterranean'] },
+  { id: 'olive_oil_tbsp',      name: 'Olive Oil (1 tbsp)',              category: 'fat',     trafficLight: 'yellow', caloriesPer100g: 884, servingSizeG: 14,  servingLabel: '1 tbsp',      keywords: ['olive oil', 'oil', 'fat', 'cooking oil', 'evoo'] },
+  { id: 'mayo',                name: 'Mayonnaise (1 tbsp)',             category: 'fat',     trafficLight: 'orange', caloriesPer100g: 680, servingSizeG: 14,  servingLabel: '1 tbsp',      keywords: ['mayonnaise', 'mayo', 'condiment', 'spread', 'fat'] },
+  { id: 'ranch_dressing',      name: 'Ranch Dressing (2 tbsp)',         category: 'fat',     trafficLight: 'yellow', caloriesPer100g: 429, servingSizeG: 29,  servingLabel: '2 tbsp',      keywords: ['ranch', 'ranch dressing', 'dressing', 'dip', 'salad dressing'] },
+  { id: 'italian_dressing',    name: 'Italian Dressing (2 tbsp)',       category: 'fat',     trafficLight: 'green',  caloriesPer100g: 172, servingSizeG: 30,  servingLabel: '2 tbsp',      keywords: ['italian dressing', 'dressing', 'salad dressing'] },
+  { id: 'avocado_half',        name: 'Avocado (½ medium)',              category: 'fat',     trafficLight: 'green',  caloriesPer100g: 160, servingSizeG: 100, servingLabel: '½ avocado',   keywords: ['avocado', 'avo', 'guacamole', 'fat', 'healthy fat'] },
+  { id: 'guacamole',           name: 'Guacamole (¼ cup)',               category: 'fat',     trafficLight: 'green',  caloriesPer100g: 155, servingSizeG: 60,  servingLabel: '¼ cup',       keywords: ['guacamole', 'guac', 'avocado dip', 'dip', 'mexican'] },
+
+  // ── SNACKS & BARS ─────────────────────────────────────────────────────────────
+  { id: 'protein_bar',         name: 'Protein Bar (generic, ~200 cal)', category: 'snack',   trafficLight: 'yellow', caloriesPer100g: 370, servingSizeG: 55,  servingLabel: '1 bar',       keywords: ['protein bar', 'bar', 'snack', 'quest bar', 'clif bar', 'kind bar', 'rx bar'] },
+  { id: 'granola_bar',         name: 'Granola Bar (Nature Valley)',     category: 'snack',   trafficLight: 'yellow', caloriesPer100g: 455, servingSizeG: 42,  servingLabel: '1 bar',       keywords: ['granola bar', 'bar', 'snack', 'nature valley', 'cereal bar'] },
+  { id: 'rice_cakes',          name: 'Rice Cakes (plain, 2 cakes)',     category: 'snack',   trafficLight: 'green',  caloriesPer100g: 387, servingSizeG: 18,  servingLabel: '2 cakes',     keywords: ['rice cakes', 'rice cake', 'snack', 'light snack'] },
+  { id: 'string_cheese',       name: 'String Cheese (1 stick)',         category: 'dairy',   trafficLight: 'yellow', caloriesPer100g: 298, servingSizeG: 28,  servingLabel: '1 stick',     keywords: ['string cheese', 'cheese stick', 'mozzarella', 'snack', 'cheese'] },
+  { id: 'crackers_wheat',      name: 'Wheat Crackers (Triscuit, 6 pcs)',category:'snack',    trafficLight: 'yellow', caloriesPer100g: 433, servingSizeG: 28,  servingLabel: '6 crackers',  keywords: ['wheat crackers', 'triscuit', 'crackers', 'snack', 'whole wheat crackers'] },
+  { id: 'pretzels',            name: 'Pretzels (1 oz)',                 category: 'snack',   trafficLight: 'yellow', caloriesPer100g: 380, servingSizeG: 28,  servingLabel: '1 oz',        keywords: ['pretzels', 'pretzel', 'snack', 'salty snack'] },
+  { id: 'trail_mix',           name: 'Trail Mix (nuts & raisins, ¼ cup)',category:'snack',   trafficLight: 'yellow', caloriesPer100g: 462, servingSizeG: 43,  servingLabel: '¼ cup',       keywords: ['trail mix', 'mixed nuts', 'snack', 'nuts', 'raisins', 'hiking snack'] },
+  { id: 'pita_chips',          name: 'Pita Chips (1 oz)',               category: 'snack',   trafficLight: 'yellow', caloriesPer100g: 453, servingSizeG: 28,  servingLabel: '1 oz',        keywords: ['pita chips', 'chips', 'snack', 'baked chips'] },
+
+  // ── BEVERAGES ─────────────────────────────────────────────────────────────────
+  { id: 'coffee_black',        name: 'Coffee (black, 8 oz)',            category: 'beverage',trafficLight: 'green',  caloriesPer100g: 2,   servingSizeG: 240, servingLabel: '8 oz',        keywords: ['coffee', 'black coffee', 'americano', 'drip coffee', 'espresso'] },
+  { id: 'latte_2pct',          name: 'Latte (12 oz, 2% milk)',          category: 'beverage',trafficLight: 'yellow', caloriesPer100g: 54,  servingSizeG: 360, servingLabel: '12 oz',       keywords: ['latte', 'cafe latte', 'coffee', 'milk', 'starbucks', 'espresso latte'] },
+  { id: 'cappuccino',          name: 'Cappuccino (8 oz)',               category: 'beverage',trafficLight: 'green',  caloriesPer100g: 40,  servingSizeG: 240, servingLabel: '8 oz',        keywords: ['cappuccino', 'coffee', 'espresso', 'milk foam', 'starbucks'] },
+  { id: 'orange_juice',        name: 'Orange Juice (8 oz)',             category: 'beverage',trafficLight: 'yellow', caloriesPer100g: 45,  servingSizeG: 240, servingLabel: '8 oz',        keywords: ['orange juice', 'oj', 'juice', 'citrus juice'] },
+  { id: 'green_juice',         name: 'Green Juice (celery/cucumber)',   category: 'beverage',trafficLight: 'green',  caloriesPer100g: 30,  servingSizeG: 480, servingLabel: '16 oz',       keywords: ['green juice', 'celery juice', 'juice cleanse', 'cold pressed', 'veggie juice'] },
+  { id: 'protein_shake',       name: 'Protein Shake (25g protein)',     category: 'beverage',trafficLight: 'green',  caloriesPer100g: 95,  servingSizeG: 360, servingLabel: '12 oz',       keywords: ['protein shake', 'shake', 'protein drink', 'whey shake', 'post workout'] },
+  { id: 'smoothie_green',      name: 'Green Smoothie (spinach/banana)', category: 'beverage',trafficLight: 'green',  caloriesPer100g: 60,  servingSizeG: 480, servingLabel: '16 oz',       keywords: ['green smoothie', 'smoothie', 'spinach smoothie', 'banana smoothie', 'healthy smoothie'] },
+  { id: 'smoothie_fruit',      name: 'Fruit Smoothie (mixed berries)',  category: 'beverage',trafficLight: 'yellow', caloriesPer100g: 73,  servingSizeG: 480, servingLabel: '16 oz',       keywords: ['fruit smoothie', 'smoothie', 'berry smoothie', 'mango smoothie', 'strawberry smoothie'] },
+  { id: 'sports_drink',        name: 'Sports Drink (Gatorade, 20 oz)', category: 'beverage',trafficLight: 'yellow', caloriesPer100g: 26,  servingSizeG: 590, servingLabel: '20 oz',       keywords: ['gatorade', 'sports drink', 'electrolytes', 'powerade', 'hydration'] },
+  { id: 'soda_cola',           name: 'Soda / Cola (12 oz can)',         category: 'beverage',trafficLight: 'orange', caloriesPer100g: 40,  servingSizeG: 355, servingLabel: '12 oz',       keywords: ['soda', 'cola', 'coke', 'pepsi', 'pop', 'soft drink', 'fizzy drink'] },
+  { id: 'diet_soda',           name: 'Diet Soda (12 oz can)',           category: 'beverage',trafficLight: 'yellow', caloriesPer100g: 1,   servingSizeG: 355, servingLabel: '12 oz',       keywords: ['diet soda', 'diet coke', 'diet pepsi', 'zero sugar', 'sugar free soda'] },
+
+  // ── PIZZA & FAST FOOD ─────────────────────────────────────────────────────────
+  { id: 'pizza_cheese',        name: 'Pizza Slice (cheese)',            category: 'dish',    trafficLight: 'yellow', caloriesPer100g: 266, servingSizeG: 107, servingLabel: '1 slice',     keywords: ['pizza', 'cheese pizza', 'slice', 'plain pizza'] },
+  { id: 'pizza_pepperoni',     name: 'Pizza Slice (pepperoni)',         category: 'dish',    trafficLight: 'orange', caloriesPer100g: 298, servingSizeG: 107, servingLabel: '1 slice',     keywords: ['pepperoni pizza', 'pizza', 'slice', 'pepperoni'] },
+  { id: 'burger',              name: 'Hamburger (¼ lb, with bun)',      category: 'dish',    trafficLight: 'orange', caloriesPer100g: 254, servingSizeG: 220, servingLabel: '1 burger',    keywords: ['hamburger', 'burger', 'cheeseburger', 'fast food', 'ground beef'] },
+  { id: 'chicken_burger',      name: 'Grilled Chicken Sandwich',        category: 'dish',    trafficLight: 'yellow', caloriesPer100g: 210, servingSizeG: 200, servingLabel: '1 sandwich',  keywords: ['chicken sandwich', 'grilled chicken sandwich', 'burger', 'fast food', 'mcchicken'] },
+  { id: 'french_fries',        name: 'French Fries (medium, fast food)',category:'dish',     trafficLight: 'orange', caloriesPer100g: 323, servingSizeG: 117, servingLabel: 'medium',      keywords: ['french fries', 'fries', 'fast food', 'potato', 'mcdonalds', 'chips'] },
+  { id: 'hot_dog',             name: 'Hot Dog (with bun)',              category: 'dish',    trafficLight: 'orange', caloriesPer100g: 260, servingSizeG: 115, servingLabel: '1 hot dog',   keywords: ['hot dog', 'hotdog', 'frank', 'sausage', 'baseball', 'bun'] },
+  { id: 'mac_cheese',          name: 'Mac & Cheese (1 cup)',            category: 'dish',    trafficLight: 'orange', caloriesPer100g: 163, servingSizeG: 200, servingLabel: '1 cup',       keywords: ['mac and cheese', 'macaroni cheese', 'mac cheese', 'pasta', 'comfort food'] },
+
+  // ── RESTAURANT / BOWL MEALS ───────────────────────────────────────────────────
+  { id: 'chipotle_bowl',       name: 'Chipotle Burrito Bowl (chicken)', category: 'dish',    trafficLight: 'yellow', caloriesPer100g: 130, servingSizeG: 500, servingLabel: '1 bowl',      keywords: ['chipotle', 'burrito bowl', 'bowl', 'mexican', 'rice bowl', 'chicken bowl'] },
+  { id: 'poke_bowl',           name: 'Poke Bowl (salmon, rice)',        category: 'dish',    trafficLight: 'yellow', caloriesPer100g: 140, servingSizeG: 400, servingLabel: '1 bowl',      keywords: ['poke bowl', 'poke', 'hawaiian bowl', 'rice bowl', 'salmon poke'] },
+  { id: 'grain_bowl',          name: 'Grain Bowl (quinoa, veggies)',    category: 'dish',    trafficLight: 'green',  caloriesPer100g: 120, servingSizeG: 400, servingLabel: '1 bowl',      keywords: ['grain bowl', 'bowl', 'quinoa bowl', 'veggie bowl', 'power bowl', 'healthy bowl'] },
+  { id: 'chicken_caesar_wrap', name: 'Chicken Caesar Wrap',             category: 'dish',    trafficLight: 'yellow', caloriesPer100g: 215, servingSizeG: 280, servingLabel: '1 wrap',      keywords: ['chicken caesar wrap', 'wrap', 'caesar', 'chicken', 'lunch'] },
+  { id: 'sushi_roll',          name: 'Sushi Roll (California, 8 pcs)', category: 'dish',    trafficLight: 'green',  caloriesPer100g: 150, servingSizeG: 170, servingLabel: '8 pieces',    keywords: ['sushi', 'california roll', 'sushi roll', 'japanese', 'rice roll', 'maki'] },
+
+  // ── SWEETS & DESSERTS ─────────────────────────────────────────────────────────
+  { id: 'dark_chocolate',      name: 'Dark Chocolate (70%, 1 oz)',      category: 'snack',   trafficLight: 'yellow', caloriesPer100g: 598, servingSizeG: 28,  servingLabel: '1 oz',        keywords: ['dark chocolate', 'chocolate', 'cocoa', '70% chocolate'] },
+  { id: 'ice_cream',           name: 'Ice Cream (vanilla, ½ cup)',      category: 'snack',   trafficLight: 'orange', caloriesPer100g: 207, servingSizeG: 66,  servingLabel: '½ cup',       keywords: ['ice cream', 'icecream', 'vanilla ice cream', 'dessert', 'frozen'] },
+  { id: 'frozen_yogurt',       name: 'Frozen Yogurt (low fat, ½ cup)', category: 'snack',   trafficLight: 'yellow', caloriesPer100g: 127, servingSizeG: 115, servingLabel: '½ cup',       keywords: ['frozen yogurt', 'froyo', 'fro-yo', 'soft serve', 'dessert'] },
+  { id: 'cookies_choc_chip',   name: 'Chocolate Chip Cookies (2)',      category: 'snack',   trafficLight: 'orange', caloriesPer100g: 488, servingSizeG: 30,  servingLabel: '2 cookies',   keywords: ['chocolate chip cookies', 'cookies', 'dessert', 'baked goods', 'sweet'] },
+  { id: 'muffin_blueberry',    name: 'Blueberry Muffin (large)',        category: 'snack',   trafficLight: 'orange', caloriesPer100g: 290, servingSizeG: 130, servingLabel: '1 muffin',    keywords: ['blueberry muffin', 'muffin', 'breakfast muffin', 'baked goods', 'pastry'] },
+  { id: 'banana_bread_slice',  name: 'Banana Bread (1 slice)',          category: 'snack',   trafficLight: 'orange', caloriesPer100g: 326, servingSizeG: 60,  servingLabel: '1 slice',     keywords: ['banana bread', 'bread', 'banana', 'baked goods', 'sweet bread'] },
 ]
 
 export function searchFoods(query, filter = 'all') {
   const q = query.toLowerCase().trim()
+  const words = q.split(/\s+/).filter(w => w.length >= 2)
   return FOODS.filter(f => {
-    const matchesFilter = filter === 'all' || f.trafficLight === filter
-    if (!matchesFilter) return false
+    if (filter !== 'all' && f.trafficLight !== filter) return false
     if (!q) return true
-    return f.name.toLowerCase().includes(q) || f.keywords.some(k => k.includes(q))
+    const nameL = f.name.toLowerCase()
+    const keywordsL = f.keywords.map(k => k.toLowerCase())
+    // Exact phrase match
+    if (nameL.includes(q) || keywordsL.some(k => k.includes(q))) return true
+    // All-words match: every word in the query appears somewhere in name + keywords
+    if (words.length > 1) {
+      const text = nameL + ' ' + keywordsL.join(' ')
+      return words.every(w => text.includes(w))
+    }
+    return false
   })
 }
 
