@@ -18,11 +18,11 @@ import ProgressPage from './pages/ProgressPage'
 
 export default function App() {
   const [onboarded, setOnboarded] = useLocalStorage(KEYS.ONBOARDED, false)
-  const { session, loading } = useAuth()
+  const { session, loading, recovering } = useAuth()
 
   // ── Periodic cloud sync (every 2 min while signed in) ──
   useEffect(() => {
-    if (!supabase || !session) return
+    if (!supabase || recovering || !session) return
 
     // Push on tab hide (user switches apps / closes browser)
     function onHide() {
@@ -37,16 +37,16 @@ export default function App() {
       document.removeEventListener('visibilitychange', onHide)
       clearInterval(interval)
     }
-  }, [session])
+  }, [session, recovering])
 
   // ── If user has a valid session but no local data, pull from cloud ──
   // (handles: opened on a new device, or localStorage was cleared)
   useEffect(() => {
-    if (!supabase || !session || onboarded) return
+    if (!supabase || recovering || !session || onboarded) return
     pullFromCloud().then(result => {
       if (result.success) window.location.reload()
     })
-  }, [session, onboarded])
+  }, [session, onboarded, recovering])
 
   // ── No Supabase configured → original local-only behavior ──
   if (!supabase) {
@@ -87,6 +87,8 @@ export default function App() {
       </div>
     )
   }
+
+  if (recovering) return <AuthPage recovery={Boolean(session)} invalidRecovery={!session} />
 
   // Not signed in → show auth screen
   if (!session) {

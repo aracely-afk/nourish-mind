@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { supabase } from '../utils/supabase'
+import { supabase, recoveryLink, recoveryError } from '../utils/supabase'
 import { pullFromCloud, pushToCloud } from '../utils/syncData'
 
 /**
@@ -19,6 +19,7 @@ import { pullFromCloud, pushToCloud } from '../utils/syncData'
  *     pull from cloud, then reload so all hooks read the restored data.
  */
 export function useAuth() {
+  const [recovering, setRecovering] = useState(recoveryLink || recoveryError)
   const [session, setSession] = useState(undefined)
 
   useEffect(() => {
@@ -36,7 +37,8 @@ export function useAuth() {
       async (event, session) => {
         setSession(session)
 
-        if (event === 'SIGNED_IN') {
+        if (event === 'PASSWORD_RECOVERY') setRecovering(true)
+        if (event === 'SIGNED_IN' && !recoveryLink && !recoveryError) {
           const hasLocalData = localStorage.getItem('nm_onboarded') === 'true'
 
           if (hasLocalData) {
@@ -57,6 +59,7 @@ export function useAuth() {
 
   return {
     session,
+    recovering,
     loading: session === undefined,
     user: session?.user ?? null,
   }
